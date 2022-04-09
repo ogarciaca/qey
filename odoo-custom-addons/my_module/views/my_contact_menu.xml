@@ -1,0 +1,5 @@
+<odoo>
+
+    <menuitem name="Otros Clientes" id="mycontactmenu" parent="menu_custom_top_level" action="" />
+   
+</odoo>

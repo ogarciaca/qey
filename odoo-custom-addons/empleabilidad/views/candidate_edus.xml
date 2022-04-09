@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Skills -->
+    <record id="candidate_edus_action" model="ir.actions.act_window">
+        <field name="name">Experiencia</field>
+        <field name="res_model">candidate.edus</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+ 
+    <record id="candidate_edus_view_form" model="ir.ui.view">
+        <field name="name">candidate.edus.form</field>
+        <field name="model">candidate.edus</field>
+        <field name="arch" type="xml">
+            <form string="Educacion">
+                <div class="oe_title">
+                    <label for="name" class="oe_edit_only"/>
+                    <h1>
+                        <field name="name" string="Entidad Educativa" placeholder="Universidad.." required="True"/>
+                    </h1>
+                </div>
+                <group>
+                    <field name="edu_title" string="Titulo " placeholder="Ej. Administrador de empresas"/>
+                </group>
+                <group>
+                    <group>
+                        <div class="row">
+                            <label for="date_start" class="custom_allign" string="Inicio"/>
+                            <div name = "Inicio" class="col-4" string="Inicio">
+                                <field name="date_start" string="Inicio" required="True" placeholder="Inicio"/>
+                            </div>
+                            <label for="date_end" class="custom_allign" string="Fin"/>
+                            <div name = "Fin" class="col-4" string="Fin" placeholder="Fin">
+                                <field name="date_end" string="Fin" required="True" />
+                            </div>                            
+                        </div>
+
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    <!--  Tree(list) View  -->
+    <record id="candidate_edus_view_tree" model="ir.ui.view">
+        <field name="name">candidate.edus.view</field>
+        <field name="model">candidate.edus</field>
+        <field name="arch" type="xml">
+            <tree string="Lista de estudios">
+                <field name="edu_title" string="Titulo"/>
+                <field name="name" string="Entidad educativa"/>
+                <field name="date_start" string="Inicio"/>
+                <field name="date_end" string="Fin"/>
+            </tree>
+
+        </field>
+    </record>
+   
+
+    <menuitem
+        id="candidate_edus_menu"
+        name="Educacion"
+        action="candidate_edus_action"
+        parent="menu_candidate_top_level"
+        sequence="7"
+        groups=""/>
+</odoo>

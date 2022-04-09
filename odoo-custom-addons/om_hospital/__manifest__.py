@@ -1,0 +1,16 @@
+{
+    'name' : 'Hospital Management',
+    'version' : '1.0',
+    'summary': 'Hospital Management software',
+    'sequence': 10,
+    'description': """Hospital Management Software - My First Add-on in odoo""",
+    'category': 'Productivity',
+    'website': 'https://www.odoomates.tech',
+    'depends' : [],
+    'data': ['views/patient.xml'],
+    'demo': [],
+    'qweb': [],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

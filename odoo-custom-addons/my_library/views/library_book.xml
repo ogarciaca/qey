@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="library_book_view_form" model="ir.ui.view">
+        <field name="name">Library Book Form</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form>
+                <!--  header para poner los botones de cambio de estado  -->
+                <header>
+                    <button name="book_rent" string="Rent this book" type="object" class="btn-primary" groups="my_library.group_self_borrow"/>
+                    <button name="return_all_books" string="Return all book" type="object" class="btn-primary" groups="my_library.group_self_borrow"/>
+                    <button name="make_available" string="Make Available" type="object"/>
+                    <button name="make_borrowed" string="Make Borrowed" type="object"/>
+                    <button name="make_lost" string="Make Lost" type="object"/>
+                    <button name="average_book_occupation" string="Log Average Occ." type="object"/>
+                    <button name="log_all_library_members" string="Log Members" type="object"/>
+                    <button name="create_categories" string="Create Categories" type="object"/>
+                    <button name="change_release_date" string="Update Date" type="object"/>
+                    <button name="find_book" string="Find Book" type="object"/>
+                    <button name="filter_books" string="Filter Book " type="object"/>
+                    <button name="mapped_books" string="Mapped authors " type="object"/>
+                    <button name="sort_books" string="Sort Books " type="object"/>
+                    <button name="grouped_data" string="Groupped Data" type="object"/>
+                </header>
+                <group>
+                    <group>
+                        <field name="name" />
+                        <field name="id" />
+                        <field name="author_ids" widget="many2many_tags" />
+                        <field name="old_edition"/>
+                        <field name="state" />
+                        <field name="pages" />
+                        <field name="notes" />
+
+                        
+                    </group>
+                    <group>
+                        <field name="short_name" />
+                        <field name="publisher_id"/>
+                        <field name="publisher_city"/>
+                        <field name="publisher_web"/>
+                        <field name="date_release" />
+                        <field name="isbn"/>
+                        <field name="manager_remarks"/>
+                        <field name="date_updated" />
+                        <field name="age_days"/>
+                        <field name="cover" widge="image" class="or_avatar"/>
+                        <field name="reader_rating" />
+                        <field name="ref_doc_id"/> 
+                        <field name="cost_price" /> 
+                        <field name="retail_price"/>
+                        <field name="currency_id"/>
+                        <field name="category_id"/>
+                    </group>
+                    <group>
+
+                        <field name="description" />                    
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id='library_book_action' model='ir.actions.act_window'> 
+        <field name="name">Library Books</field>
+        <field name="res_model">library.book</field> 
+        <field name="view_mode">tree,form</field> 
+        
+    </record>
+    <!--  Tree(list) View  -->
+    <record id="library_book_view_tree" model="ir.ui.view">
+        <field name="name">Library Book List</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+        <tree>
+        <field name="name"/>
+        <field name="date_release"/>
+        </tree>
+        </field>
+    </record>
+    <!--  Search View  -->
+    <record id="library_book_view_search" model="ir.ui.view">
+            <field name="name">Library Book Search</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="author_ids"/>
+                    <filter string="Without Authors" name="without_author" domain="[('author_ids','=',False)]"/>
+                  <!--    <filter string="With Authors" name="with_author" domain="[(len('author_ids'),'=',True)]"/>  -->
+                </search>
+            </field>
+        </record>
+    
+    <menuitem   id="library_base_menu" 
+                name="My Library" 
+                sequence="10" />
+    <menuitem   id="library_book_menu" 
+                name="Library Books" 
+                parent="library_base_menu" 
+                sequence="10" />
+    <menuitem   id="library_book" 
+                name="Library Books" 
+                parent="library_book_menu" 
+                action = "library_book_action"
+                sequence="10" />
+</odoo>

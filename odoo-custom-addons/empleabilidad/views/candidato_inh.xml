@@ -1,0 +1,15 @@
+<odoo>
+    <act_window id="action_all_candidate" name="Candidatos" res_model="res.partner" view_mode="tree,form"  limit="20" />
+ 
+<record id="inherited_candidato_view_form" model="ir.ui.view">
+    <field name="name">inherited.model.form.inherit.test</field>
+    <field name="model">inherited.model</field>
+    <field name="inherit_id" ref="res.partner.form"/>
+    <field name="arch" type="xml">
+        <!-- find field description and add the field
+             new_field after it -->
+        <xpath expr="//field[@name='description']" position="after">
+          <field name="image_1920"/>
+        </xpath>
+    </field>
+</record>

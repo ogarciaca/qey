@@ -1,0 +1,23 @@
+<odoo>
+    <!-- DEMO DATA -->
+    <!-- <data noupdate="1"></data> Es para que no se actualize en la instalacion de primera vez. NO en los update  
+        En casi de que el cliente lo haya borrado se crearia. 
+        Si se pone el forcecreate="False" entonce no se crearia.
+    -->
+    <odoo noupdate="1">
+        <record id="res_partner_packt" model="res.partner">
+            <field name="name">Packt Publishing</field>
+            <field name="city">Birmingham</field>
+            <field name="country_id" ref="base.uk"/>
+        </record>
+        <record id="book_category_all" model="library.book.category" forcecreate="False">
+            <field name="name">All books</field>
+        </record>
+    </odoo>
+    <record id="base.main_company" model="res.company">
+        <field name="name">Packt publishing</field>
+    </record>
+    <record id="book_cookbook" model="library.book">
+        <field name="name"> Odoo 14 Development Cookbook </field>
+    </record>
+</odoo>

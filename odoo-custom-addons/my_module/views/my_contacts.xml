@@ -1,0 +1,162 @@
+<odoo>
+     
+    <act_window id="action_all_customers" name="All customers" res_model="res.partner" view_mode="tree,form" domain="[('customer_rank', '>', 0)]" context="{'lang':'fr_FR','default_lang':'fr_FR','active_test':False,'default_customer_rank': 1}" limit="20" target="main" />
+    <!--
+        Aclaro lo que debe ir en el act_window
+        id :  Es el identificador unico en las tablas de menu-item 
+        res_model : se pone allí el modelo base de la p+agina
+        view_mode : Se detalla allí el tipo de vista de la forma. Es separado por "," 
+                    Si se quiere ver calendar se pone "calendar,form"
+                    Otros son : kanban,graph, pivot, calendar, cohort, dashboard
+        domain : (opcional) es para poner el filtro de los registros que se mostraran en el res_model
+                "[('customer_rank', '>', 0)]" esta condicion significa que solo deben mostrarse los "clientes"
+        context : Son valores por defecto que se ponen en el contexto.
+                "{'default_customer_rank': 1}" para este caso se pone en el contexto como por defecto el "customer_rank=1".
+                si se crea un nuevo registro, se creara con customer_rank=1
+        limit : Limita el numero de registros que se mostraran en la vista. para este caso 20. Si no se pone nada el valor por defecto es 80
+        target : (solo se usa en el act_window) especifica. Los valores pueden ser : 
+                "current" (defecto) abre la pantalla en el misma content area
+                "new" Abre la pantalla como una nueva (popup).
+                "inline" es como "current" pero abre la forma in modo edicion.
+                "fullscreen" abre la pantalla en forma completa. tambien es llamada tablet mode
+                "main" es como "current" pero como breadcrumbs
+
+
+        A continuación una alternativa de reemplazar el act_window tag con un record tag.
+        esa crea un registro en la tabla ir.actions.act_windows y en ir.ui.menu con el registro.
+    -->
+
+    <!--
+    <act_window id="action_all_customers_fr" name="Tous les clients" res_model="res.partner" view_mode="tree,form" domain="[('customer_rank', '>', 0)]" context="{'lang':'fr_FR','default_lang':'fr_FR','active_test':False,'default_customer_rank': 1}" limit="20" target="main" />
+        -->
+
+    <!--  alternative way of act_window  -->
+    <!--
+      <record id='action_all_customers' model='ir.actions.act_window'>
+            <field name="name">All customers</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('customer_rank', '>', 0)]</field>
+            <field name="context">{'default_customer_rank': 1}</field>
+            <field name="limit">20</field>
+        </record>  
+    -->
+    <!-- 
+        Los siguientes paramentros solo se usan cuando se crean menu-item con record tag
+
+        res_id : Se abre la pantalla con un registro específico seteando el ID en este parametro
+        search_view_id : Especifica una pantalla de busqueda para mostrar los datos.
+
+    -->
+
+    <record id="view_all_customers_tree" model="ir.ui.view">
+        <field name="name">All customers</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <!--
+        id : el identificador unico del registro.
+        name : EL nombre que aparece en la forma o vista. Es importante cuando se hace debug porque se hace referencia al nombre de la vista y se pueden orientar
+        model : Es el nombre del modelo que va referenciado en la forma o vista.
+
+        En este tipo de declaraciones, es ncesario que se creen los campos que irán en la forma o vista
+        la cual se insertarán en la tabla "ir.ui.view"
+
+    -->
+
+
+    <record id="view_all_customers_form" model="ir.ui.view">
+        <field name="name">All customers</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button type="object" name="open_commercial_entity" string="Open commercial partner" class="btn-primary" />
+                    <button type="action" name="%(base.action_partner_category_form)d" string="Open partner categories"/>
+                </header>
+                    <!-- 
+                        Para ponerle color al boton style="background-color:red"
+                        type : Determina los otros parametros que la acompañan
+                                action : Realiza la accion que esta definida en ir.action.*
+                                object : Llama a un método que esta en el modelo.
+                                name : es el id de la accion u
+                                string : es el label dentro del boton.
+                        class : son los estilos CSS que se pueden usar. Ej btn-defaul, btn-primar. oe_link (para link)
+                    -->
+
+                <group string="Contenido.." name="my_content">
+                    <field name="name" />
+                    <field name="category_id" widget="many2many_tags"/>
+                    <!--
+                        widget="many2many_tags" indica como el dato en el campo es presentado al usuario.
+                            tambien hay "many2many_kanban", "many2many_checkboxes", "x2many_counter"
+                        Si se poner el pararametro  readonly="1" solo dejará visible el campo.
+                        Si se pone invisible="1" no se mostrará el campo
+                    --> 
+                </group>
+            </form>
+        </field>
+    </record>
+
+
+    <!--
+
+        
+    -->    
+    <record id="action_all_customers_tree" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_all_customers" />
+        <field name="view_id" ref="view_all_customers_tree" />
+        <field name="view_mode">tree</field>
+        <field name="sequence" eval="2" />
+    </record>
+    <!--
+
+        
+    -->
+
+    
+    <record id="action_all_customers_form" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_all_customers" />
+        <field name="view_id" ref="view_all_customers_form" />
+        <field name="view_mode">form</field>
+        <field name="sequence" eval="2" />
+    </record>
+    <!--
+
+        
+    -->
+    <menuitem id="menu_custom_top_level" name="My Module" web_icon="my_module,static/description/icon.png" />
+   <!-- 
+        La linea de menuitem se compone de 
+        id : el identificador unico del menu-item
+        name : Es el texto que se muestra en como menu item.
+                Si el menuitem tiene una acccion, se debe quitar el parametro
+        parent : es el id del padre en el menu-item en el nivel superior
+        action : es el id de la acción que se ejecutara
+        sequence : es usado para ordenar los item en el  menu-item
+        groups : es la lista opcional de grupos de usuarios que pueden acceder al menuitem. 
+                Si está vacio, estará disponible para todos los usuarios
+        web_icon : Solamente es usada para el nivel superior del menu-item.
+                    Va el nombre y path del icono que acompaña al modelo.
+
+
+    -->
+
+    <menuitem id="menu_all_customers1" name="Clientes" parent="menu_custom_top_level"  sequence="11" groups="" />
+    <menuitem id="menu_all_customers2" name="Sub Menu Clientes 1" parent="menu_all_customers1" action="action_all_customers" sequence="12" groups="" />
+    <menuitem id="menu_all_customers3" name="Sub Menu Clientes 2" parent="menu_all_customers1" action="action_all_customers" sequence="13" groups="" />
+    <menuitem id="menu_all_customers4" name="Sub Menu Clientes 3" parent="menu_all_customers1" action="action_all_customers" sequence="14" groups="" />
+    <menuitem id="menu_all_customers5" name="Sub Menu Clientes 4" parent="menu_all_customers1" action="action_all_customers" sequence="15" groups="" />
+    <menuitem id="menu_all_customers6" name="Sub Menu Clientes 5" parent="menu_all_customers1"  sequence="17" groups="" />    
+    <menuitem id="menu_all_customers7" name="Sub Menu Clientes 51" parent="menu_all_customers6" action="action_all_customers" />
+    <menuitem id="menu_all_customers" parent="menu_all_customers1" action="action_all_customers" sequence="10" groups="" />
+
+    <menuitem id="menu_all_customers11" name="Clientes 2" parent="menu_custom_top_level"  sequence="20" groups="" />
+    <menuitem id="menu_all_customers21" name="Sub Menu Clientes 21" parent="menu_all_customers11" action="action_all_customers" sequence="12" groups="" />
+     <!--
+    -->
+ </odoo>

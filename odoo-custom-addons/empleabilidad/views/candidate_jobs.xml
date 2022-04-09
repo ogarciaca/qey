@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!-- Skills -->
+    <record id="candidate_jobs_action" model="ir.actions.act_window">
+        <field name="name">Experiencia</field>
+        <field name="res_model">candidate.jobs</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+ 
+    <record id="candidate_jobs_view_form" model="ir.ui.view">
+        <field name="name">candidate.jobs.form</field>
+        <field name="model">candidate.jobs</field>
+        <field name="arch" type="xml">
+            <form string="Trabajos">
+                <div class="oe_title">
+                    <label for="name" class="oe_edit_only"/>
+                    <h1>
+                        <field name="name" string="Nombre la Empresa" placeholder="Empresa" required="True"/>
+                    </h1>
+                </div>
+                <group>
+                    <!-- 
+                    <group>
+                        <field name="line_type_id" invisible="1"/>
+                    </group>
+                    -->
+                    <group>
+                        <div class="row">
+                            <label for="date_start" class="custom_allign" string="Inicio"/>
+                            <div name = "Inicio" class="col-4" string="Inicio">
+                                <field name="date_start" string="Inicio" required="True" placeholder="Inicio"/>
+                            </div>
+                            <label for="date_end" class="custom_allign" string="Fin"/>
+                            <div name = "Fin" class="col-4" string="Fin" placeholder="Fin">
+                                <field name="date_end" string="Fin" required="True" />
+                            </div>                            
+                        </div>
+
+                    </group>
+                </group>
+                <group>
+                    <!-- 
+                    <field name="description" string="" placeholder="Description" invisible="1"/>
+                    -->
+                    <field name="job_title" string="Cargo" placeholder="Ultimo cargo desempñado"/>
+                    <field name="functions" string="Funciones" placeholder="Detalle las principales funciones"/>
+                    <field name="Achievements" string="Logros" placeholder="Detalle los principales logros"/>
+                </group>
+
+            </form>
+        </field>
+    </record>
+    <!--  Tree(list) View  -->
+    <record id="candidate_jobs_view_tree" model="ir.ui.view">
+        <field name="name">candidate.jobs.view</field>
+        <field name="model">candidate.jobs</field>
+        <field name="arch" type="xml">
+            <tree string="Lista de trabajos">
+                <field name="name" string="Nombre la Empresa"/>
+                <field name="job_title" string="Cargo"/>
+                <field name="date_start" string="Inicio"/>
+                <field name="date_end" string="Fin"/>
+                <field name="functions" string="Funciones"/>
+                <field name="Achievements" string="Logros"/>
+
+            </tree>
+
+        </field>
+    </record>
+   <!-- 
+    <record id="candidate_jobss_view_inherit_form" model="ir.ui.view">
+        <field name="name">candidate_jobs.view.form.inherit.resume</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[1]" position="before">
+                <page name="Aptitudes" string="Aptitudes">
+                    <div class="row">
+                        <div class="o_hr_skills_group o_group_skills col-lg-5 d-flex flex-column">
+                            <separator string="Skills"/>
+                            <field mode="tree" nolabel="1" name="partner_skill_ids"  widget="hr_skills">
+                                <tree>
+                                    <field name="skill_type_id" invisible="1"/>
+                                    <field name="skill_id"/>
+                                    <field name="skill_level_id"/>
+                                    <field name="level_progress" widget="progressbar"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+ 
+    <record id="employee_skill_level_view_tree" model="ir.ui.view">
+        <field name="name">hr.skill.level.tree</field>
+        <field name="model">hr.skill.level</field>
+        <field name="arch" type="xml">
+            <tree string="Skill Levels">
+                <field name="name"/>
+                <field name="level_progress" widget="progressbar"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="employee_skill_view_tree" model="ir.ui.view">
+        <field name="name">hr.skill.tree</field>
+        <field name="model">hr.skill</field>
+        <field name="arch" type="xml">
+            <tree string="Skill Levels">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="employee_skill_level_view_form" model="ir.ui.view">
+        <field name="name">hr.skill.level.form</field>
+        <field name="model">hr.skill.level</field>
+        <field name="arch" type="xml">
+            <form string="Skill Level">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="level_progress" string="Progress (%)"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    
+
+    <record id="hr_skill_view_form" model="ir.ui.view">
+        <field name="name">hr.skill.form</field>
+        <field name="model">hr.skill</field>
+        <field name="arch" type="xml">
+            <form string="Skills">
+                <sheet>
+                    <field name="name"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_skill_type_view_tree" model="ir.ui.view">
+        <field name="name">hr.skill.type.tree</field>
+        <field name="model">hr.skill.type</field>
+        <field name="arch" type="xml">
+            <tree string="Skill Types">
+                <field name="name"/>
+                <field name="skill_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_employee_skill_type_view_form" model="ir.ui.view">
+        <field name="name">hr.skill.type.form</field>
+        <field name="model">hr.skill.type</field>
+        <field name="arch" type="xml">
+            <form string="Skill Type">
+                <field name="id" invisible="1"/>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Skill Type" required="True"/>
+                        </h1>
+                    </div>
+                    <group string="Skills">
+                        <field name="skill_ids" nolabel="1" context="{'default_skill_type_id': id}">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group string="Levels">
+                        <field name="skill_level_ids" nolabel="1" context="{'default_skill_type_id': id}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    
+-->
+    <menuitem
+        id="candidate_jobs_menu"
+        name="Experiencia"
+        action="candidate_jobs_action"
+        parent="menu_candidate_top_level"
+        sequence="5"
+        groups=""/>
+</odoo>

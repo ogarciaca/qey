@@ -1,0 +1,65 @@
+<odoo>
+    <record id="empl_candidate_studies_action" model="ir.actions.act_window">
+        <field name="name">Studies</field>
+        <field name="res_model">candidate.estudio</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="CandidatosStudies" id="candidate_studies_menu" parent="menu_candidate_top_level" action="empl_candidate_studies_action" />
+
+    <record id="empl_candidate_studies_view_form" model="ir.ui.view">
+        <field name="name">Studies Form</field>
+        <field name="model">candidate.estudio</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="partner_id" />
+                </group>
+                <group>
+                    <field name="institution" style="width:200px;margin-left: 34px;"/>
+                </group>
+                <group>
+                    <field name="titulo" style="width:200px;margin-left: 34px;"/>
+                </group>
+                <group>
+                    <field name="ended"/>
+                </group>
+                <group>
+                    <field name="degree"  style="width:110px"/>
+                </group>
+                <group>
+                    <div>
+                        <label for="start_month" string="Inicio"
+                               style="font-weight: bold !important;margin-right:107px;margin-left: 0px;" /> 
+                        <field name="start_month" style="width:110px" />
+                        <field name="start_year" style="width:110px;margin-left: 34px;"/>
+                    </div>  
+                </group>
+                <group attrs="{'invisible': [('ended', '=', False)]}">
+                    <div >
+                        <label for="end_month" string="Fin"
+                               style="font-weight: bold !important;margin-right:107px;margin-left: 0px;" /> 
+                        <field name="end_month" style="width:110px" />
+                        <field name="end_year" style="width:110px;margin-left: 34px;"/>
+                    </div>  
+                </group>
+            </form>
+        </field>
+    </record>
+    <!--  Tree(list) View  -->
+    <record id="empl_candidate_studies_view_tree" model="ir.ui.view">
+        <field name="name">Studies View</field>
+        <field name="model">candidate.estudio</field>
+        <field name="arch" type="xml">
+            <tree string="Lista de estudios">
+                <field name="institution" string=""/>
+                <field name="titulo" string="Titulo"/>
+                <field name="ended" string="Terminado" optional="show"/>
+                <field name="degree"  string="Grado" optional="show"/>
+                <field name="start_month" string="InicioMes" />
+                <field name="start_year" string="InicioAño" optional="show"/>
+                <field name="end_month" string="FinMes" optional="show"/>
+                <field name="end_year" string="FinAño" optional="show"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
