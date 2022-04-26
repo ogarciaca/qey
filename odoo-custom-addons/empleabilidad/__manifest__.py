@@ -7,7 +7,16 @@
     'category': 'Human Resources/Employees',
     'website': 'https://www.odoolibrary.tech',
     'version': '14.0.1',
-    'depends': ['base','hr_skills'],
+    'depends': ['base','hr_skills','hr_recruitment',
+        'hr',
+        'calendar',
+        'fetchmail',
+        'utm',
+        'attachment_indexation',
+        'web_tour',
+        'digest',
+    
+    ],
     'data': ['views/empl_engage.xml'
             ,'views/empl_studies.xml'
             ,'views/candidate_skills.xml'

@@ -1,7 +1,6 @@
 <odoo>
-    <!-- act_window id="action_all_customers" name="All customers" res_model="res.partner" view_mode="kanban,form" domain="[('customer_rank', '>', 0)]" context="{'active_test':False,'default_customer_rank': 1}" limit="20" target="main" /> -->
-  
-    <act_window id="action_all_customers" name="All customers" res_model="res.partner" view_mode="kanban,form" context="{'active_test':False,'default_customer_rank': 1}" limit="20" target="main" />
+     
+    <act_window id="action_all_customers" name="All customers" res_model="res.partner" view_mode="kanban" domain="[('customer_rank', '>', 0)]" context="{'active_test':False,'default_customer_rank': 1}" limit="20" target="main" />
     <!--
         Aclaro lo que debe ir en el act_window
         id :  Es el identificador unico en las tablas de menu-item 
@@ -79,7 +78,7 @@
                     <button type="object" name="open_commercial_entity" string="Open commercial partner" class="btn-primary" />
                     <button type="action" name="%(base.action_partner_category_form)d" string="Open partner categories" class="oe_link"/>
                 </header>
-                 <!-- 
+                <!-- 
                         Para ponerle color al boton style="background-color:red"
                         type : Determina los otros parametros que la acompañan
                                 action : Realiza la accion que esta definida en ir.action.*
@@ -107,8 +106,6 @@
                         </h1>
                         <field name="parent_id" attrs="{ 'invisible': [('is_company', '=', True)], 'required': [('is_company', '=', False)] }"/>
                     </div>
-                    <field name="image_1920" widget='image' class="oe_avatar" options='{"preview_image": "image_1920"}'/>
-
                     <group string="Contenido.." name="my_content">
                         <field name="is_company"/>
                         <field name="category_id" widget="many2many_tags" />
@@ -154,101 +151,24 @@
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
             <kanban>
-                <field name="id"/>
-                <field name="color"/>
-                <field name="display_name"/>
-                <field name="title"/>
-                <field name="email"/>
-                <field name="parent_id"/>
-                <field name="is_company"/>
-                <field name="function"/>
-                <field name="phone"/>
-                <field name="street"/>
-                <field name="street2"/>
-                <field name="zip"/>
-                <field name="city"/>
-                <field name="country_id"/>
-                <field name="mobile"/>
-                <field name="state_id"/>
-                <field name="category_id"/>
-                <field name="image_1920"/>
-                <field name="type"/>
                 <field name="name" />
                 <field name="supplier_rank" />
                 <field name="customer_rank" />
-                <field name="category_id" />
                 <templates>
                     <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
-                            <t t-if="!record.is_company.raw_value">
-                                <t t-if="record.type.raw_value === 'delivery'" t-set="placeholder" t-value="'/base/static/img/truck.png'"/>
-                                <t t-elif="record.type.raw_value === 'invoice'" t-set="placeholder" t-value="'/base/static/img/money.png'"/>
-                                <t t-else="" t-set="placeholder" t-value="'/base/static/img/avatar_grey.png'"/>
-                                <div class="o_kanban_image_fill_left d-none d-md-block" t-attf-style="background-image:url('#{kanban_image('res.partner', 'image_1920', record.id.raw_value,  placeholder)}')">
-                                    <img class="o_kanban_image_inner_pic" t-if="record.parent_id.raw_value" t-att-alt="record.parent_id.value" t-att-src="kanban_image('res.partner', 'image_1920', record.parent_id.raw_value)"/>
-                                </div>
-
-                            </t>
-                            <t t-else="">
-                                <t t-set="placeholder" t-value="'/base/static/img/company_image.png'"/>
-                                <div class="o_kanban_image_fill_left o_kanban_image_full" t-attf-style="background-image: url(#{kanban_image('res.partner', 'image_1920', record.id.raw_value, placeholder)})" role="img"/>
-                            </t>                   
-                            <!-- 
-                                type puede ser : 
-                                    open : que se abre una nueva ventana
-                                    edit : para editar el registro
-                                    delete : Borrar el registro
-                                    object : llamar a una funcion
-                                    action : llamar a una accion
-
-                           
+                        <div class="oe_kanban_card">
                             <a type="open">
                                 <strong>
                                     <field name="name" />
- 
                                 </strong>
                             </a>
-                             -->
-                            <div class="oe_kanban_details d-flex flex-column">
-                                <strong class="o_kanban_record_title oe_partner_heading">
-                                    <field name="display_name"/>
-                                </strong>
-                                <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
-                                <ul>
-                                    <li t-if="record.email.raw_value" class="o_text_overflow">
-                                        <field name="email"/>
-                                    </li>
-                                    <li t-if="record.mobile.raw_value" class="o_text_overflow">
-                                        <field name="mobile"/>
-                                    </li>
-                                    <li t-if="record.category_id.raw_value" class="o_text_overflow">
-                                        <field name="category_id"/>
-                                    </li>
-                                </ul>
-                                <div class="o_row">
-                                    <span class="oe_kanban_partner_links"/>
-                                </div>
-                            </div>
-<!--
                             <t t-if="record.supplier_rank.raw_value or record.customer_rank.raw_value">
                                 is
                                 <t t-if="record.customer_rank.raw_value"> a customer </t>
                                 <t t-if="record.customer_rank.raw_value and record.supplier_rank.raw_value"> and </t>
                                 <t t-if="record.supplier_rank.raw_value"> a supplier </t>
                             </t>
-                            <div>
-                                <field name="email" />
-                            </div>
-                            <div>
-                                <field name="mobile" />
-                            </div>
-                            <div>
-                                <field name="category_id" />
-                            </div>
-                        -->
-
                         </div>
-
                     </t>
                 </templates>
             </kanban>

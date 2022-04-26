@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!-- Appls -->
+    <record id="candidate_appls_action" model="ir.actions.act_window">
+        <field name="name">Posiciones</field>
+        <field name="res_model">candidate.appls</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+ 
+
+        
+
+    <menuitem
+        id="candidate_appls_menu"
+        name="Posiciones"
+        action="action_company_jobs"
+        parent="menu_candidate_top_level"
+        sequence="16"
+        groups=""/>
+</odoo>
