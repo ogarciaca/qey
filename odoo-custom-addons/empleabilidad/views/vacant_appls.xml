@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="candidate_vacant_appls_action" model="ir.actions.act_window">
+        <field name="name">VacantAppls</field>
+        <field name="res_model">vacant.appls</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <!--  Se define las variables de busqueda
+    -->
+    <record id="candidate_vacant_appls_view_search" model="ir.ui.view">
+        <field name="name">candidate.vacant.appls.view.search</field>
+        <field name="model">vacant.appls</field>
+        <field name="arch" type="xml">
+            <search string="Search Applicants">
+                <field name="vacant_ids" string="Vancate"/>
+                <field name="stage_id" domain="[]"/>
+                <field name="refuse_reason_id"/>
+                <field name="attachment_ids" filter_domain="[('attachment_ids.index_content', 'ilike', self)]" string="Attachments"/>
+                <filter string="My Applications" name="my_applications" domain="[('user_id', '=', uid)]"/>
+                <filter string="Unassigned" name="unassigned" domain="[('user_id', '=', False)]"/>
+                <separator/>
+                <filter string="Ready for Next Stage" name="done" domain="[('kanban_state', '=', 'done')]"/>
+                <filter string="Blocked" name="blocked" domain="[('kanban_state', '=', 'blocked')]"/>
+                <separator/>
+                <filter string="Creation Date" name="filter_create" date="create_date"/>
+                <separator/>
+           </search>
+        </field>
+    </record>
+    <record id="candidate_vacant_appls_view_form" model="ir.ui.view">
+        <field name="name">candidate.vacant.appls.form</field>
+        <field name="model">vacant.appls</field>
+        <field name="arch" type="xml">
+            <form string="Aplicantes">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="active"/>
+                            <field name="detail"/>          
+                            <field name="probability" readonly="True"/>               
+                            <field name="refuse_reason_id"/>           
+                            <field name="last_stage_id" readonly="True"/>            
+                            <field name="date_last_stage_update" readonly="True" />
+                            <field name="priority" string="Prioridad"/>              
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+     <record id="candidate_vacant_appls_view_tree" model="ir.ui.view">
+        <field name="name">candidate.vacant.appls.view</field>
+        <field name="model">vacant.appls</field>
+        <field name="arch" type="xml">
+            <tree string="Lista de estudios">
+                <field name="active"/>
+                <field name="detail"/>
+                <field name="partner_id"/>            
+                <field name="create_date"/>           
+                <field name="probability"/>           
+                <field name="vacant_ids"/>            
+                <field name="refuse_reason_id"/>      
+                <field name="stage_id"/>              
+                <field name="last_stage_id"/>         
+                <field name="date_closed"/>           
+                <field name="date_open"/>             
+                <field name="date_last_stage_update"/>
+                <field name="priority"/>              
+                <field name="color"/>                 
+                <field name="kanban_state"/>          
+                <field name="application_count"/>  
+            </tree>
+        </field>
+    </record>
+
+
+
+
+    
+    <!-- Hr Applicant Kanban View -->
+    <record model="ir.ui.view" id="vacant_appls_kanban_view">
+        <field name="name">candidate.vacant.appls.kanban</field>
+        <field name="model">vacant.appls</field>
+        <!--
+        <field name="context">{'search_default_vacant_ids': [active_id], 'default_vacant_ids': active_id}</field>
+        -->
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id" class="o_kanban_applicant" 
+                    quick_create_view="hr_recruitment.quick_create_applicant_form" 
+                    group_create="false"
+                    group_edit = "false"
+                    group_delete = "false"
+                    sample="1">
+                <field name="stage_id" options='{"group_by_tooltip": {"requirements": "Requirements"}}'/>
+                <field name="color"/>
+                <field name="priority"/>
+                <field name="partner_id"/>
+                <field name="attachment_number"/>
+                <field name="active"/>
+                <field name="probability"/>
+<!--
+
+                <field name="user_email"/>
+                <field name="partner_name"/>
+                <field name="type_id"/>
+
+                <field name="job_id"/>
+                <field name="department_id"/>
+
+
+                <field name="activity_ids" />
+                <field name="activity_state" />
+                <progressbar field="activity_state" colors='{"planned": "success", "overdue": "danger", "today": "warning"}'/>
+-->
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card  oe_applicant_kanban oe_semantic_html_override">
+                            <span class="badge badge-pill badge-danger pull-right mr-4" attrs="{'invisible': [('active', '=', True)]}">Refused</span>
+                            <div class="o_dropdown_kanban dropdown">
+                                <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu" data-display="static">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <a role="menuitem" type="edit" class="dropdown-item" name="edit">
+                                        Editar
+                                    </a> 
+                                    <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                                    <a role="menuitem" name="action_makeMeeting" type="object" class="dropdown-item">Schedule Interview</a>
+                                    <div role="separator" class="dropdown-divider"></div>
+                                    <ul class="oe_kanban_colorpicker text-center" data-field="color"/>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_bottom mt4">
+                                    <div class="oe_kanban_bottom_left">
+                                        <div class="o_kanban_card_header_title">
+                                            <div class="o_primary col-12">
+                                                <span><t t-esc="record.partner_id.value"/></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <div class="o_kanban_state_with_padding ml-1 mr-2" >
+                                            <field name="kanban_state" widget="kanban_state_selection"/>
+                                            <field name="legend_normal" invisible="1"/>
+                                            <field name="legend_blocked" invisible="1"/>
+                                            <field name="legend_done" invisible="1"/>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="container o_kanban_card_content">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <field name="probability"/> % Aprox <br/>
+                                        </div>
+                                        <div class="col-6">
+                                            <field name="attachment_number" /> Adjuntos <br/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="priority" widget="priority" />
+                                    </div>
+                                    <div class="oe_kanban_bottom_rigth">
+                                        <field name="active" widget="boolean_toggle" /> Activo <br/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="oe_clear"></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_vacant_appls_applications">
+        <field name="name">Applications</field>
+        <field name="res_model">vacant.appls</field>
+        <field name="view_mode">kanban</field>
+        <field name="search_view_id" ref="candidate_vacant_appls_view_search"/> 
+        <field name="context">{'search_default_vacant_ids': [active_id], 'default_vacant_ids': active_id}</field> 
+        <field name="help" type="html">
+              <p class="o_view_nocontent_empty_folder">
+                No hay candidatos para esta vacante
+              </p><p>
+                  El sistema te ayuda a encontrar candidatos para esdta vacante, incluirlas en el kanban
+                  para el seguimiento.
+              </p><p>
+                Los candidatos y sus HV seran creados en forma automática cuando un email es enviado.
+                Si se instala el documento management modules, todos las HV son indexados automáticamente
+                y podrán ser facilmente buscados por su contenido.
+              </p>
+         </field>
+    </record>
+
+
+    <menuitem
+        id="candidate_vacant_appls_menu"
+        name="Vacante Appls"
+        action="candidate_vacant_appls_action"
+        parent="menu_candidate_top_level"
+        sequence="20"
+        groups=""
+    />
+</odoo>

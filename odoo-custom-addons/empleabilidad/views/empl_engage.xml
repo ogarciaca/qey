@@ -1,6 +1,6 @@
 <odoo>
 
-    <act_window id="action_all_candidate" name="Candidatos0" res_model="res.partner" view_mode="tree,form,kanban" limit="20" />
+    <act_window id="action_all_candidate" name="Candidatos0" res_model="res.partner" view_mode="kanban,form,tree" limit="20" />
    
     <record id="view_all_candidate_tree" model="ir.ui.view">
         <field name="name">EmpleabilidadCandidatosTree</field>
@@ -49,7 +49,7 @@
                         <field name="phone" string="Telefono" placeholder="Teléfono..." />
                         <field name="mobile" string="Celular" />
                         <field name="gender" string="Genero"/>
-                        <field name="category_id" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tags..."></field>
+                        <field name="category_id" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Categorias..."/>
 
                     </group>
                     </group>
@@ -59,11 +59,14 @@
 
                                 <group name="container_row_2">
                                     <field name="birthday" string="Nacimiento" widget="date" options="{'format': 'DD/MM/YYYY'}" style="width:16%" />
-                                    <field name="link_linkedin" string="LinkedIn" />
-                                    <field name="link_twitter" string="twitter" />
-                                    <field name="link_side" string="Pagina Web" />
+                                    <field name="link_linkedin" string="LinkedIn" widge="website_urls"/>
+                                    <field name="link_twitter" string="twitter" widge="website_urls"/>
+                                    <field name="link_side" string="Pagina Web" widge="website_urls"/>
+                                    <separator orientation="horizontal"/>
                                     <field name="profile" string="Profile " widge="html" />
+                                    <separator orientation="horizontal"/>
                                     <field name="cover" string="Presentacion " widge="text_html" />
+                               
                                 </group>
                             </page>
                             <page string="Educacion">

@@ -45,6 +45,7 @@ class candidate(models.Model):
     partner_edus_ids = fields.One2many('candidate.edus', 'partner_id', string="Educations")
 
 
+
 class candidateEstudio(models.Model):
     _name = 'candidate.estudio'
     _inherits = {'res.partner': 'partner_id'}

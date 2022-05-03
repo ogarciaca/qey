@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Vacantes -->
+    <record id="candidate_vacant_action" model="ir.actions.act_window">
+        <field name="name">EmpleabilidadVacanteAction</field>
+        <field name="res_model">candidate.vacant</field>
+        <field name="view_mode">kanban,form,tree</field>
+    </record>
+ 
+    <!--  Tree(list) View  -->
+    <record id="candidate_vacant_view_tree" model="ir.ui.view">
+        <field name="name">candidate.vacant.view</field>
+        <field name="model">candidate.vacant</field>
+        <field name="arch" type="xml">
+            <tree string="Lista de Vacantes">
+                <field name="name" string="Nombre la Vacante"/>
+                <field name="active" string="active"/>
+                <field name="description" string="description"/>
+                <field name="date_open" string="date_open"/>
+                <field name="kanban_state" string="kanban_state"/>
+
+                <field name="email_from" string="email_from"/>
+                <field name="probability" string="probability"/>
+                <field name="partner_id" string="partner_id"/>
+                <field name="stage_id" string="stage_id"/>
+                <field name="last_stage_id" string="last_stage_id"/>
+                <field name="company_id" string="company_id"/>
+                <field name="user_id" string="user_id"/>
+                <field name="date_closed" string="date_closed"/>
+                <field name="date_last_stage_update" string="date_last_stage_update"/>
+                <field name="priority" string="priority"/>
+
+                <field name="job_id" string="job_id"/>
+                <field name="salary_proposed_extra" string="salary_proposed_extra"/>
+                <field name="salary_expected_extra" string="salary_expected_extra"/>
+                <field name="salary_proposed" string="kanban_state"/>
+                <field name="salary_expected" string="salary_expected"/>
+                <field name="availability" string="availability"/>
+                <field name="partner_phone" string="partner_phone"/>
+                <field name="partner_mobile" string="partner_mobile"/>
+                <field name="type_id" string="type_id"/>
+                <field name="department_id" string="department_id"/>
+                <field name="delay_close" string="delay_close"/>
+                <field name="color" string="color"/>
+                <field name="emp_id" string="emp_id"/>
+            </tree>
+
+        </field>
+    </record>
+
+<record id="candidate_vacant_view_form" model="ir.ui.view">
+    <field name="name">candidate.vacant.form</field>
+    <field name="model">candidate.vacant</field>
+    <field name="arch" type="xml">
+        <form string="Vacantes">
+            <!--
+        <header>
+            <button name="set_recruit" string="Start Recruitment" states="open" type="object" class="oe_highlight" groups="base.group_user"/>
+            <button name="set_open" string="Stop Recruitment" states="recruit" type="object" groups="base.group_user"/>
+            <field name="state" widget="statusbar" statusbar_visible="recruit,open"/>
+        </header>
+        -->
+        <sheet>
+            <div class="oe_button_box" name="button_box"/>
+            <div class="oe_title">
+                <label for="name" class="oe_edit_only"/>
+                <h1><field name="name" placeholder="e.g. Gerente de ventas"/></h1>
+            </div>
+            <field name="active" string="active"/>
+            <field name="categ_ids" string="Categorias" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tags..."/>
+            
+            <notebook> 
+                <page string="Descripcion">
+                    <!-- 
+                        attrs="{'invisible': [('state', '!=', 'recruit')]}"
+                    -->
+                    <div >
+                        <label for="description"/>
+                        <field name="description"/>
+                    </div>
+                    <div >
+                        <label for="priority" string="Prioridad"/>
+                        <field name="priority"  style="width:16%"/>
+                    </div>
+                    <div >
+                        <label for="color" string="color"/>
+                        <field name="color"  style="width:16%"/>
+                    </div>
+                </page>
+                <page string="Fechas">
+                    <group>
+                        <field name="date_open" string="Apertura" widget="date" options="{'format': 'DD/MM/YYYY'}" style="width:16%"/>
+                        <field name="date_closed" string="Cierre" widget="date" options="{'format': 'DD/MM/YYYY'}" style="width:16%"/>
+                        <field name="date_last_stage_update" string="Actualizado" widget="date" options="{'format': 'DD/MM/YYYY'}" style="width:16%"/>
+                        <field name="delay_close" string="Espera (dias)"/>
+                    </group>
+                </page>
+                <page string="Inf Reclutador">
+                    <group>
+                        <!--
+                            <field name="salary_expected" string="salary_expected"/>
+                        -->
+                        <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                        <field name="department_id" string="Departamento "/>
+                        <field name="email_from" string="Correo del contacto" widget="regex_mask" data-inputmask-regex="[a-zA-Z0-9._%-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,4}"/>
+                        <field name="partner_id" string="Contacto "/>
+                        <field name="salary_proposed" string="Salario"/>
+                        <field name="partner_phone" string="Tel Contacto" widget="mask" data-inputmask-alias="phone"/>
+                        <field name="partner_mobile" string="Cel Contacto" widget="mask" data-inputmask-alias="phone"/>
+                    </group>
+                </page>
+
+                <page string="Habilidades">
+                    <div class="row" modifiers="{}">
+                        <div class="o_hr_skills_group o_group_skills col-lg-7 d-flex flex-column" modifiers="{}">
+                            <separator string="Habilidades" modifiers="{}" />
+                            <field mode="tree" nolabel="1" name="vacant_skill_ids" widget="hr_skills" modifiers="{}" id="vacant_skill_ids" />
+                        </div>
+                    </div>
+                </page>
+
+                <page string="Otros">
+
+                    <group>
+                        <field name="probability" string="Probabilidad" widget="number" digit="2" style="width:16%"/>
+                        <field name="availability" string="Disponibilidad para " style="width:16%"/>
+                        <field name="type_id" string="Nivel Educativo" style="width:20%"/>
+                    </group>
+                    <!--
+                    <field name="kanban_state" string="kanban_state"/>
+                    <field name="stage_id" string="stage_id"/>
+                    <field name="last_stage_id" string="last_stage_id"/>
+                    <field name="company_id" string="company_id"/>
+                    <field name="user_id" string="user_id"/>
+                    <field name="emp_id" string="emp_id"/>
+                    <field name="job_id" string="Cargo" style="width:16%"/> 
+                    -->
+                </page>
+                <page string="Aplicantes">
+                    <div class="row" modifiers="{}">
+                        <div class="col-lg-7 d-flex flex-column" modifiers="{}">
+                            <separator string="Aplicantes" modifiers="{}" />
+                            <field mode="tree" nolabel="1" name="vacant_appls_ids" modifiers="{}" id="vacant_appls_ids" />
+                        </div>
+                    </div>
+                </page>
+            </notebook>
+        </sheet>
+        <div class="oe_chatter">
+            <field name="message_follower_ids" options="{'open_attachments': True}"/>
+        </div>
+    </form>
+</field>
+</record>
+
+<record id="create_new_vacant" model="ir.actions.act_window">
+    <field name="name">Crear una nueva vacante</field>
+    <field name="res_model">candidate.vacant</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="candidate_vacant_view_form"/>
+    <field name="target">new</field>
+</record>
+
+<record id="view_candidate_vacant_kanban" model="ir.ui.view">
+    <field name="name">Empleabilidad.vacant.kanban</field>
+    <field name="model">candidate.vacant</field>
+    <field name="arch" type="xml">
+        <!-- on_create="hr_recruitment.create_job_simple"
+            Tags :
+            o_kanban_dashboard
+            o_hr_recruitment_kanban  
+            o_kanban_small_column : pone las tarjetas mas pequeñas
+        -->
+        <kanban class="oe_background_grey  o_kanban_small_column oe_kanban_global_click_edit" 
+                        on_create="empleabilidad.create_new_vacant" sample="1">
+            <field name="name"/>
+            <field name="department_id"/>
+            <field name="color"/>
+            <field name="active"/>
+            <field name="user_id"/>
+            <field name="partner_id"/>
+            <field name="application_count"/>
+            <field name="meeting_count"/>
+            <field name="priority"/>
+            <field name="day_close"/>
+            <field name="salary_proposed"/>
+            <templates>
+                <t t-name="kanban-box">
+                    <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''} " >
+                        <div class="o_kanban_card_header">
+                            <div class="o_kanban_card_header_title">
+                                <div class="o_primary col-12">
+                                    <span><t t-esc="record.name.value"/></span>
+                                </div>
+                                <div class="o_kanban_record_subtitle col-12 text-muted">
+                                    <field name="partner_id" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container o_kanban_card_content">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button class="btn btn-primary" name="%(action_vacant_appls_applications)d" type="action" >
+                                            <field name="application_count"/> Aplicaciones
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <field name="day_close" widget="integer" /> Dias para cerrar <br/>
+                                    </div>
+                                    <div class="col-6" >
+                                        <p t-if="record.salary_proposed.raw_value == 0">A Convenir</p>
+                                        <p t-else="">
+                                            <field name="salary_proposed" widget="monetary"/>
+                                        </p>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="o_kanban_record_bottom">
+                            <div class="oe_kanban_bottom_left">
+                                <field name="priority" widget="priority" />
+                            </div>
+                            <div class="oe_kanban_bottom_rigth">
+                                <field name="active" widget="boolean_toggle" /> Activo <br/>
+                            </div>
+                        </div>
+                        <div class="o_dropdown_kanban dropdown"> 
+                            <a class="dropdown-toggle btn"      data-toggle="dropdown" role="menu"     href="#"> 
+                                <span class="fa fa-ellipsis-v"/> 
+                            </a> 
+                            <div class="dropdown-menu" role="menu">
+                                <t t-if="widget.editable"> 
+                                    <a role="menuitem" type="edit" class="dropdown-item" name="edit">
+                                        Editar
+                                    </a> 
+                                    <ul class="oe_kanban_colorpicker" data-field="color" role="menu"/>
+                                </t>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="o_kanban_card_manage_pane dropdown-menu" role="menu">
+                            <div class="o_kanban_card_manage_section">
+                                <div role="menuitem"><a t-if="record.active.raw_value == 'True'" name="active" type="object">Recruitment Done</a></div>
+                             </div>
+                             <div role="menuitem" aria-haspopup="true">
+                                <ul class="oe_kanban_colorpicker" data-field="color" role="menu"/>
+                            </div>
+                        </div> 
+                    -->  
+                    </div>                       
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
+
+    <menuitem
+        id="candidate_vacant_menu"
+        name="Vacantes"
+        action="candidate_vacant_action"
+        parent="menu_candidate_top_level"
+        sequence="5"
+        groups=""/>
+</odoo>

@@ -22,6 +22,11 @@
             ,'views/candidate_skills.xml'
             ,'views/candidate_jobs.xml'
             ,'views/candidate_edus.xml'
+            ,'views/vacant_skills.xml'
+            ,'views/candidate_works.xml'
+            ,'views/vacant_appls.xml'
+
+            
             ],
     'demo': [],
     'qweb': [],
