@@ -13,9 +13,10 @@
         <field name="name">candidate.vacant.view</field>
         <field name="model">candidate.vacant</field>
         <field name="arch" type="xml">
-            <tree string="Lista de Vacantes">
-                <field name="name" string="Nombre la Vacante"/>
-                <field name="active" string="active"/>
+            <tree string="Lista de Vacantes" >
+                <field name="name" string="Nombre la Vacante" />
+                <field name="active" string="active" />
+                <field name="website_published" string="Web"/>
                 <field name="description" string="description"/>
                 <field name="date_open" string="date_open"/>
                 <field name="kanban_state" string="kanban_state"/>
@@ -67,9 +68,13 @@
                 <label for="name" class="oe_edit_only"/>
                 <h1><field name="name" placeholder="e.g. Gerente de ventas"/></h1>
             </div>
+            <label for="active" string="Estado" />
             <field name="active" string="active"/>
-            <field name="categ_ids" string="Categorias" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tags..."/>
-            
+            <label for="website_published" string="Web" />
+            <field name="website_published" string="Web"/>
+            <group>
+                <field name="categ_ids" string="Categorias" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Categorias..."/>
+            </group>
             <notebook> 
                 <page string="Descripcion">
                     <!-- 
@@ -82,6 +87,8 @@
                     <div >
                         <label for="priority" string="Prioridad"/>
                         <field name="priority"  style="width:16%"/>
+                        <label for="city" string="Ciudad"/>
+                        <field name="city"  style="width:18%"/> 
                     </div>
                     <div >
                         <label for="color" string="color"/>
@@ -223,6 +230,9 @@
                             </div>
                             <div class="oe_kanban_bottom_rigth">
                                 <field name="active" widget="boolean_toggle" /> Activo <br/>
+                            </div>
+                            <div class="oe_kanban_bottom_rigth">
+                                <field name="website_published" widget="boolean_toggle" /> Web <br/>
                             </div>
                         </div>
                         <div class="o_dropdown_kanban dropdown"> 

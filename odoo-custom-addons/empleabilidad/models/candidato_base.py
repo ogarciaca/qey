@@ -43,7 +43,7 @@ class candidate(models.Model):
     partner_skill_ids = fields.One2many('candidate.skill', 'partner_id', string="Skills")
     partner_jobs_ids = fields.One2many('candidate.jobs', 'partner_id', string="jobs")
     partner_edus_ids = fields.One2many('candidate.edus', 'partner_id', string="Educations")
-
+    partner_vacant_appls_ids = fields.One2many('vacant.appls', 'partner_id', string="Aplicaciones")
 
 
 class candidateEstudio(models.Model):

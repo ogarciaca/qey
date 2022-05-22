@@ -62,6 +62,9 @@ class Works(models.Model):
         inverse='_inverse_partner_phone', store=True)
     partner_mobile = fields.Char("Mobile", size=32, compute='_compute_partner_phone_email',
         inverse='_inverse_partner_mobile', store=True)
+    city = fields.Char()
+    state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict', domain="[('country_id', '=?', country_id)]")
+    country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
     # Revisar el titulo universitario
     type_id = fields.Many2one('hr.recruitment.degree', "Nivel Académico")
     # Revisar el departamento de la vacante
@@ -76,6 +79,7 @@ class Works(models.Model):
     emp_id = fields.Many2one('res.partner', string="Candidatos", help="Candidatos enlazados con la vacante", copy=False)
     user_email = fields.Char(related='user_id.email', string="User Email", readonly=True)   
     attachment_number = fields.Integer(compute='_get_attachment_number', string="Numero de anexos")
+    website_published = fields.Boolean("PublicadoEnWeb", default=True)
     # Revisar el employee_name
     employee_name = fields.Char(related='emp_id.name', string="Employee Name", readonly=False, tracking=False)    
     attachment_ids = fields.One2many('ir.attachment', 'res_id', domain=[('res_model', '=', 'candidate.vacant')], string='Attachments')

@@ -15,7 +15,8 @@
         'attachment_indexation',
         'web_tour',
         'digest',
-    
+        'website_partner',
+  
     ],
     'data': ['views/empl_engage.xml'
             ,'views/empl_studies.xml'
@@ -25,8 +26,7 @@
             ,'views/vacant_skills.xml'
             ,'views/candidate_works.xml'
             ,'views/vacant_appls.xml'
-
-            
+            ,'views/works_template.xml'
             ],
     'demo': [],
     'qweb': [],

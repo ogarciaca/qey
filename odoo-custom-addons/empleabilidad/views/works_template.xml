@@ -1,0 +1,170 @@
+<odoo>
+    <template id="vacantes" name="Vacantes">
+        <t t-call="website.layout">
+            <div id="wrap" class="o_website_hr_recruitment_jobs_list bg-100">
+
+                <div class="oe_structure">
+                    <section class="pt48 pb32 bg-200">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    <h2 class="h1 text-secondary">Nuestras oportunidades</h2>
+                                    <h3 class="text-muted">Unase a quieroemplearmeya y reciba los servicios de empleabilidad </h3>
+                                    <p>
+                                        Lo invitamos a que se una como cliente de Quieroemplearmeya para que sea màs efectivo en la consecuciòn
+                                        de estas posiciones.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+    
+                <div class="container oe_website_jobs">
+                    <div class="row pt48 pb48">
+                        <div class="d-none" id="jobs_grid_left">
+    
+                        </div>
+                        <div class="col-lg" id="jobs_grid">
+                            <div t-if="not jobs">
+                                <div class="text-center text-muted">
+                                    <h3 class="css_editable_hidden"><a t-attf-href="/contactus">Contact us</a> for job opportunities.</h3>
+                                    <h4 groups="hr_recruitment.group_hr_recruitment_manager">
+                                        Create new job pages from the <strong><i>+New</i></strong> top-right button.
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <a t-foreach="jobs" t-as="job" t-attf-href="/vacantes/detalle/#{ slug(job) }" t-attf-class="text-decoration-none#{' mt-3' if job_index else ''}">
+                                <div class="card card-default mb32">
+                                    <div class="card-body" t-att-data-publish="job.website_published and 'on' or 'off'">
+                                        <span t-if="not job.website_published" class="badge badge-danger mb8 p-2">unpublished</span>
+                                        <h3 class="text-secondary mt0 mb4">
+                                            <span t-field="job.name"/>
+                                        </h3>
+                                        <p t-if="editable"
+                                           t-field="job.description"
+                                           class="mt16 mb0 css_non_editable_mode_hidden"/>
+
+                                        <p t-esc="len((job.description or '').split(' ')) > 100 and '%s ...' % ' '.join(job.description.split(' ')[:100]) or job.description"
+                                            class="mt16 mb0 css_editable_mode_hidden"
+                                        />
+                                        <t t-if="job.city" >
+                                            <p t-esc="job.city " />
+                                        </t>
+                                        <span class="s_website_form_label_content">Salario : </span>
+                                        <t t-if="job.salary_proposed != 0" >
+                                            <span t-field="job.salary_proposed" t-field-options='{"widget": "monetary","display_currency": "job.salary_proposed.currency_id"}'/>
+                                        </t>
+
+                                        <t t-else="job.salary_proposed = 0">
+                                            <td>A convenir</td>
+                                        </t>
+                                        <p></p>
+                                        <td>Publicacion </td>
+                                        <t t-if="job.create_date" >
+                                            <span t-esc="job.create_date.strftime('%d-%m-%Y')"/>
+                                        </t>
+
+                                       <t t-if="job.priority" >
+                                        <p></p>
+                                        <td>Prioridad </td>
+                                        <span t-field="job.priority" t-field-options='{"widget": "priority"}'/>
+                                        </t>
+                                       
+
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="detalle" name="Vacantes detalle" track="1">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Detalles de la vacante</t>
+            <div id="wrap" class="js_hr_recruitment">
+                <!-- Breadcrumb -->
+                <section class="bg-200">
+                    <div class="container">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb pl-0">
+                                <li class="breadcrumb-item"><a href="/vacantes" class="text-secondary font-weight-bold">Vacante</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span t-field="job.name"/></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </section>
+                <!-- Job name -->
+                <section class="pb32">
+                    <div class="container">
+                        <div class="mt32">
+                            <h1 t-field="job.name"/>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="container">
+                        <div t-field="job.description"/>
+                    </div>
+                </section>
+                
+                <section>
+                    <div class="container">
+                        <t t-if="job.city" >
+                            <p t-esc="job.city " />
+                        </t>
+                        <span class="s_website_form_label_content">Salario : </span>
+                        <t t-if="job.salary_proposed != 0" >
+                            <span t-field="job.salary_proposed" t-field-options='{"widget": "monetary","display_currency": "job.salary_proposed.currency_id"}'/>
+                        </t>
+
+                        <t t-else="job.salary_proposed = 0">
+                            <td>A convenir</td>
+                        </t>
+                        <p></p>
+                        <td>Publicacion </td>
+                        <t t-if="job.create_date" >
+                            <span t-esc="job.create_date.strftime('%d-%m-%Y')"/>
+                        </t>
+
+                        <t t-if="job.priority" >
+                        <p></p>
+                        <td>Prioridad </td>
+                        <span t-field="job.priority" t-field-options='{"widget": "priority"}'/>
+                        </t>
+                        <t t-if="job.partner_id" >
+                            <p></p>
+                            <td>Contacto </td>
+                            <span t-field="job.partner_id" />
+                        </t>
+
+                        <t t-if="job.email_from" >
+                            <p></p>
+                            <td>Email Contacto </td>
+                            <span t-field="job.email_from" t-field-options='{"widget": "email"}'/>
+                        </t>
+                        <t t-if="job.partner_mobile" >
+                            <p></p>
+                            <td>Telefono Contacto </td>
+                            <span t-field="job.partner_mobile" />
+                        </t>
+                    </div>                    
+                </section>
+                <div class="oe_structure">
+                    <section class="o_job_bottom_bar mt32 mb32">
+                        <div class="text-center">
+                            <a role="button" t-attf-href="/jobs/apply/#{job.id}" class="btn btn-primary btn-lg">Apply Now!</a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </t>
+    </template>
+    
+
+</odoo>

@@ -1,4 +1,24 @@
 <odoo>
+    <!--
+    <template id="assets_frontend" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <link href="/opt/odoo/odoo-custom-addons/my_library/static/scr/css/my_library.css" rel="stylesheet" type="text/css" />
+            <link href="/opt/odoo/odoo-custom-addons/my_library/static/scr/scss/my_library.scss" rel="stylesheet" type="text/scss" />
+            <script src="/opt/odoo/odoo-custom-addons/my_library/static/src/js/my_library.js" type="text/javascript" />
+        </xpath>
+    </template>
+-->
+    <template id="other_template">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>
+                    <div>
+                        <t t-foreach="[1, 2, 3, 4, 5]" t-as="num"> <p><t t-esc="num"/></p> </t>
+                    </div>
+                </h2>
+            </div>
+        </t>
+    </template>
     <template id="books">
         <t t-call="website.layout">
             <div class="oe_structure">
@@ -8,7 +28,12 @@
                     </div>
                 </section>
             </div>
+            <div>
+                <t t-foreach="['info', 'danger', 'warning']" t-as="color"> <div t-attf-class="alert alert-#{color}"> Simple bootstrap alert </div> </t>
+
+            </div>
             <div class="container">
+
                 <t t-foreach="books" t-as="book">
                     <div t-attf-class="card mt-3 #{'bg-info' if book_odd else ''}">
                         <div class="card-body" id="card_body">
@@ -16,6 +41,7 @@
                             <t t-if="book.date_release">
                                 <div t-field="book.date_release" class="text-muted" />
                             </t>
+                            <t t-foreach="['info', 'danger', 'warning']" t-as="color"> <div t-attf-class="alert alert-#{color}"> Simple bootstrap alert </div> </t>
                             <b class="mt8"> Authors </b>
                             <ul>
                                 <li t-foreach="book.author_ids" t-as="author">
@@ -26,6 +52,7 @@
                     </div>
                 </t>
             </div>
+            <div class="card-body"> This is some text within a card body. </div>
             <section class="container mt16" contenteditable="False"> This is a non-editable text after the list of books. </section>
         </t>
     </template>
@@ -35,6 +62,7 @@
             <b class="mt8">
                 Authors (
                 <t t-esc="len(book.author_ids)" />
+                <t t-esc="len(book.author_ids)-1" />
                 )
             </b>
         </xpath>

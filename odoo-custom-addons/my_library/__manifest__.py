@@ -7,7 +7,7 @@
     'category': 'Library',
     'website': 'https://www.odoolibrary.tech',
     'version': '14.0.1',
-   'depends': ['base'],
+   'depends': ['base','website','http_routing'],
     'data': [
         'security/groups.xml',
         'views/library_book.xml',

@@ -27,7 +27,7 @@ class Applicant(models.Model):
 
     active = fields.Boolean("Activo", default=True, help="Si el trabajo es puesto en falso, el sistema lo esconde sin eliminarlo")
     detail = fields.Text("Detalle")
-    partner_id = fields.Many2one('res.partner', "Candidato", copy=False)
+    partner_id = fields.Many2one('res.partner', "Candidato")
     probability = fields.Float("Probability")
     vacant_ids = fields.Many2one('candidate.vacant', string='Vacante', domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", tracking=True)
     refuse_reason_id = fields.Many2one('hr.applicant.refuse.reason', string='Razon de rechazo', tracking=True)
