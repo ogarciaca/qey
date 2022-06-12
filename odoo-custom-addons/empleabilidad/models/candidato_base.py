@@ -26,6 +26,7 @@ class candidate(models.Model):
     _inherit = 'res.partner'
 
 
+    cand_progress = fields.Integer('progreso',compute="_compute_cand_progress")
     gender = fields.Selection([('male', 'Male'),('female', 'Female'),('other', 'Other')], 'Gender')
     marital = fields.Selection([
                 ('single', 'Single'),
@@ -38,12 +39,25 @@ class candidate(models.Model):
     link_linkedin = fields.Char('link linkedin')
     link_twitter = fields.Char('link twitter')
     link_side = fields.Char('link side')
-    profile = fields.Html('Profile')
-    cover =  fields.Html('cover')
+    profile = fields.Text('Profile')
+    cover =  fields.Text('cover')
     partner_skill_ids = fields.One2many('candidate.skill', 'partner_id', string="Skills")
     partner_jobs_ids = fields.One2many('candidate.jobs', 'partner_id', string="jobs")
     partner_edus_ids = fields.One2many('candidate.edus', 'partner_id', string="Educations")
     partner_vacant_appls_ids = fields.One2many('vacant.appls', 'partner_id', string="Aplicaciones")
+
+    def _compute_cand_progress(self):
+            for record in self:
+                record.cand_progress = 0
+                if record.profile:
+                    record.cand_progress = record.cand_progress + 10
+                if record.cover:
+                    record.cand_progress = record.cand_progress + 5  
+                if record.partner_skill_ids:
+                    record.cand_progress = record.cand_progress + 30       
+                if record.partner_edus_ids:
+                    record.cand_progress = record.cand_progress + 30  
+                                                                              
 
 
 class candidateEstudio(models.Model):
@@ -69,6 +83,7 @@ class candidateEstudio(models.Model):
                           ('09', 'Septiembre'), ('10', 'Octubre'), ('11', 'Noviembre'), ('12', 'Diciembre') ], 
                           string='FinMes')
     end_year = fields.Selection(get_years(), string='FinAño')
+
 
     """
     @api.model

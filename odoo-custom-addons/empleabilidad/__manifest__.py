@@ -27,6 +27,7 @@
             ,'views/candidate_works.xml'
             ,'views/vacant_appls.xml'
             ,'views/works_template.xml'
+            ,'views/candidate_templates.xml'
             ],
     'demo': [],
     'qweb': [],

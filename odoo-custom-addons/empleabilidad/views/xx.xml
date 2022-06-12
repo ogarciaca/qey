@@ -1,0 +1,428 @@
+<t t-name="empleabilidad.portal_my_details">
+    <t t-call="empleabilidad.portal_layout">
+      <t t-set="additional_title">Contact Details</t>
+      <div class="oe_structure">
+        <section class="bg-secondary oe_custom_bg o_colored_level pb0 pt0" style="">
+          <div class="text-center o_container_small">
+            <h1> Diligencia completamente la HV</h1>
+          </div>
+        </section>
+        <form action="/mi/cuenta" method="post">
+          <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+          <section class="s_table_of_content pt24 pb24 o_cc o_cc1 o_colored_level" data-snippet="s_table_of_content" data-name="Table of Content">
+            <div class="container">
+              <div class="row s_nb_column_fixed">
+  
+                <div class="col-lg-3 s_table_of_content_navbar_wrap s_table_of_content_navbar_sticky s_table_of_content_vertical_navbar d-print-none d-none d-lg-block o_not_editable o_cc o_cc1 o_colored_level" data-name="Navbar">
+                <div>
+                  <!--  Barra de estado  
+                   <div class="s_progress_bar" data-display="inline" data-snippet="s_progress_bar" data-name="Progress Bar">
+                     <t t-set="avance" t-value="100"/>
+                    <h4 class="o_default_snippet_text">Casi terminamos!</h4>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" t-att-aria-valuenow="partner.completado" aria-valuemin="0" aria-valuemax="100" t-attf-style="width:#{partner.completado}%;">
+                        <span class="s_progress_bar_text"> Development</span>
+                      </div>
+                    </div>
+                  </div> -->
+                </div>
+                  <div class="s_table_of_content_navbar list-group" style="">
+                    <a href="#table_of_content_heading_1654117921360_66" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0 active">Datos Básios</a>
+                    <a href="#table_of_content_heading_1654117921360_67" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">Redes sociales</a>
+                    <a href="#table_of_content_heading_1654117921360_68" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">Perfil laboral</a>
+                    <a href="#table_of_content_heading_1654117921360_69" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">Estudios Formales</a>
+                    <a href="#table_of_content_heading_1654117921360_70" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">Experiencia laboral</a>
+                    <a href="#table_of_content_heading_1654117921360_71" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">Habilidades</a>
+                    <a href="#table_of_content_heading_1654117921360_72" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">Aspiraciones</a>
+    
+                    <a href="#table_of_content_heading_1654117921360_73" class="table_of_content_link list-group-item list-group-item-action py-2 border-0 rounded-0">Confirmar</a>
+                  </div>
+  
+                </div>
+  
+                <div class="col-lg-9 s_table_of_content_main oe_structure oe_empty o_colored_level" data-name="Content">
+                  <section class="pb16 o_colored_level">
+                    <h1 data-anchor="true" class="o_default_snippet_text" id="table_of_content_heading_1654117921360_66">Datos Basicos</h1>
+                    <p>
+                    En esta sección pedimos informacion persona y de contacto
+                  </p>
+                  
+                        <div class="row o_portal_details">
+                          <div class="col-lg-8">
+                            <div class="row">
+                              <div t-attf-class="form-group #{error.get('name') and 'o_has_error' or ''} col-xl-6">
+                                <label class="col-form-label" for="name">Name</label>
+                                <input type="text" name="name" t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}" t-att-value="name or partner.name"/>
+                              </div>
+                              <div t-attf-class="form-group #{error.get('email') and 'o_has_error' or ''} col-xl-6">
+                                <label class="col-form-label" for="email">Emailll</label>
+                                <input type="email" name="email" t-attf-class="form-control #{error.get('email') and 'is-invalid' or ''}" t-att-value="email or partner.email"/>
+                              </div>
+                              <div t-attf-class="form-group #{error.get('vat') and 'o_has_error' or ''} col-xl-6">
+                                <label class="col-form-label label-optional" for="vat">VAT Number</label>
+                                <input type="text" name="vat" t-attf-class="form-control #{error.get('vat') and 'is-invalid' or ''}" t-att-value="vat or partner.vat"/>
+                              </div>
+                              <div t-attf-class="form-group #{error.get('phone') and 'o_has_error' or ''} col-xl-6">
+                                <label class="col-form-label" for="phone">Phone</label>
+                                <input type="tel" name="phone" t-attf-class="form-control #{error.get('phone') and 'is-invalid' or ''}" t-att-value="phone or partner.phone"/>
+                              </div>
+                              <div class="clearfix"/>
+                              <div t-attf-class="form-group #{error.get('street') and 'o_has_error' or ''} col-xl-6">
+                                <label class="col-form-label" for="street">Street</label>
+                                <input type="text" name="street" t-attf-class="form-control #{error.get('street') and 'is-invalid' or ''}" t-att-value="street or partner.street"/>
+                              </div>
+                              <div t-attf-class="form-group #{error.get('city') and 'o_has_error' or ''} col-xl-6">
+                                <label class="col-form-label" for="city">City</label>
+                                <input type="text" name="city" t-attf-class="form-control #{error.get('city') and 'is-invalid' or ''}" t-att-value="city or partner.city"/>
+                              </div>
+                              <div t-attf-class="form-group #{error.get('zip') and 'o_has_error' or ''} col-xl-6">
+                                <label class="col-form-label label-optional" for="zipcode">Zip / Postal Code</label>
+                                <input type="text" name="zipcode" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}" t-att-value="zipcode or partner.zip"/>
+                              </div>
+                              <div t-attf-class="form-group #{error.get('country_id') and 'o_has_error' or ''} col-xl-6">
+                                <label class="col-form-label" for="country_id">Country</label>
+                                <select name="country_id" t-attf-class="form-control #{error.get('country_id') and 'is-invalid' or ''}">
+                                  <option value="">Country...</option>
+                                  <t t-foreach="countries or []" t-as="country">
+                                    <option t-att-value="country.id" t-att-selected="country.id == int(country_id) if country_id else country.id == partner.country_id.id">
+                                      <t t-esc="country.name"/>
+                                    </option>
+                                  </t>
+                                </select>
+                              </div>
+                              <div t-attf-class="form-group #{error.get('state_id') and 'o_has_error' or ''} col-xl-6">
+                                  <label class="col-form-label label-optional" for="state_id">State / Province</label>
+                                  <select name="state_id" t-attf-class="form-control #{error.get('state_id') and 'is-invalid' or ''}">
+                                      <option value="">select...</option>
+                                      <t t-foreach="states or []" t-as="state">
+                                          <option t-att-value="state.id" style="display:none;" t-att-data-country_id="state.country_id.id" t-att-selected="state.id == partner.state_id.id">
+                                              <t t-esc="state.name" />
+                                          </option>
+                                      </t>
+                                  </select>
+                              </div>
+                              
+                              <div t-attf-class="form-group #{error.get('gender') and 'o_has_error' or ''} col-xl-6">
+                                <label class="col-form-label" for="gender">Genero</label>
+                                <select name="gender" class="form-control">
+                                  <option value="">Genero...</option>
+                                  <t t-foreach="genders or []" t-as="a">
+                                    <option t-att-value="a[0]" t-att-selected="a[0] == gender if gender else a[0] == partner.gender" selected="True">
+                                      <t t-esc="a[1]"/>
+                                    </option>
+                                  </t>
+                                </select>
+                              </div>
+                              <!-- Estado Civil -->
+                              <div t-attf-class="form-group #{error.get('marital') and 'o_has_error' or ''} col-xl-6">
+                                <label class="col-form-label" for="marital">Estado civil</label>
+                                <select name="marital" class="form-control">
+                                  <option value="">Estado Civil...</option>
+                                  <t t-foreach="maritals or []" t-as="a">
+                                    <option t-att-value="a[0]" t-att-selected="a[0] == marital if marital else a[0] == partner.marital" selected="True">
+                                      <t t-esc="a[1]"/>
+                                    </option>
+                                  </t>
+                                </select>
+                              </div>
+                              <!-- Nacimiento -->
+                              <div t-attf-class="form-group #{error.get('birthday') and 'o_has_error' or ''} col-xl-6">
+                                <label class="col-form-label" for="birthday">Nacimiento</label>
+                                <input type="date" name="birthday" t-attf-class="form-control #{error.get('birthday') and 'is-invalid' or ''}" t-att-value="birthday or partner.birthday"/>
+                              </div>
+                    
+                              <input type="hidden" name="redirect" t-att-value="redirect"/>
+                            </div>
+                          </div>
+                        </div>  
+                          
+                          
+                          
+  
+                    <h4 class="o_default_snippet_text">Tratamiento de datos personales</h4>
+                    <p>
+                    Por medio del presente AVISO DE PRIVACIDAD y en cumplimiento de las normas colombianas en materia de protección de datos personales, 
+                    Ley 1581 de 2012 y decreto 1074 de 2015 y demás normas que las modifiquen o complementen, informamos a los titulares de datos personales 
+                    sobre la existencia de nuestra PÓLITICA DE TRATAMIENTO DE DATOS PERSONALES, la cual es un documento público que puede ser consultado 
+                    en todo momento a través de nuestra página www.quieroemplearmeya.com.co
+                  </p>
+                  </section>
+                  <section class="pb16 o_colored_level">
+                    <h1 data-anchor="true" id="table_of_content_heading_1654117921360_67">Redes Sociales</h1>
+                    <p class="o_default_snippet_text">
+                      Registre aca los link de las redes sociales.
+                      Esto ayudará a las empresar a revisar tus contactos y publicaciones.
+                  </p>
+                    <!-- LinkedIn -->
+                    <div t-attf-class="form-group #{error.get('zip') and 'o_has_error' or ''} col-xl-6">
+                      <label class="col-form-label label-optional" for="link_linkedin">LinkeId</label>
+                      <input type="text" name="link_linkedin" t-attf-class="form-control #{error.get('link_linkedin') and 'is-invalid' or ''}" t-att-value="link_linkedin or partner.link_linkedin"/>
+                    </div>
+                    <!-- link_twitter -->
+                    <div t-attf-class="form-group #{error.get('link_twitter') and 'o_has_error' or ''} col-xl-6">
+                      <label class="col-form-label label-optional" for="link_twitter">Twitter</label>
+                      <input type="text" name="link_twitter" t-attf-class="form-control #{error.get('link_twitter') and 'is-invalid' or ''}" t-att-value="link_twitter or partner.link_twitter"/>
+                    </div>
+                    <!-- link_side -->
+                    <div t-attf-class="form-group #{error.get('link_side') and 'o_has_error' or ''} col-xl-6">
+                      <label class="col-form-label label-optional" for="link_side">Pagina</label>
+                      <input type="text" name="link_side" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}" t-att-value="link_side or partner.link_side"/>
+                    </div>
+                    <h4 class="o_default_snippet_text">Porque tener redes sociales ? </h4>
+                    <p class="o_default_snippet_text">
+                        Esto implica que el candidato debe, al menos tener un perfil en las redes sociales,mantenerlo actualizado 
+                        y haber sido bastante frecuente en el uso del servicio. Pues que no estaría de más contar con un par de recomendaciones en la red, 
+                        de subir un par de artículos de los blogs o de los contenidos que has publicado en la red.
+                          </p>
+                  </section>
+                  <section class="pb16 o_colored_level">
+                    <h1 data-anchor="true" id="table_of_content_heading_1654117921360_68">Perfil laboral</h1>
+                    <p class="o_default_snippet_text">
+                    El perfil profesional es una descripción del conjunto de capacidades y competencias que identifican la formación de una persona 
+                    para encarar las funciones y tareas en un determinado puesto de trabajo.
+                  </p>
+                    <!-- Profile -->
+                    <div t-attf-class="form-group #{error.get('profile') and 'o_has_error' or ''} col-xl-6">
+                      <label class="col-form-label" for="profile">Perfil</label>
+                      <textarea style="height:100px;width:750px;text-justify:distribute" rows="5" name="profile">
+                        <t t-esc="partner.profile" class="form-control o_wysiwyg_loader"/>
+                      </textarea>
+                    </div>
+                    <!-- Cover -->
+                    <div t-attf-class="form-group #{error.get('cover') and 'o_has_error' or ''} col-xl-6">
+                      <label class="col-form-label" for="cover">Carta de presentacion</label>
+                      <textarea style="height:100px;width:750px;text-justify:distribute" rows="5" name="cover">
+                        <t t-esc="partner.cover" class="form-control o_wysiwyg_loader"/>
+                      </textarea>
+                    </div>
+                    <h4 class="o_default_snippet_text">Realmente necesario</h4>
+                    <p class="o_default_snippet_text">
+                      Un perfil laboral es una herramienta con la que cuentan las empresas para definir a un colaborador para un puesto determinado de trabajo,
+                      con la cual recopilan requisitos y calificaciones personales del candidato exigidos para el cumplimiento satisfactorio de las tareas 
+                      dentro de una institución, como el nivel de estudio, experiencia, funciones del puesto y requisitos que deben cumplir.
+                  </p>
+                  </section>
+                  <section class="pb16 o_colored_level">
+                    <h1 data-anchor="true" id="table_of_content_heading_1654117921360_69">Estudios formales</h1>
+                    <p class="o_default_snippet_text">
+                      Registre aca los estudios cursados o actualmente cursando en instituciones educativas tecnicas y/o universitarias
+                  </p>
+                    <div>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>institution</th>
+                            <th>titulo</th>
+                            <th>Inicio</th>
+                            <th>Fin</th>
+                            <th/>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <t t-foreach="partner.partner_edus_ids" t-as="key">
+                            <tr>
+                              <td>
+                                <span t-field="key.name"/>
+                              </td>
+                              <td>
+                                <span t-field="key.edu_title"/>
+                              </td>
+                              <td>
+                                <span t-field="key.date_start" type="date"/>
+                              </td>
+                              <td>
+                                <span t-field="key.date_end" type="date"/>
+                              </td>
+                              <td>
+                                <t t-set="foo" t-value="CandidateEdu"/>
+                                <t t-log="foo"/>
+                                <div t-att-edu_id="key.id"/>
+                                <a t-attf-href="/mi/cuenta/edu/#{key.id}" class="btn btn-primary"><i class="fa"/>Editar</a>
+                              </td>
+                            </tr>
+                          </t>
+                        </tbody>
+                      </table>
+                      <div class="">
+                        <button type="submit" class="oe_action_button btn btn-secondary rounded-circle" action_def="ba" name="AdicionaEdu" data-original-title="" title="" aria-describedby="tooltip518386">Adicionar Estudio</button>
+                      </div>
+                    </div>
+                    <h4 class="o_default_snippet_text">Datos académicos</h4>
+                    <p class="o_default_snippet_text">
+                      La formación académica da cuenta de los procesos de educación formal,
+                      generalmente en lugares reconocidos y con tiempos de dedicación
+                      considerables.
+                          </p>
+                  </section>
+                  <section class="pb16 o_colored_level">
+                    <h1 data-anchor="true" id="table_of_content_heading_1654117921360_70">Experiencia Laboral</h1>
+                    <p class="o_default_snippet_text">
+                      Registre toda su trayectoria laboral.
+                      Sea específico en las funciones y logros.
+                  </p>
+                    <div>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Cargo</th>
+                            <th>Empresa</th>
+                            <th>Inicio</th>
+                            <th>Fin</th>
+                            <th/>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <t t-foreach="partner.partner_jobs_ids" t-as="key">
+                            <tr>
+                              <td>
+                                <span t-field="key.job_title"/>
+                              </td>
+                              <td>
+                                <span t-field="key.name"/>
+                              </td>
+                              <td>
+                                <span t-field="key.date_start" type="date"/>
+                              </td>
+                              <td>
+                                <span t-field="key.date_end" type="date"/>
+                              </td>
+                              <td>
+                                <div t-att-edu_id="key.id"/>
+                                <a t-attf-href="/mi/cuenta/jobs/#{key.id}" class="btn btn-primary"><i class="fa"/>Editar</a>
+                              </td>
+                            </tr>
+                          </t>
+                        </tbody>
+                      </table>
+                      <div class="">
+                        <button type="submit" class="oe_action_button btn btn-secondary rounded-circle" action_def="ba" name="AdicionaJob" data-original-title="" title="" aria-describedby="tooltip518386">Adicionar Experiencia</button>
+                      </div>
+                    </div>                
+                    <h4 class="o_default_snippet_text">¿Qué es la experiencia laboral?</h4>
+                    <p class="o_default_snippet_text">
+                      En la hoja de vida, la experiencia profesional se refiere a todos los puestos de trabajo que ya ha ocupado en su carrera. 
+                      También podemos agregar todos los logros y habilidades adquiridas en el transcurso del trabajo.
+                  </p>
+                  </section>
+                  <section class="pb16 o_colored_level">
+                    <h1 data-anchor="true" id="table_of_content_heading_1654117921360_71">Habilidades</h1>
+                    <p class="o_default_snippet_text">
+                        Hace referencia a todas aquellas competencias que pueden adquirirse mediante formación y experiencia profesional. 
+                        Ejemplos de estas habilidades pueden ser la competencia en idiomas extranjeros, la experiencia en manejo de software, 
+                        los conocimientos de programación web, etc
+                  </p>
+                    <h4 class="o_default_snippet_text">Mejora tu perfil</h4>
+                    <p class="o_default_snippet_text">
+                        En el proceso de solicitud de empleo, tenemos la oportunidad de dar a conocer nuestras competencias profesionales para que 
+                        el especialista de recursos humanos pueda determinar si nuestro perfil es el más apropiado para un puesto concreto
+                  </p>
+  
+                      <div class="row">   
+                        <div class='col-lg-8 offset-lg-2' id='partner_categories'>
+                          <table class='table table-striped table-sm table-hover'>
+                            <t t-foreach="partner.category_id" t-as="category">
+                                  <tr class="clickable" data-toggle="collapse" t-att-data-target="'.o_ws_category_%d' % category.id">
+                                      <th class="text-left" t-att-colspan="2">
+                                          <span t-field="category.name"/>
+                                      </th>
+                                  </tr>
+                              </t>
+                          </table>
+                        </div>
+                      </div>
+  
+                  </section>
+                <section class="pb16 o_colored_level " >
+                    <h1 data-anchor="true" id="table_of_content_heading_1654117921360_72">Aspiración</h1>
+                    <p class="o_default_snippet_text">
+                      Registre aca los link de las redes sociales.
+                      Esto ayudará a las empresar a revisar tus contactos y publicaciones.
+                  </p>
+                  <div t-attf-class="form-group col-xl-6">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Cargos</th>
+                            <th/>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <t t-foreach="partner.category_id" t-as="key">
+                            <tr class="badge badge-pill">
+                              <td>
+                                <span t-field="key.name"/>
+                              </td>
+                              <td>
+                                <div t-att-edu_id="key.id" class="btn btn-sm btn-link"/>
+                                <a t-attf-href="/mi/cuenta/cat-rem/#{key.id}" class="fa fa-fw fa-remove"><i class="fa"/>      </a>
+                              </td>
+                            </tr>
+                          </t>
+                        </tbody>
+                      </table>
+                      <div class="">
+                        <button type="submit" class="oe_action_button btn btn-secondary rounded-circle" action_def="ba" name="AdicionaCat" data-original-title="" title="" aria-describedby="tooltip518386">Adicionar Cargo</button>
+                      </div>
+                    </div>                
+         
+                    <h4 class="o_default_snippet_text">Porque tener redes sociales ? </h4>
+                    <p class="o_default_snippet_text">
+                        Esto implica que el candidato debe, al menos tener un perfil en las redes sociales,mantenerlo actualizado 
+                        y haber sido bastante frecuente en el uso del servicio. Pues que no estaría de más contar con un par de recomendaciones en la red, 
+                        de subir un par de artículos de los blogs o de los contenidos que has publicado en la red.
+                          </p>
+                  </section>                
+                  
+                  
+                  <section class="pb16 o_colored_level" action="/mi/cuenta" method="post">
+                    <h1 data-anchor="true" id="table_of_content_heading_1654117921360_73">Confirmar</h1>
+                    <p class="o_default_snippet_text">
+                      Sección para almacenar los datos en nuestra base de hojas de vida.
+                      Asegurese de que los datos están correctos. En caso contrario puede corregir y volver a confirmar su datos.
+                  </p>
+                    <div class="clearfix">
+                      <button type="submit" class="btn btn-primary float-right mb32 ">
+                                  Confirmar
+                                  <span class="fa "/>
+                        </button>
+                    </div>
+                    <h4 class="o_default_snippet_text">AUTORIZACIÓN PARA EL TRATAMIENTO DE DATOS PERSONALES</h4>
+                    <p class="o_default_snippet_text">
+                      quieroemplearmeya será el responsable del tratamiento de sus datos personales y, en tal virtud, podrá recolectar, 
+                      almacenar y usar para las siguientes finalidades: 
+                      – Efectuar las gestiones pertinentes para el desarrollo del objeto social de la compañía en lo que tiene que ver 
+                        con el cumplimiento del objeto del contrato celebrado con el Titular de la información.
+                      – Realizar invitaciones a eventos y ofrecer nuevos productos y servicios.
+                      – Gestionar trámites (solicitudes, quejas, reclamos).
+                      – Efectuar encuestas de satisfacción respecto de los bienes y servicios ofrecidos por quieroemplearmeya
+  
+                  </p>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </section>
+        </form>
+      </div>
+      <div class="row o_portal_details">
+        <div class="col-lg-8">
+          <div class="row">
+            <t t-set="partner_can_edit_vat" t-value="partner.can_edit_vat()"/>
+            <div class="col-lg-12">
+              <div t-if="error_message" class="alert alert-danger" role="alert">
+                <t t-esc="error_message"/>
+                <t t-foreach="error_message" t-as="err">
+                  <t t-esc="err"/>
+                  <br/>
+                </t>
+              </div>
+            </div>
+            <div class="clearfix"/>
+            <!-- LinkedIn -->
+            <input type="hidden" name="redirect" t-att-value="redirect"/>
+          </div>
+        </div>
+      </div>
+    </t>
+  </t>
+  

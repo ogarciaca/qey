@@ -1,7 +1,7 @@
 from odoo import http, _
 import pdb
 from odoo.addons.http_routing.models.ir_http import slug
-from odoo.http import request
+from odoo.http import request,content_disposition, Controller, request, route
 from werkzeug.exceptions import NotFound
 from datetime import datetime
 import logging
@@ -62,3 +62,61 @@ class WebsiteEmplWorks(http.Controller):
             'error': error,
             'default': default,
         })
+
+    @http.route('/candidate_webform_basic', type='http', auth="public", website=True, sitemap=True)
+    def candidate_webform(self, **kwargs):
+        return request.render("empleabilidad.candidate_website_form_basic",{})
+
+
+    @http.route('/create/webcandidate', type='http', auth="public", website=True, sitemap=True)
+    def create_web_candidate(self, **kwargs):
+        print("Candidato creado----------------",kwargs)
+        request.env['empleabilidad.res.partner'].sudo().create(kwargs)
+        return request.render("empleabilidad.candidate_thanks")
+
+"""
+class CustomerPortal(Controller):
+
+    @route(['/my/account'], type='http', auth='user', website=True)
+    def account(self, redirect=None, **post):
+        values = self._prepare_portal_layout_values()
+        partner = request.env.user.partner_id
+        values.update({
+            'error': {},
+            'error_message': [],
+        })
+
+        if post and request.httprequest.method == 'POST':
+            error, error_message = self.details_form_validate(post)
+            values.update({'error': error, 'error_message': error_message})
+            values.update(post)
+            if not error:
+                values = {key: post[key] for key in self.MANDATORY_BILLING_FIELDS}
+                values.update({key: post[key] for key in self.OPTIONAL_BILLING_FIELDS if key in post})
+                for field in set(['country_id', 'state_id']) & set(values.keys()):
+                    try:
+                        values[field] = int(values[field])
+                    except:
+                        values[field] = False
+                values.update({'zip': values.pop('zipcode', '')})
+                partner.sudo().write(values)
+                if redirect:
+                    return request.redirect(redirect)
+                return request.redirect('/my/home')
+
+        countries = request.env['res.country'].sudo().search([])
+        states = request.env['res.country.state'].sudo().search([])
+
+        values.update({
+            'partner': partner,
+            'countries': countries,
+            'states': states,
+            'has_check_vat': hasattr(request.env['res.partner'], 'check_vat'),
+            'redirect': redirect,
+            'page_name': 'my_details',
+        })
+
+        response = request.render("portal_my_details", values)
+        response.headers['X-Frame-Options'] = 'DENY'
+        return response        
+"""

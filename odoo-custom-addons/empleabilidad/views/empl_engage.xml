@@ -63,7 +63,7 @@
                                     <field name="link_twitter" string="twitter" widge="website_urls"/>
                                     <field name="link_side" string="Pagina Web" widge="website_urls"/>
                                     <separator orientation="horizontal"/>
-                                    <field name="profile" string="Profile " widge="html" />
+                                    <field name="profile" string="Profile " widge="text_html" />
                                     <separator orientation="horizontal"/>
                                     <field name="cover" string="Presentacion " widge="text_html" />
                                

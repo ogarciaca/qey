@@ -229,4 +229,29 @@
         </field>
     </record>
 
+    <template id="candidate_frontend_layout" name="Main Frontend Layout" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[@class='o_portal_my_home']" position="replace">
+            <div class="oe_structure" id="oe_structure_portal_my_home_1"/>
+            <h3>Hoja de Vida</h3>
+            <div class="o_portal_docs list-group">
+            </div>
+        </xpath>
+    </template>
+
+    <template id="candidate_portal_my_details" name="portal_my_details" inherit_id="portal.portal_my_details">
+        <xpath expr="//input[@name='company_name']" position="replace">
+        </xpath>
+        <xpath expr="//label[@for='company_name']" position="replace">
+        </xpath>
+
+        <xpath expr="//input[@name='redirect']" position="before">
+            <div t-attf-class="col-lg-3 col-lg-offset-1 col-sm-3 col-md-3 text-muted" rows="5">
+                <label class="col-form-label" for="profile">Profile</label>
+                <textarea style="height:100px;width:750px;text-justify:distribute">
+                    <t t-field="partner.profile"/>
+                </textarea>
+                            </div>       
+        </xpath>
+    </template>
+
 </odoo>

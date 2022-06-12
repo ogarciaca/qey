@@ -12,8 +12,8 @@ class CandidateSkill(models.Model):
     _order = "skill_level_id"
 
     partner_id = fields.Many2one('res.partner', required=True, ondelete='cascade')
-    skill_id = fields.Many2one('hr.skill', required=True)
-    skill_level_id = fields.Many2one('hr.skill.level', string="Nivel", required=True)
+    skill_id = fields.Many2one('hr.skill', required=True,  domain="[('skill_type_id', '', skill_type_id)]")
+    skill_level_id = fields.Many2one('hr.skill.level', string="Nivel", required=True, domain="[('skill_type_id', '=', skill_type_id)]")
     skill_type_id = fields.Many2one('hr.skill.type', required=True)
     level_progress = fields.Integer("level_progress", related='skill_level_id.level_progress')
     #related='skill_level_id.level_progress')

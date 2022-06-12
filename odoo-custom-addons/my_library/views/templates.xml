@@ -8,18 +8,7 @@
         </xpath>
     </template>
 -->
-    <template id="other_template">
-        <t t-call="web.external_layout">
-            <div class="page">
-                <h2>
-                    <div>
-                        <t t-foreach="[1, 2, 3, 4, 5]" t-as="num"> <p><t t-esc="num"/></p> </t>
-                    </div>
-                </h2>
-            </div>
-        </t>
-    </template>
-    <template id="books">
+    <template id="my_library.libros">
         <t t-call="website.layout">
             <div class="oe_structure">
                 <section class="pt32 pb32 bg-secondary oe_custom_bg">
@@ -28,12 +17,7 @@
                     </div>
                 </section>
             </div>
-            <div>
-                <t t-foreach="['info', 'danger', 'warning']" t-as="color"> <div t-attf-class="alert alert-#{color}"> Simple bootstrap alert </div> </t>
-
-            </div>
             <div class="container">
-
                 <t t-foreach="books" t-as="book">
                     <div t-attf-class="card mt-3 #{'bg-info' if book_odd else ''}">
                         <div class="card-body" id="card_body">
@@ -41,23 +25,25 @@
                             <t t-if="book.date_release">
                                 <div t-field="book.date_release" class="text-muted" />
                             </t>
-                            <t t-foreach="['info', 'danger', 'warning']" t-as="color"> <div t-attf-class="alert alert-#{color}"> Simple bootstrap alert </div> </t>
                             <b class="mt8"> Authors </b>
                             <ul>
                                 <li t-foreach="book.author_ids" t-as="author">
                                     <span t-esc="author.name" />
                                 </li>
                             </ul>
+                            <a t-attf-href="/books/detail/#{book.id}" class="btn btn-primary">
+                                <i class="fa fa-book" />
+                                Book Detail
+                            </a>
                         </div>
                     </div>
                 </t>
             </div>
-            <div class="card-body"> This is some text within a card body. </div>
             <section class="container mt16" contenteditable="False"> This is a non-editable text after the list of books. </section>
         </t>
     </template>
     <!--  inheritance example  -->
-    <template id="books_ids_inh" inherit_id="my_library.books">
+    <template id="books_ids_inh" inherit_id="my_library.libros">
         <xpath expr="//div[@id='card_body']/b" position="replace">
             <b class="mt8">
                 Authors (
@@ -66,5 +52,31 @@
                 )
             </b>
         </xpath>
+    </template>
+
+    <!--  Book Detail Page  -->
+    <template id="book_detail" name="Books Detail">
+        <t t-call="website.layout">
+            <div class="container">
+                <div class="row mt16">
+                    <div class="col-5">
+                        <!-- <span t-field="book.image" t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}" /> -->
+                    </div>
+                    <div class="offset-1 col-6">
+                        <h1 t-field="book.name" />
+                        <t t-if="book.date_release">
+                            <div t-field="book.date_release" class="text-muted" />
+                        </t>
+                        <b class="mt8"> Authors </b>
+                        <ul>
+                            <li t-foreach="book.author_ids" t-as="author">
+                                <span t-esc="author.name" />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- <div t-field="book.html_description" /> -->
+        </t>
     </template>
 </odoo>

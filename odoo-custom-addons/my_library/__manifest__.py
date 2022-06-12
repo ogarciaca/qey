@@ -7,7 +7,7 @@
     'category': 'Library',
     'website': 'https://www.odoolibrary.tech',
     'version': '14.0.1',
-   'depends': ['base','website','http_routing'],
+   'depends': ['base','website','http_routing','web'],
     'data': [
         'security/groups.xml',
         'views/library_book.xml',
@@ -19,7 +19,8 @@
         'wizard/library_book_return_wizard.xml',
         'views/library_book_statistics.xml',
         'views/res_config_settings_views.xml',
-        'views/templates.xml'
+        'views/templates.xml',
+        'views/snippets.xml'
     ],
     'post_init_hook': 'add_book_hook',
     'demo': [],

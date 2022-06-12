@@ -4,14 +4,6 @@ from odoo.http import request
 from odoo.addons.http_routing.models.ir_http import unslug
 
 
-class Main(http.Controller):
-    @http.route('/books', type='http', auth="public", website=True)
-    def library_books(self):
-        return request.render(
-            'my_library.books', {
-                'books': request.env['library.book'].search([]),
-            })
-
 # @http.route tiene varios parametros
 #     el primer parametro es la ruta donde estan los modelos. Pueden poner varios path separados por coma(,)
 #      '/path1','/path2'
@@ -31,6 +23,12 @@ class Main(http.Controller):
         html_result += '</ul></body></html>'
         return html_result
 """
+    @http.route('/books', type='http', auth="user", website=True)
+    def library_books(self):
+        return request.render(
+            'my_library.libros', {
+                'books': request.env['library.book'].search([]),
+            })
 # Se hizo la prueba con postman 
 #    curl -i -X POST -H "Content-Type: application/json" -d "{}" 192.168.0.30:8069/my_library/books/json
 #    y devuelve un JSON con los datos de los libros
@@ -94,6 +92,14 @@ class Main(http.Controller):
     @http.route("/my_library/book_details_inpath/<model('library.book'):book>", type='http', auth='none')
     def book_details_in_path(self, book):
         return self.book_details(book.id)
+
+
+    @http.route('/books/detail/<model("library.book"):book>', type='http', auth="user", website=True)
+    def library_book_detail(self, book):
+        return request.render(
+            'my_library.book_detail', {
+                'book': book,
+            })
 
 # Esta clase se crea como ejemplo para mostrar los recursos estáticos. ej una imagen
 # La imagen se pone en la ruta /my_library/static/src/image/odoo.png
