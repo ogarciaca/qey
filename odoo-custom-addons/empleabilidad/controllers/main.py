@@ -23,7 +23,7 @@ class WebsiteEmplWorks(http.Controller):
         _logger.debug("Ingreso en def vacantes ! ")
         env = request.env(context=dict(request.env.context, show_address=True, no_tag_br=True))
 
-        Vacantes = env['candidate.vacant']
+        Vacantes = env['candidate.vacant'].sudo()
         _logger.debug("Cargo variables de ambiente candidate.vacant ")
         #_logger.debug("Vacantes : " + Vacantes)
         # List jobs available to current UID
@@ -40,11 +40,18 @@ class WebsiteEmplWorks(http.Controller):
 
     @http.route('''/vacantes/detalle/<model("candidate.vacant"):job>''', type='http', auth="public", website=True, sitemap=True)
     def vacantes_detalle(self, job, **kwargs):
+        partner = request.env.user.partner_id
+        
+        partner_activo=False
+        if partner:
+            if partner.cand_progress >= 99:
+                partner_activo=True
 
 
         return request.render("empleabilidad.detalle", {
             'job': job,
             'main_object': job,
+            'partner_activo' : partner_activo,
         })
 
     @http.route('''/jobs/apply/<model("hr.job"):job>''', type='http', auth="public", website=True, sitemap=True)

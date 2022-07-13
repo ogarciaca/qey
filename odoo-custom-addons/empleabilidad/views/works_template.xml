@@ -84,7 +84,7 @@
         </t>
     </template>
 
-    <template id="detalle" name="Vacantes detalle" track="1">
+    <template id="empleabilidad.detalle" name="Vacantes detalle" track="1">
         <t t-call="website.layout">
             <t t-set="additional_title">Detalles de la vacante</t>
             <div id="wrap" class="js_hr_recruitment">
@@ -156,11 +156,13 @@
                     </div>                    
                 </section>
                 <div class="oe_structure">
-                    <section class="o_job_bottom_bar mt32 mb32">
-                        <div class="text-center">
-                            <a role="button" t-attf-href="/jobs/apply/#{job.id}" class="btn btn-primary btn-lg">Apply Now!</a>
-                        </div>
-                    </section>
+                    <span t-if="partner_activo">
+                        <section class="o_job_bottom_bar mt32 mb32">
+                            <div class="text-center">
+                                <a role="button" t-attf-href="/jobs/apply/#{job.id}" class="btn btn-primary btn-lg">Aplique ahora</a>
+                            </div>
+                        </section>
+                    </span>
                 </div>
             </div>
         </t>

@@ -3,8 +3,8 @@
     'version' : '1.0',
     'summary': 'Employee engagement software',
     'sequence': 10,
-    'description': """Library Management Software - Employee engagement  Add-on in odoo""",
-    'category': 'Human Resources/Employees',
+    'description': """Software de empleanbilidad - conectarse a empleos  Add-on in odoo""",
+    'category': 'empleabilidad',
     'website': 'https://www.odoolibrary.tech',
     'version': '14.0.1',
     'depends': ['base','hr_skills','hr_recruitment',
@@ -18,7 +18,8 @@
         'website_partner',
   
     ],
-    'data': ['views/empl_engage.xml'
+    'data': ['security/groups.xml'
+            ,'views/empl_engage.xml'
             ,'views/empl_studies.xml'
             ,'views/candidate_skills.xml'
             ,'views/candidate_jobs.xml'

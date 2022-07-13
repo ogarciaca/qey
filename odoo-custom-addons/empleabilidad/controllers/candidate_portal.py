@@ -134,6 +134,7 @@ class CustomerPortal(http.Controller):
         # get customer sales rep
         sales_user = False
         partner = request.env.user.partner_id
+        vacant = request.env['candidate.vacant']
         if partner.user_id and not partner.user_id._is_public():
             sales_user = partner.user_id
 
@@ -155,17 +156,66 @@ class CustomerPortal(http.Controller):
     def counters(self, counters, **kw):
         return self._prepare_home_portal_values(counters)
 
-    @route(['/my', '/mi/home'], type='http', auth="user", website=True)
+    @route(['/mi/home'], type='http', auth="user", website=True)
     def home(self, **kw):
         values = self._prepare_portal_layout_values()
         cand_progress = request.env.user.cand_progress
+        image_1920 = request.env.user.image_1920
 
+        if request.env.user.is_company:
+            values.update({
+            'cand_progress': cand_progress,'image_1920': image_1920 , 'is_company': request.env.user.is_company
+            })
+            return request.render("empleabilidad.portal_my_company", values)
+        else:
+            values.update({
+                'cand_progress': cand_progress,'image_1920': image_1920 , 'is_company': request.env.user.is_company
+                })
+            return request.render("empleabilidad.portal_my_home", values)
+
+    @http.route('/mi/listaoportunidad/oportunidad/Cat/<cat_id>', type='http', auth='user', website=True,methods=['POST','GET'])
+    def EmpresaCandidateCat(self,cat_id,redirect=None, **post):
+        categories = request.env['res.partner.category'].sudo().search([])
+        values = self._prepare_portal_layout_values()
+        partner = request.env.user.partner_id
+        vacant_id = request.session['vacant_id']
+        vacant = request.env['candidate.vacant'].sudo().browse(int(vacant_id))
+        if post:
+            values = post
+            values['partner_id'] = partner.id
+
+            if 'Cancelar' in post:
+                return request.redirect('/mi/listaoportunidad/oportunidad/'+ str(vacant['id']))
+            else:
+                if int(values['category_id']) not in vacant.categ_ids.ids:
+                    qry ="INSERT INTO candidate_vacant_res_partner_category_rel (candidate_vacant_id,res_partner_category_id) VALUES (" + str(vacant['id']) + "," + post['category_id'] + ")"
+                    request.cr.execute(qry)
+                return request.redirect('/mi/listaoportunidad/oportunidad/'+ str(vacant['id']))
+        else:
+            if int(cat_id)>0: 
+                qry ="DELETE FROM candidate_vacant_res_partner_category_rel WHERE candidate_vacant_id=" + str(vacant['id'])   + " and res_partner_category_id=" + cat_id 
+                request.cr.execute(qry)
+                return request.redirect('/mi/listaoportunidad/oportunidad/'+ str(vacant['id']))
+
+        #partner = request.env.user.partner_id
+        #cat = request.env['res_partner_res_partner_category_rel']
+        #cat.update({'partner_id':partner.id})
+        cat={}
+        cat['partner_id']=partner.id
+        cat['category_id']=''
         values.update({
-            'cand_progress': cand_progress,})
-        return request.render("empleabilidad.portal_my_home", values)
+            'cat': cat,
+            'redirect': redirect,
+            'page_name': 'cargos',
+            'categories': categories
+        })
+        response = request.render("empleabilidad.CandidateVacanteCat", values)
+        response.headers['X-Frame-Options'] = 'DENY'
+        return response
+
 
     @http.route('/mi/cuenta/CandidateCat/<cat_id>', type='http', auth='user', website=True,methods=['POST','GET'])
-    def CandidateCat(self,cat_id,redirect=None, **post):
+    def CandidateCat(self,cat_id, redirect=None, **post):
         #tuple([tuple(row) for row in myarray])  convertir un arregl en tupla
         categories = request.env['res.partner.category'].sudo().search([])
         values = self._prepare_portal_layout_values()
@@ -193,7 +243,12 @@ class CustomerPortal(http.Controller):
         #cat = request.env['res_partner_res_partner_category_rel']
         #cat.update({'partner_id':partner.id})
         cat={}
+        # cat = request.env['res.partner.res.partner.category.rel']
+        #cat = request.env['res.partner']
         cat['partner_id']=partner.id
+        
+
+        #cat.update({'partner_id':partner.id})
         cat['category_id']=''
         values.update({
             'cat': cat,
@@ -392,7 +447,7 @@ class CustomerPortal(http.Controller):
             edu = request.env['candidate.edus'].sudo().browse(int(edu_id))
             partner = request.env.user.partner_id
             #_logger.info(post.partner.partner_edus_ids.id)    
-            _logger.info(edu)  
+            #_logger.info(edu)  
             #                        'partner': partner,
             values.update({
                         'TipoEdu' : TipoEdu,
@@ -414,18 +469,179 @@ class CustomerPortal(http.Controller):
         response.headers['X-Frame-Options'] = 'DENY'
         return response
 
-    #def DelcandidateEdus(self, edu_id, **post):
-    #    _logger.info("DelcandidateEdus...")
-    #    values = self._prepare_portal_layout_values()
-    #    edu_id = post['id']
-    #    edu = request.env['candidate.edus'].sudo().browse(int(post['id']))
-    #    values = post
-    #    values['partner_id'] = edu['partner_id'].id
-    #    request.env['candidate.edus'].sudo().remove(edu_id)
+    @http.route('/mi/listaoportunidad/oportunidad/<id>', type='http', auth='user', website=True,methods=['POST','GET'])
+    def EmpresaCandidateOportunidad(self, id, **post):
+        values = self._prepare_portal_layout_values()
+        prioridad = [ ('1', 'Baja'), ('2', 'Media'), ('3', 'Alta')]
+        TipoEdu = request.env['hr.recruitment.degree'].sudo().search([])
+        req = request.params
+        
+
+        if post:
+            if 'Borrar' in post:
+                if post['id']:
+                    vacant = request.env['candidate.vacant'].sudo().browse(int(id))
+                    vacant.sudo().unlink()
+                return request.redirect('/mi/listaoportunidad')
+
+            elif 'Cancelar' in post:
+                return request.redirect('/mi/listaoportunidad')
+            elif 'AdicionaVacanteCat' in post:
+                vacant = request.env['candidate.vacant'].sudo().browse(req['id'])
+                #request.session.update({'vacant':vacant})
+                return request.redirect('/mi/listaoportunidad/oportunidad/Cat/-1')
+
+
+            else:
+                vacant_id = request.session['vacant_id']
+                if vacant_id:
+                    #job = request.env['candidate.vacant'].sudo().browse(int(post['id']))
+                    vacant = request.env['candidate.vacant'].sudo().browse(int(vacant_id))
+                    values = post
+                    if 'csrf_token' in values:
+                        del values['csrf_token']
+                    values['partner_id'] = vacant['partner_id'].id
+                    vacant.sudo().write(values)
+                else:
+                    partner = request.env.user.partner_id
+                    values = post
+                    values['partner_id'] = partner.id
+                    vacant = request.env['candidate.vacant']
+                    vacant.sudo().create(values)
+
+                return request.redirect('/mi/listaoportunidad')
+
+        if (int(id)>0):
+            vacant = request.env['candidate.vacant'].sudo().browse(int(id))
+            partner = request.env.user.partner_id
+            vacant.update({'partner_id':partner.id})
+
+            values.update({
+                        'vacant': vacant,
+                        'prioridad': prioridad,
+                        'TipoEdu': TipoEdu,
+                        'redirect': '/mi/creaoportunidad',
+                        'page_name': 'EmpresaCandidateOportunidad',
+                    })
+        else:
+            partner = request.env.user.partner_id
+            vacant = request.env['candidate.vacant']
+            vacant.update({'partner_id':partner.id})
+            vacant.update({'vacant_id':id})
+
+            values.update({
+                'vacant': vacant,
+                'prioridad': prioridad,
+                'TipoEdu' :TipoEdu,
+                'redirect': '/mi/listaoportunidad',
+                'page_name': 'EmpresaCandidateOportunidad',
+            })
+        response = request.render("empleabilidad.portal_mi_vacant", values)
+        response.headers['X-Frame-Options'] = 'DENY'
+        return response
+
+    @http.route('/mi/listaoportunidad', type='http', auth='user', website=True,methods=['POST','GET'])
+    def MiListaOportunidad(self, **post):
+        values = self._prepare_portal_layout_values()
+        prioridad = [ ('1', 'Baja'), ('2', 'Media'), ('3', 'Alta')]
+        TipoEdu = request.env['hr.recruitment.degree'].sudo().search([])
+
+        if post:
+            if 'Borrar' in post:
+                if post['id']:
+                    job_id = post['id']
+                    vacant = request.env['candidate.vacant'].sudo().browse(int(post['id']))
+                    vacant.sudo().unlink()
+                return request.redirect('/mi/listaoportunidad')
+
+            elif 'Cancelar' in post:
+                return request.redirect('/mi/listaoportunidad')
+            elif 'AdicionaVacanteCat' in post:
+                vacant = request.env['candidate.vacant'].sudo().browse(int(id))
+                return request.redirect('/mi/cuentaempresa/CandidateCat/-1')
+
+
+            else:
+                if post['id']:
+                    job_id = post['id']
+                    job = request.env['candidate.vacant'].sudo().browse(int(post['id']))
+                    values = post
+                    values['partner_id'] = job['partner_id'].id
+                    vacant.sudo().write(values)
+                else:
+                    partner = request.env.user.partner_id
+                    values = post
+                    values['partner_id'] = partner.id
+                    vacant = request.env['candidate.vacant']
+                    vacant.sudo().create(values)
+
+                return request.redirect('/mi/creaoportunidad/lista')
+
+        else:
+            partner = request.env.user.partner_id
+            vacant = request.env['candidate.vacant'].sudo().search([('partner_id','=',partner.id)])
+            vacant.update({'partner_id':partner.id})
+
+            values.update({
+                'vacant': vacant,
+                'prioridad': prioridad,
+                'TipoEdu' :TipoEdu,
+                'redirect': '/mi/listaoportunidad',
+                'has_check_vat': hasattr(request.env['res.partner'], 'check_vat'),
+                'page_name': 'Candidate',
+            })
+        response = request.render("empleabilidad.portal_my_oportunidad", values)
+        response.headers['X-Frame-Options'] = 'DENY'
+        return response
+
+    @route(['/my/account'], type='http', auth='user', website=True)
+    def micuentaempresa(self, redirect=None, **post):
+        values = self._prepare_portal_layout_values()
+        partner = request.env.user.partner_id
+        values.update({
+            'error': {},
+            'error_message': [],
+        })
+
+        if post and request.httprequest.method == 'POST':
+            error, error_message = self.details_form_validate(post)
+            values.update({'error': error, 'error_message': error_message})
+            values.update(post)
+            if not error:
+                values = {key: post[key] for key in self.MANDATORY_BILLING_FIELDS}
+                values.update({key: post[key] for key in self.OPTIONAL_BILLING_FIELDS if key in post})
+                for field in set(['country_id', 'state_id']) & set(values.keys()):
+                    try:
+                        values[field] = int(values[field])
+                    except:
+                        values[field] = False
+                values.update({'zip': values.pop('zipcode', '')})
+                partner.sudo().write(values)
+                if redirect:
+                    return request.redirect(redirect)
+                #return request.redirect('/my/home')
+                return request.redirect('/my/account')
+
+        countries = request.env['res.country'].sudo().search([])
+        states = request.env['res.country.state'].sudo().search([])
+
+        values.update({
+            'partner': partner,
+            'countries': countries,
+            'states': states,
+            'has_check_vat': hasattr(request.env['res.partner'], 'check_vat'),
+            'redirect': redirect,
+            'page_name': 'my_details',
+        })
+
+        response = request.render("empleabilidad.portal_my_details_company", values)
+        response.headers['X-Frame-Options'] = 'DENY'
+        return response
+
 
 
     @route(['/mi/cuenta'], type='http', auth='user', website=True)
-    def account(self, redirect=None, **post):
+    def micuentapersona(self, redirect=None, **post):
         values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id
         values.update({
@@ -444,20 +660,21 @@ class CustomerPortal(http.Controller):
                 return request.redirect('/mi/cuenta/CandidateCat/-1')                           
             else:
                 error, error_message = self.details_form_validate(post)
-                _logger.info('An INFO error and error_message')
-                _logger.info(error)
-                _logger.info(error_message)
+                #_logger.info('An INFO error and error_message')
+                #_logger.info(error)
+                #_logger.info(error_message)
                 values.update({'error': error, 'error_message': error_message})
                 values.update(post)
                 if not error:
                     values = {key: post[key] for key in self.MANDATORY_BILLING_FIELDS}
                     values.update({key: post[key] for key in self.OPTIONAL_BILLING_FIELDS if key in post})
-                    for field in set(['country_id', 'state_id']) & set(values.keys()):
+                    for field in set(['country_id', 'state_id','salary']) & set(values.keys()):
                         try:
                             values[field] = int(values[field])
                         except:
                             values[field] = False
                     values.update({'zip': values.pop('zipcode', '')})
+                    values['salary'] = int(post['salary'])
                     partner.sudo().write(values)
                 if redirect:
                     return request.redirect(redirect)
@@ -468,9 +685,6 @@ class CustomerPortal(http.Controller):
 
         genders = [('male', 'Male'),('female', 'Female'),('other', 'Other')]
         maritals = [('single', 'Single'),('married', 'Married'),('cohabitant', 'Legal Cohabitant'),('widower', 'Widower'),('divorced', 'Divorced')]
-
-        # MANDATORY_BILLING_FIELDS = ["name", "phone", "email", "street", "city", "country_id","birthday","gender"]
-        # OPTIONAL_BILLING_FIELDS = ["zipcode", "state_id", "vat", "company_name","profile","partner_skill_ids","cover"]
 
         values.update({
             'partner': partner,
@@ -486,8 +700,8 @@ class CustomerPortal(http.Controller):
         response = request.render("empleabilidad.portal_my_details", values)
         response.headers['X-Frame-Options'] = 'DENY'
         return response
-
-
+        
+ 
 
     @route('/my/security', type='http', auth='user', website=True, methods=['GET', 'POST'])
     def security(self, **post):
@@ -616,8 +830,8 @@ class CustomerPortal(http.Controller):
         for field_name in self.MANDATORY_BILLING_FIELDS:
             if not data.get(field_name):
                 error[field_name] = 'missing'
-                _logger.info('An INFO error and error_message missing')
-                _logger.info(field_name)
+                #_logger.info('An INFO error and error_message missing')
+                #_logger.info(field_name)
 
 
         # email validation

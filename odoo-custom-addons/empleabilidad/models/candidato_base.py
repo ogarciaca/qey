@@ -27,6 +27,7 @@ class candidate(models.Model):
 
 
     cand_progress = fields.Integer('progreso',compute="_compute_cand_progress")
+    salary = fields.Integer('Salario Mensual')
     gender = fields.Selection([('male', 'Male'),('female', 'Female'),('other', 'Other')], 'Gender')
     marital = fields.Selection([
                 ('single', 'Single'),
@@ -52,7 +53,9 @@ class candidate(models.Model):
                 if record.profile:
                     record.cand_progress = record.cand_progress + 10
                 if record.cover:
-                    record.cand_progress = record.cand_progress + 5  
+                    record.cand_progress = record.cand_progress + 5 
+                if record.salary > 0 :
+                    record.cand_progress = record.cand_progress + 5                      
                 if record.partner_skill_ids:
                     record.cand_progress = record.cand_progress + 30       
                 if record.partner_edus_ids:
