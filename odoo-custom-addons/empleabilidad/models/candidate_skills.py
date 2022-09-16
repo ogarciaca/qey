@@ -37,4 +37,7 @@ class CandidateSkill(models.Model):
                 raise ValidationError(_("El nivel de habilidades %(level)s is not valid for skill type: %(type)s", level=record.skill_level_id.name, type=record.skill_type_id.name))
                 #raise ValidationError(_("The skill level %(level)s is not valid for skill type: %(type)s", level=record.skill_level_id.name, type=record.skill_type_id.name))
 
+    @api.model
+    def _MergeSkill(self, JSdata):
+        print("Hacer el merge con los datos")
 

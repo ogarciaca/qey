@@ -8,9 +8,6 @@ import json
 import logging
 import math
 import re
-import unicodedata
-import base64
-from base64 import b64decode, b64encode
 
 
 from werkzeug import urls
@@ -120,84 +117,6 @@ def _SkillWrite(pjs,v_id):
                     VALUES (" + str(v_id) + "," + i["skill_id"] + "," + i["skill_level_id"] +  "," + i["skill_type_id"]  + ")"
             print("Insert ", v_id,i)
         request.cr.execute(qry)
-      
-
-def _SkillWriteHV(pjs,p_id):
-    s = request.env['candidate.skill'].sudo().search([('partner_id','=',p_id)])
-    # Eliminar los que no vienen en el json pjs
-    for i in s:
-        val = _SkillSearch(pjs,i.skill_id.id)
-        if not val:
-            # print("Update",val)
-        #else:
-            qry ="DELETE FROM candidate_skill WHERE ID = " + str(i.id)
-            request.cr.execute(qry)
-            print("Delete",i.id)
-
-    for i in pjs:
-        val = request.env['candidate.skill'].sudo().search([('partner_id','=',p_id),('skill_id','=',int(i["skill_id"]))])
-        if val.id:
-            qry ="UPDATE candidate_skill SET skill_level_id=" + i["skill_level_id"] + " WHERE ID = " + str(val.id)
-            print("update",val.id,i)
-        else:
-            qry ="INSERT INTO candidate_skill (partner_id,skill_id,skill_level_id,skill_type_id) \
-                    VALUES (" + str(p_id) + "," + i["skill_id"] + "," + i["skill_level_id"] +  "," + i["skill_type_id"]  + ")"
-            print("Insert ", p_id,i)
-        request.cr.execute(qry)
-
-def  _ESTSearch (js,search_term): 
-    for i in js:
-        if int(i["popupest_edu_id"]) == search_term:
-            return i
-    return False
-
-def _ESTWriteHV(pjs,p_id):
-    s = request.env['candidate.edus'].sudo().search([('partner_id','=',p_id)])
-    # Eliminar los que no vienen en el json pjs
-    for i in s:
-        val = _ESTSearch(pjs,i.id)
-        if not val:
-            qry ="DELETE FROM candidate_edus WHERE ID = " + str(i.id)
-            request.cr.execute(qry)
-            print("Delete",i.id)
-
-    for i in pjs:
-        val = request.env['candidate.edus'].sudo().search([('partner_id','=',p_id),('id','=',int(i["popupest_edu_id"]))])
-        if val.id:
-            qry ="UPDATE candidate_edus SET edu_title='" + i["popupest_edu_title"] + "', name = '" +  i["popupest_name"] + "', date_start = '" +   i["popupest_date_start"]  + "', date_end = '" +   i["popupest_date_end"] + "', display_type = '" +   i["popupest_edu_type"] + "' WHERE ID = " + str(val.id)
-            print("update",val.id,i)
-        else:
-            qry ="INSERT INTO candidate_edus (partner_id,edu_title, name, date_start, date_end, display_type) \
-                    VALUES (" + str(p_id) + ",'" + i["popupest_edu_title"] + "','" + i["popupest_name"] + "','" + i["popupest_date_start"] + "','" + i["popupest_date_end"] + "','" + i["popupest_edu_type"] + "')"
-            print("Insert ", p_id,i)
-        request.cr.execute(qry)        
-
-def  _EXPearch(js,search_term): 
-    for i in js:
-        if int(i["popupexp_job_id"]) == search_term:
-            return i
-    return False
-
-def _EXPWriteHV(pjs,p_id):
-    s = request.env['candidate.jobs'].sudo().search([('partner_id','=',p_id)])
-    # Eliminar los que no vienen en el json pjs
-    for i in s:
-        val = _EXPearch(pjs,i.id)
-        if not val:
-            qry ="DELETE FROM candidate_jobs WHERE ID = " + str(i.id)
-            request.cr.execute(qry)
-            print("Delete",i.id)
-
-    for i in pjs:
-        val = request.env['candidate.jobs'].sudo().search([('partner_id','=',p_id),('id','=',int(i["popupexp_job_id"]))])
-        if val.id:
-            qry ="UPDATE candidate_jobs SET job_title='" + i["popupexp_job_title"] + "', name = '" +  i["popupexp_name"] + "', date_start = '" +   i["popupexp_date_start"]  + "', date_end = '" +   i["popupexp_date_end"] + "', functions = '" +   i["popupexp_functions"] + "', achievements = '" +   i["popupexp_achievements"] + "' WHERE ID = " + str(val.id)
-            print("update",val.id,i)
-        else:
-            qry ="INSERT INTO candidate_edu (partner_id,job_title, name, date_start, date_end, functions, achievements) \
-                    VALUES (" + str(p_id) + ",'" + i["popupexp_job_title"] + "','" + i["popupexp_name"] + "','" + i["popupexp_date_start"] + "','" + i["popupexp_date_end"] + "','" + i["popupexp_functions"] + "','" + i["popupexp_achievements"] + "')"
-            print("Insert ", p_id,i)
-        request.cr.execute(qry)
 
 def get_records_pager(ids, current):
     if current.id in ids and (hasattr(current, 'website_url') or hasattr(current, 'access_url')):
@@ -276,15 +195,15 @@ class CustomerPortal(http.Controller):
         values = self._prepare_portal_layout_values()
         cand_progress = request.env.user.cand_progress
         image_1920 = request.env.user.image_1920
-        partner_id = request.env.user.partner_id.id
+
         if request.env.user.is_company:
             values.update({
-            'cand_progress': cand_progress,'image_1920': image_1920 , 'is_company': request.env.user.is_company, 'partner_id': partner_id
+            'cand_progress': cand_progress,'image_1920': image_1920 , 'is_company': request.env.user.is_company
             })
             return request.render("empleabilidad.portal_my_company", values)
         else:
             values.update({
-                'cand_progress': cand_progress,'image_1920': image_1920 , 'is_company': request.env.user.is_company, 'partner_id': partner_id
+                'cand_progress': cand_progress,'image_1920': image_1920 , 'is_company': request.env.user.is_company
                 })
             return request.render("empleabilidad.portal_my_home", values)
 
@@ -663,6 +582,9 @@ class CustomerPortal(http.Controller):
                     _logger.info("post['priority'] ",post['priority'])
                     #_logger.info("post.vacant.priority ",post.vacant.priority)
 
+                    
+
+
                     _logger.info("post[x_categ_dicts] ",post["x_categ_dicts"])
 
                     x_categ_ids=json.loads(json.loads(post["x_categ_dicts"]))
@@ -909,38 +831,8 @@ class CustomerPortal(http.Controller):
 
     @route(['/mi/cuenta'], type='http', auth='user', website=True)
     def micuentapersona(self, redirect=None, **post):
-        TipoEdu = [('classic', 'Classic')]
-        # Caso 5  Inicio de llenado de todos los skill
-        skill_Total1 = request.env['candidate.skills.view'].sudo().search([])
-        skill_Total = []
-        for l in skill_Total1:
-            x_skill_dict={}
-            x_skill_dict["type_id"] = l.type_id.id
-            x_skill_dict["name_type"] = l.name_type.id
-            x_skill_dict["skill_id"] = l.skill_id.id
-            x_skill_dict["name_skill"] = l.name_skill.id
-            x_skill_dict["level_id"] = l.level_id.id
-            x_skill_dict["name_level"] = l.name_level.id
-            x_skill_dict["level_progress"] = l.level_progress.id
-            skill_Total.append(x_skill_dict)
-
-        x_categ_Totals = []
-        x_categ_ids = request.env['res.partner.category'].sudo().search([])
-        for l in x_categ_ids:
-            x_categ_dict={}
-            
-            x_categ_dict["name"] = l.name
-            #x_categ_dict["partner_id"] = '' #partner.id
-            #x_categ_dict["candidate_vacant_id"] = '' #vacant.id
-            x_categ_dict["res_partner_category_id"] = l.id
-
-            x_categ_Totals.append(x_categ_dict)    
-
-        # Caso 5  Fin de llenado de todos los skill
-
         values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id
-        x_photo = partner.image_1920
         values.update({
             'error': {},
             'error_message': [],
@@ -951,8 +843,8 @@ class CustomerPortal(http.Controller):
                 return request.redirect('/mi/cuenta/edu/-1')
             elif 'AdicionaJob' in post:
                 return request.redirect('/mi/cuenta/jobs/-1')
-            #elif 'AdicionaSkill' in post:
-            #    return request.redirect('/mi/cuenta/skills/-1')       
+            elif 'AdicionaSkill' in post:
+                return request.redirect('/mi/cuenta/skills/-1')       
             elif 'AdicionaCat' in post:
                 return request.redirect('/mi/cuenta/CandidateCat/-1')                           
             else:
@@ -970,40 +862,9 @@ class CustomerPortal(http.Controller):
                             values[field] = int(values[field])
                         except:
                             values[field] = False
-                    values.update({'zip': values.pop('zipcode', 'image_1920')})
+                    values.update({'zip': values.pop('zipcode', '')})
                     values['salary'] = int(post['salary'])
-                    # partner.sudo().write(values)
-                    values.update({'image_1920': x_photo})
-                    x_photo = post["x_photo"]
-                    if 'jpeg' in x_photo:
-                        x_photo = x_photo.replace('data:image/jpeg;base64,','')
-                    if 'png' in x_photo:
-                        x_photo = x_photo.replace('data:image/png;base64,','')
-                    
-                    x_photo = unicodedata.normalize('NFKD', x_photo).encode('ascii', 'ignore')
-                    values["image_1920"] = x_photo
-                    # Poner las categorias
-                    x_categ_ids=json.loads(json.loads(post["x_categ_dicts"]))
-                    if (x_categ_ids):
-                        list = []
-                        for x in x_categ_ids:
-                            list.append(int(x["res_partner_category_id"]))
-                        values["category_id"]=list
-                    # salvar los datos en partner    
-                    partner.sudo().write(values)    
-
-                    # poner aca la actualziacion de skill
-                    x_skill_ids = json.loads(json.loads(post["x_skill_ids"]))
-                    # Function to write JSON x_skill_ids into database
-                    _SkillWriteHV(x_skill_ids,partner.id)
-                    # poner aca la actualziacion de estudios
-                    x_estrudios_ids=json.loads(json.loads(post["x_estudios_ids"]))
-                    _ESTWriteHV(x_estrudios_ids,partner.id)
-                    # pponer a la actualizacion de la experiencia
-                    x_experiencia_ids=json.loads(json.loads(post["x_experiencia_ids"]))
-                    _EXPWriteHV(x_experiencia_ids,partner.id)
-
-
+                    partner.sudo().write(values)
                 if redirect:
                     return request.redirect(redirect)
                 return request.redirect('/mi/home')
@@ -1014,45 +875,8 @@ class CustomerPortal(http.Controller):
         genders = [('male', 'Male'),('female', 'Female'),('other', 'Other')]
         maritals = [('single', 'Single'),('married', 'Married'),('cohabitant', 'Legal Cohabitant'),('widower', 'Widower'),('divorced', 'Divorced')]
 
-        # Caso 4  Inicio Llenado del arreglo de los skill de la persona
-        x_skill_ids = []
-        x_skill_dict = []
-        for l in partner.partner_skill_ids:
-            x_skill_dict={}
-            x_skill_dict["skill_id"] = l.skill_id.id
-            x_skill_dict["skill_name"] = l.skill_id.name
-
-            x_skill_dict["skill_type_id"] = l.skill_type_id.id
-            x_skill_dict["skill_type_name"] = l.skill_type_id.name
-
-            x_skill_dict["skill_level_id"] = l.skill_level_id.id
-            x_skill_dict["skill_level_name"] = l.skill_level_id.name
-
-            x_skill_dict["level_progress"] = l.level_progress
-            
-            x_skill_ids.append(x_skill_dict)
-
-            x_categ_ids = []
-            x_categ_dicts = []
-            #x_categ_dict = {'partner_id': '','candidate_vacant_id': '','res_partner_category_id':'','name':''};
-            for l in partner.category_id:
-                x_categ_dict={}
-                x_categ_dict["name"] = l.name
-                #x_categ_dict["partner_id"] = partner.id
-                #x_categ_dict["candidate_vacant_id"] = vacant.id
-                x_categ_dict["res_partner_category_id"] = l.id
-                
-                x_categ_dicts.append(x_categ_dict)    
-
-        # Caso 4  Fin Llenado del arreglo de los skill de la persona
-
         values.update({
             'partner': partner,
-            'x_skill_ids': x_skill_ids,   # se renderiza los skill de la persona
-            'skill_Total' : skill_Total,  # se renderiza TODOS los skill
-            'x_categ_ids' : x_categ_ids,
-            'x_categ_dicts' : x_categ_dicts,
-            'x_categ_Totals': x_categ_Totals, # Lista total de Categorias
             'countries': countries,
             'states': states,
             'genders': genders,
@@ -1060,123 +884,12 @@ class CustomerPortal(http.Controller):
             'has_check_vat': hasattr(request.env['res.partner'], 'check_vat'),
             'redirect': redirect,
             'page_name': 'cuenta',
-            'TipoEdu' : TipoEdu,
-            'x_photo': x_photo
         })
 
         response = request.render("empleabilidad.portal_my_details", values)
         response.headers['X-Frame-Options'] = 'DENY'
         return response
         
-    @route('/mi/hvpdf/<id>', type='http', auth='user', website=True, methods=['GET'])
-    def mihvpdf(self, id, redirect=None, **post):
-        # Averiguar si es un cliente el id
-        partner = request.env['res.partner'].sudo().search([('id','=',id)])
-        if not partner:        
-            if redirect:
-                return request.redirect(redirect)
-            return request.redirect('/mi/home')
-
-        TipoEdu = [('classic', 'Classic')]
-        # Caso 5  Inicio de llenado de todos los skill
-        skill_Total1 = request.env['candidate.skills.view'].sudo().search([])
-        skill_Total = []
-        for l in skill_Total1:
-            x_skill_dict={}
-            x_skill_dict["type_id"] = l.type_id.id
-            x_skill_dict["name_type"] = l.name_type.id
-            x_skill_dict["skill_id"] = l.skill_id.id
-            x_skill_dict["name_skill"] = l.name_skill.id
-            x_skill_dict["level_id"] = l.level_id.id
-            x_skill_dict["name_level"] = l.name_level.id
-            x_skill_dict["level_progress"] = l.level_progress.id
-            skill_Total.append(x_skill_dict)
-
-        x_categ_Totals = []
-        x_categ_ids = request.env['res.partner.category'].sudo().search([])
-        for l in x_categ_ids:
-            x_categ_dict={}
-            
-            x_categ_dict["name"] = l.name
-            #x_categ_dict["partner_id"] = '' #partner.id
-            #x_categ_dict["candidate_vacant_id"] = '' #vacant.id
-            x_categ_dict["res_partner_category_id"] = l.id
-
-            x_categ_Totals.append(x_categ_dict)    
-
-        # Caso 5  Fin de llenado de todos los skill
-
-        values = self._prepare_portal_layout_values()
-        #partner = request.env.user.partner_id
-        x_photo = partner.image_1920
-        values.update({
-            'error': {},
-            'error_message': [],
-        })
-        if post and request.httprequest.method == 'POST':
-            if redirect:
-                return request.redirect(redirect)
-            return request.redirect('/mi/home')
-
-        countries = request.env['res.country'].sudo().search([])
-        states = request.env['res.country.state'].sudo().search([])
-
-        genders = [('male', 'Male'),('female', 'Female'),('other', 'Other')]
-        maritals = [('single', 'Single'),('married', 'Married'),('cohabitant', 'Legal Cohabitant'),('widower', 'Widower'),('divorced', 'Divorced')]
-
-        # Caso 4  Inicio Llenado del arreglo de los skill de la persona
-        x_skill_ids = []
-        x_skill_dict = []
-        for l in partner.partner_skill_ids:
-            x_skill_dict={}
-            x_skill_dict["skill_id"] = l.skill_id.id
-            x_skill_dict["skill_name"] = l.skill_id.name
-
-            x_skill_dict["skill_type_id"] = l.skill_type_id.id
-            x_skill_dict["skill_type_name"] = l.skill_type_id.name
-
-            x_skill_dict["skill_level_id"] = l.skill_level_id.id
-            x_skill_dict["skill_level_name"] = l.skill_level_id.name
-
-            x_skill_dict["level_progress"] = l.level_progress
-            
-            x_skill_ids.append(x_skill_dict)
-
-        x_categ_ids = []
-        x_categ_dicts = []
-        #x_categ_dict = {'partner_id': '','candidate_vacant_id': '','res_partner_category_id':'','name':''};
-        for l in partner.category_id:
-            x_categ_dict={}
-            x_categ_dict["name"] = l.name
-            #x_categ_dict["partner_id"] = partner.id
-            #x_categ_dict["candidate_vacant_id"] = vacant.id
-            x_categ_dict["res_partner_category_id"] = l.id
-            
-            x_categ_dicts.append(x_categ_dict)    
-
-        # Caso 4  Fin Llenado del arreglo de los skill de la persona
-
-        values.update({
-            'partner': partner,
-            'x_skill_ids': x_skill_ids,   # se renderiza los skill de la persona
-            'skill_Total' : skill_Total,  # se renderiza TODOS los skill
-            'x_categ_ids' : x_categ_ids,
-            'x_categ_dicts' : x_categ_dicts,
-            'x_categ_Totals': x_categ_Totals, # Lista total de Categorias
-            'countries': countries,
-            'states': states,
-            'genders': genders,
-            'maritals': maritals,
-            'has_check_vat': hasattr(request.env['res.partner'], 'check_vat'),
-            'redirect': redirect,
-            'page_name': 'cuenta',
-            'TipoEdu' : TipoEdu,
-            'x_photo': x_photo
-        })
-
-        response = request.render("empleabilidad.hvpdf", values)
-        response.headers['X-Frame-Options'] = 'DENY'
-        return response
  
 
     @route('/my/security', type='http', auth='user', website=True, methods=['GET', 'POST'])

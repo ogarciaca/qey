@@ -7,7 +7,7 @@
     'category': 'empleabilidad',
     'website': 'https://www.odoolibrary.tech',
     'version': '14.0.1',
-    'depends': ['base','hr_skills','hr_recruitment',
+    'depends': ['base','hr_skills','hr_recruitment','web',
         'hr',
         'calendar',
         'fetchmail',
@@ -16,6 +16,7 @@
         'web_tour',
         'digest',
         'website_partner',
+        'website_profile'
   
     ],
     'data': ['security/groups.xml'
@@ -29,6 +30,7 @@
             ,'views/vacant_appls.xml'
             ,'views/works_template.xml'
             ,'views/candidate_templates.xml'
+            ,'static/src/js/widget.js'
             ],
     'demo': [],
     'qweb': [],

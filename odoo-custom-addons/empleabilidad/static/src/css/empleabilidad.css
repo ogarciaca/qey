@@ -1,0 +1,95 @@
+.my-custom-scrollbar {
+    position: relative;
+    height: 200px;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+label {
+    cursor: pointer
+}
+
+input[type=text]:hover {
+    border-color: darkblue;
+    border-width: 1px;
+}
+
+label:focus-within {
+    color: blue;
+}
+
+input[type=text]:focus {
+    border: 1px solid darkblue;
+}
+
+.error {
+    color: #dc3545;
+}
+
+input.success,
+textarea.success,
+select.success {
+    border-color: #198754;
+}
+
+input.success:focus,
+textarea.success:focus {
+    box-shadow: 0 0 0 0.25rem rgb(25 135 84 / 25%);
+}
+
+.warning {
+    background-color: cornsilk;
+}
+
+.limit {
+    background-color: mistyrose;
+}
+
+.uploadButton {
+    display: none;
+}
+
+.uploadLabel {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 7px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.uploadLabelRed {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 7px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: red;
+    color: #ffffff;
+}
+
+.uploadLabelGreen {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 7px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: green;
+    color: #ffffff;
+}
+
+.uploadLabelBlue {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 7px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: blue;
+    color: #ffffff;
+}
+
+.uploadButton {
+    display: none;
+}

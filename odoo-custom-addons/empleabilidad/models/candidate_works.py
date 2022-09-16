@@ -172,6 +172,27 @@ class Works(models.Model):
             r.application_count = len(r.vacant_appls_ids)
         
  
+    @api.model
+    def _delete_tags_from_candidate(self, vac_id, cat_id):
+
+        if (not vac_id ) and (not cat_id):
+            # Nothing to do, then!
+            return
+                
+        self.env.cr.execute("""
+            delete from candidate_vacant_res_partner_category_rel
+            where candidate_vacant_id = """ + str(vac_id) + """ and res_partner_category_id = """ + str(cat_id))
+
+    def _insert_tags_to_candidate(self, vac_id, cat_id):
+
+        if (not vac_id ) and (not cat_id):
+            # Nothing to do, then!
+            return
+                
+        self.env.cr.execute("""
+            insert into candidate_vacant_res_partner_category_rel (candidate_vacant_id, res_partner_category_id) 
+            values ( """ + "'" + str(vac_id) + "'" , "'" + str(cat_id) +"'" )
+
 
     """
         def _compute_application_count(self):

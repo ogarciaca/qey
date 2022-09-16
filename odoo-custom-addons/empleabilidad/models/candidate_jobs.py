@@ -18,7 +18,7 @@ class CandidateJobs(models.Model):
     date_start = fields.Date("Fecha inicio", required=True)
     date_end = fields.Date("Fecha retiro")
     functions = fields.Text(string="Funciones")
-    Achievements = fields.Text(string="Logros")
+    achievements = fields.Text(string="Logros")
     line_type_id = fields.Integer("line_type_id", default=1)
     description = fields.Text(string="Descripcion")
     display_type = fields.Selection([('classic', 'Classic')], string="Display Type", default='classic')

@@ -46,7 +46,7 @@
                     -->
                     <field name="job_title" string="Cargo" placeholder="Ultimo cargo desempñado"/>
                     <field name="functions" string="Funciones" placeholder="Detalle las principales funciones"/>
-                    <field name="Achievements" string="Logros" placeholder="Detalle los principales logros"/>
+                    <field name="achievements" string="Logros" placeholder="Detalle los principales logros"/>
                 </group>
 
             </form>
@@ -63,7 +63,7 @@
                 <field name="date_start" string="Inicio"/>
                 <field name="date_end" string="Fin"/>
                 <field name="functions" string="Funciones"/>
-                <field name="Achievements" string="Logros"/>
+                <field name="achievements" string="Logros"/>
 
             </tree>
 
