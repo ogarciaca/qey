@@ -177,91 +177,90 @@
 
     <template id="portal_layout" name="Portal Layout">
       <t name="Portal Layout" t-name="empleabilidad.portal_layout">
-              <t name="Portal Layout" t-name="empleabilidad.portal_layout">
-                  <t t-call="empleabilidad.frontend_layout">
-                      <t t-set="is_portal" t-value="True"/>
-                      <!--
-                      <div t-if="not no_breadcrumbs and not my_details and not breadcrumbs_searchbar" class="o_portal container mt-3">
-                          <div class="row align-items-center bg-white no-gutters border rounded">
-                              <div class="col-10">
-                                  <t t-call="portal.portal_breadcrumbs"></t>
-                              </div>
-                              <div t-if="prev_record or next_record" class="col-2 flex-grow-0 text-center">
-                                  <t t-call='portal.record_pager'/>
-                              </div>
-                          </div>
-                      </div>
-                  -->
-                      <div id="wrap" class="o_portal_wrap">
-                          <div class="container mb64">
-                              <t t-if="my_details">
-                                  <div class="row justify-content-between mt-4">
-                                      <div t-attf-class="col-12 col-md col-lg-6">
-                                          <t t-raw="0"/>
-                                      </div>
-      
-                                 
-                                      
-                                      
-                                      
-                                      <div id="o_my_sidebar" class="pt-3 pt-lg-0 col-12 col-md col-lg-4 col-xl-3 o_my_sidebar">
-                                          <div class="o_my_contact" t-if="sales_user">
-                                              <t t-call="empleabilidad.portal_contact"/>
-                                          </div>
-                                          <div class="o_portal_my_details">
-                                            
-                                             <!-- Default unchecked disabled -->
-                                            <div class="custom-control custom-radio">
-                                              <input type="checkbox" class="custom-control-input" id="defaultUncheckedDisabled2" name="disabledGroupExample" 
-                                                     t-att-checked="None  if is_company else 'checked'"  disabled="1"/>
-                                              <label class="custom-control-label" >Persona</label>
+            <t name="Portal Layout" t-name="empleabilidad.portal_layout">
+                    <t name="Portal Layout" t-name="empleabilidad.portal_layout">
+                        <t t-call="empleabilidad.frontend_layout">
+                            <t t-set="is_portal" t-value="True"/>
+                            <!--
+                            <div t-if="not no_breadcrumbs and not my_details and not breadcrumbs_searchbar" class="o_portal container mt-3">
+                                <div class="row align-items-center bg-white no-gutters border rounded">
+                                    <div class="col-10">
+                                        <t t-call="portal.portal_breadcrumbs"></t>
+                                    </div>
+                                    <div t-if="prev_record or next_record" class="col-2 flex-grow-0 text-center">
+                                        <t t-call='portal.record_pager'/>
+                                    </div>
+                                </div>
+                            </div>
+                        -->
+                            <div id="wrap" class="o_portal_wrap">
+                                <div class="container mb64">
+                                    <t t-if="my_details">
+                                        <div class="row justify-content-between mt-4">
+                                            <div t-attf-class="col-12 col-md col-lg-6">
+                                                <t t-raw="0"/>
                                             </div>
+            
+                                       
                                             
-                                            <!-- Default checked disabled -->
-                                            <div class="custom-control custom-radio">
-                                              <input type="checkbox" class="custom-control-input" id="defaultCheckedDisabled2" name="disabledGroupExample" 
-                                                     t-att-checked="'checked'   if is_company else None" disabled="1"/>
-                                              <label class="custom-control-label" >Empresa</label>
-                                            </div>                                        
                                             
-                                            <t t-if="is_company">
-                                                <h4>Datos Basicos Compañia<a role="button" href="/my/account" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Editar Datos Compañia</a></h4>
-                                                <hr class="mt-1 mb-0"/>
-                                                <div t-field="user_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;email&quot;, &quot;phone&quot;, &quot;address&quot;, &quot;name&quot;,&quot;gender&quot;]}"/>
-                                            </t>
-                                            <t t-else="">
-                                              <div>
-                                                <div class="row">
-                                                  <h4>Hoja de vida <a role="button" href="/mi/cuenta" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Editar</a></h4>
+                                            
+                                            <div id="o_my_sidebar" class="pt-3 pt-lg-0 col-12 col-md col-lg-4 col-xl-3 o_my_sidebar">
+                                                <div class="o_my_contact" t-if="sales_user">
+                                                    <t t-call="empleabilidad.portal_contact"/>
                                                 </div>
-                                                <div class="row">
-                                                  <a href="/mi/hvpdf" class="btn btn-secondary btn-link btn-sm float-left" role="button">PDF</a>
-                                                </div>
+                                                <div class="o_portal_my_details">
                                                   
-                                                  <hr class="mt-1 mb-0"/>
-                                                  <div t-field="user_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;email&quot;, &quot;phone&quot;, &quot;address&quot;, &quot;name&quot;,&quot;gender&quot;]}"/>
+                                                   <!-- Default unchecked disabled -->
+                                                  <div class="custom-control custom-radio">
+                                                    <input type="checkbox" class="custom-control-input" id="defaultUncheckedDisabled2" name="disabledGroupExample" t-att-checked="None  if is_company else 'checked'" disabled="1"/>
+                                                    <label class="custom-control-label">Persona</label>
+                                                  </div>
+                                                  
+                                                  <!-- Default checked disabled -->
+                                                  <div class="custom-control custom-radio">
+                                                    <input type="checkbox" class="custom-control-input" id="defaultCheckedDisabled2" name="disabledGroupExample" t-att-checked="'checked'   if is_company else None" disabled="1"/>
+                                                    <label class="custom-control-label">Empresa</label>
+                                                  </div>                                        
+                                                  
+                                                  <t t-if="is_company">
+                                                      <h4>Datos Basicos Compañia<a role="button" href="/my/account" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Editar Datos Compañia</a></h4>
+                                                      <hr class="mt-1 mb-0"/>
+                                                      <div t-field="user_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;email&quot;, &quot;phone&quot;, &quot;address&quot;, &quot;name&quot;,&quot;gender&quot;]}"/>
+                                                  </t>
+                                                  <t t-else="">
+                                                    <div>
+                                                      <div class="row">
+                                                        <h4>Hoja de vida <a role="button" href="/mi/cuenta" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Editar</a></h4>
+                                                      </div>
+                                                      <div class="row">
+                                                        <a t-attf-href="/mi/hvpdf/#{partner_id}" class="btn btn-secondary btn-link btn-sm float-left" role="button">PDF</a>
+                                                      </div>
+                                                        
+                                                        <hr class="mt-1 mb-0"/>
+                                                        <div t-field="user_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;email&quot;, &quot;phone&quot;, &quot;address&quot;, &quot;name&quot;,&quot;gender&quot;]}"/>
+                                                      </div>
+                                                    </t>
                                                 </div>
-                                              </t>
-                                          </div>
-                                          <div class="o_portal_my_security mt-3">
-                                              <h4>Seguridad de la cuenta </h4>
-                                              <hr class="mt-1 mb-1"/>
-                                              <a href="/my/security"><i class="fa fa-pencil mx-1"/>Cambiar contraseña</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </t>
-                              <t t-else="">
-                                  <t t-raw="0"/>
-                              </t>
-                          </div>
-                      </div>
-                  </t>
-              </t>
+                                                <div class="o_portal_my_security mt-3">
+                                                    <h4>Seguridad de la cuenta </h4>
+                                                    <hr class="mt-1 mb-1"/>
+                                                    <a href="/my/security"><i class="fa fa-pencil mx-1"/>Cambiar contraseña</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-raw="0"/>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            
           </t>
-      
-       
-          
+
     </template>
 
  
@@ -275,63 +274,308 @@
         </xpath>
     </template>
 
+    <template id="portal_contrato_pagina" name="Mi Contrato">
+      <t name="Mi Contrato" t-name="empleabilidad.portal_contrato_pagina">
+        <t t-call="empleabilidad.portal_layout">
+            <t t-set="o_portal_fullwidth_alert" groups="account.group_account_invoice">
+                <t t-call="portal.portal_back_in_edit_mode">
+                    <t t-set="backend_url" t-value="'/web#return_label=Website&amp;model=contract.contract&amp;id=%s&amp;view_type=form' % (contract.id)"/>
+                </t>
+            </t>
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <h5 class="mb-0">
+                        <span>
+                            Contract - <span t-field="contract.name"/>
+                        </span>
+                    </h5>
+                </t>
+                <t t-set="card_body">
+                    <div id="general_information">
+                        <div class="row mt4">
+                            <div t-if="contract.partner_id" class="col-12 col-md-6 mb-4 mb-md-0">
+                                <h6>
+                                    <strong>Customer:</strong>
+                                </h6>
+                                <div class="row">
+                                    <div class="col flex-grow-0 pr-3">
+                                        <img t-if="contract.partner_id.image_128" class="rounded-circle mt-1 o_portal_contact_img" t-att-src="image_data_uri(contract.partner_id.image_128)" alt="Contact"/>
+                                        <img t-else="" class="rounded-circle mt-1 o_portal_contact_img" src="/web/static/src/img/user_menu_avatar.png" alt="Contact"/>
+                                    </div>
+                                    <div class="col pl-sm-0">
+                                        <address t-field="contract.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;name&quot;, &quot;email&quot;, &quot;phone&quot;]}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div t-if="contract.user_id" class="col-12 col-md-6">
+                                <h6>
+                                    <strong>Responsible:</strong>
+                                </h6>
+                                <div class="row">
+                                    <div class="col flex-grow-0 pr-3">
+                                        <img t-if="contract.user_id.image_128" class="rounded-circle mt-1 o_portal_contact_img" t-att-src="image_data_uri(contract.user_id.image_128)" alt="Contact"/>
+                                        <img t-else="" class="rounded-circle mt-1 o_portal_contact_img" src="/web/static/src/img/user_menu_avatar.png" alt="Contact"/>
+                                    </div>
+                                    <div class="col pl-sm-0">
+                                        <address t-field="contract.user_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;name&quot;, &quot;email&quot;, &quot;phone&quot;]}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt32" id="product_information">
+                            <div class="col-12 col-md-6 mb-4 mb-md-0">
+                                <div t-if="contract.code" class="row mb-2 mb-sm-1">
+                                    <div class="col-12 col-sm-4">
+                                        <strong>Reference</strong>
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <span t-field="contract.code"/>
+                                    </div>
+                                </div>
+                                <div t-if="contract.recurring_next_date" class="row mb-2 mb-sm-1">
+                                    <div class="col-12 col-sm-4">
+                                        <strong>Date of Next Invoice</strong>
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <span t-field="contract.recurring_next_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                    </div>
+                                </div>
+                                <div t-if="contract.date_end" class="row mb-2 mb-sm-1">
+                                    <div class="col-12 col-sm-4">
+                                        <strong>Date end</strong>
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <span t-field="contract.date_end" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="item_details">
+                            <table class="table table-sm" id="sales_order_table">
+                                <thead class="bg-100">
+                                    <tr>
+                                        <th name="th_name" class="text-left">Description</th>
+                                        <th name="th_quantity" class="text-right">Quantity</th>
+                                        <th name="th_price_unit" class="text-right">Price unit</th>
+                                        <th name="th_discount" class="text-right">Discount (%)</th>
+                                        <th name="th_price_subtotal" class="text-right">Sub Total</th>
+                                        <th name="th_recurring_interval" class="text-right">Recurrence</th>
+                                        <th name="th_recurring_next_date" class="text-right">Date of next invoice</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="contract_tbody">
+                                    <t t-foreach="contract.contract_line_ids" t-as="line">
+                                        <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                            <t t-if="not line.display_type">
+                                                <td name="td_name">
+                                                    <span t-field="line.name"/>
+                                                </td>
+                                                <td name="td_quantity" class="text-right">
+                                                    <span t-field="line.quantity"/>
+                                                </td>
+                                                <td name="td_price_unit" class="text-right">
+                                                    <span t-field="line.price_unit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: contract.currency_id}"/>
+                                                </td>
+                                                <td name="td_discount" class="text-right">
+                                                    <span t-field="line.discount"/>
+                                                </td>
+                                                <td name="td_price_subtotal" class="text-right">
+                                                    <span t-field="line.price_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: contract.currency_id}"/>
+                                                </td>
+                                                <td name="td_recurring_interval" class="text-right">
+                                                    <span t-field="line.recurring_interval"/>
+                                                    <span t-field="line.recurring_rule_type"/>
+                                                </td>
+                                                <td name="td_recurring_next_date" class="text-right">
+                                                    <span t-field="line.recurring_next_date"/>
+                                                </td>
+                                            </t>
+                                            <t t-if="line.display_type == 'line_section'">
+                                                <td colspan="99">
+                                                    <span t-field="line.name"/>
+                                                </td>
+                                                <t t-set="current_section" t-value="line"/>
+                                                <t t-set="current_subtotal" t-value="0"/>
+                                            </t>
+                                            <t t-if="line.display_type == 'line_note'">
+                                                <td colspan="99">
+                                                    <span t-field="line.name"/>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+            <section t-if="contract.modification_ids" class="s_timeline pt24 pb48 o_colored_level" data-snippet="s_timeline">
+                <div class="container s_timeline_line">
+                    <t t-set="last_modification_date" t-value="False"/>
+                    <div class="s_timeline_row d-block d-md-flex flex-row" t-foreach="contract.modification_ids" t-as="modification">
+                        <div class="s_timeline_date">
+                            <t t-if="not last_modification_date or last_modification_date!=modification.date">
+                                <t t-set="last_modification_date" t-value="modification.date"/>
+                                <span class="bg-white">
+                                    <b class="o_default_snippet_text" t-esc="last_modification_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                </span>
+                            </t>
+                        </div>
+                        <div class="s_timeline_content s_timeline_content_left d-flex">
+                            <div class="s_timeline_card s_card card bg-white w-100" data-snippet="s_card">
+                                <div class="card-body">
+                                    <div class="card-text o_default_snippet_text" t-field="modification.description"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="s_timeline_content s_timeline_content_right"/>
+                    </div>
+                </div>
+            </section>
+            <!-- chatter -->
+            <div id="contract_communication" class="mt-4">
+                <h2>Communication</h2>
+                <t t-call="portal.message_thread">
+                    <t t-set="object" t-value="contract"/>
+                    <t t-set="token" t-value="contract.access_token"/>
+                    <t t-set="pid" t-value="pid"/>
+                    <t t-set="hash" t-value="hash"/>
+                </t>
+            </div>
+        </t>
+    </t>
+
+    </template> 
+
+    <template id="portal_mis_contratos" name="Mis Contractos">
+            <t name="Mis Contratos" t-name="empleabilidad.portal_mis_contratos">
+              <t t-call="empleabilidad.portal_layout">
+                  <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                  
+                  <t t-if="contracts" t-call="portal.portal_table">
+                      <thead>
+                          <tr class="active">
+                              <th>Contract #</th>
+                              <th class="d-none d-md-table-cell">Date</th>
+                              <th class="d-none d-md-table-cell">Date end</th>
+                              <th class="text-right">Reference</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <t t-foreach="contracts" t-as="contract">
+                              <tr>
+                                  <td>
+                                      <a t-att-href="'/mi/contrato/'+str(contract.id)+'?access_token='+contract.access_token" t-attf-class="tr_contract_link" t-att-title="contract.name">
+                                          <t t-esc="contract.name"/>
+                                      </a>
+                                  </td>
+                                  <td class="d-none d-md-table-cell">
+                                      <span t-field="contract.recurring_next_date"/>
+                                  </td>
+                                  <td class="d-none d-md-table-cell">
+                                      <span t-field="contract.date_end"/>
+                                  </td>
+                                  <td class="text-right">
+                                      <span t-field="contract.code"/>
+                                  </td>
+                              </tr>
+                          </t>  <!-- foreach -->
+                                                                  <div class="col align-self-start">
+                                                                      <form action="Cancelar" method="post">
+                                                                          <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                                                                          <div class="left">
+                                                                              <button type="action" name="Cancelar" class="btn btn-primary" ref="/mi/home">
+                                                                                  Cancelar
+                                                                                  <span class="fa" />
+                                                                              </button>
+                                                                          </div>
+                                                                      </form>
+                                                                  </div>
+                                                                  
+                          <div class="row">
+                            <button type="submit" name="Volver" class="btn btn-primary float-right mb32 " ref="/mi/home">
+                              Volver
+                              <span class="fa "/>
+                            </button>
+                          </div>                    
+                      </tbody>
+                  </t>  <!-- t-if="contracts" -->
+                </t>
+      
+           </t>
+            
+          
+    </template>
+      
     <template id="portal_my_home" name="My Portal">
       <t name="My Portal" t-name="empleabilidad.portal_my_home">
-              <t name="My Portal" t-name="empleabilidad.portal_my_home">
-                  <t name="My Portal" t-name="empleabilidad.portal_my_home">
-                      <t t-call="empleabilidad.portal_layout">
-                          <t t-set="my_details" t-value="True"/>
-                          <link rel="stylesheet" href="/empleabilidad/static/src/css/empleabilidad.css"/>
-                          <div class="o_portal_my_home">
-                              <div class="oe_structure" id="oe_structure_portal_my_home_1"/>
-                                  <h3>Progreso</h3>
-                                    <div>
-                                      <!--  Barra de estado  -->
-                                          <h4 class="o_default_snippet_text">Casi terminamos!</h4>
-                                          <t t-set="ss" t-value="'width:' + str(cand_progress) + '%;'"/>
-                                          <div class="progress" style="height: 35px;">
-                                            <div class="progress-bar o_rating_progressbar" role="progressbar" t-att-aria-valuenow="cand_progress" aria-valuemin="0" aria-valuemax="100" t-attf-style="#{ss}">
-                                                <span><t t-esc="cand_progress"/> %</span>
+                            <t t-call="empleabilidad.portal_layout">
+                                <t t-set="my_details" t-value="True"/>
+                                <link rel="stylesheet" href="/empleabilidad/static/src/css/empleabilidad.css"/>
+                                <div class="o_portal_my_home">
+                                    <div class="oe_structure" id="oe_structure_portal_my_home_1"/>
+                                        <h3>Progreso</h3>
+                                          <div>
+                                            <!--  Barra de estado  -->
+                                                <h4 class="o_default_snippet_text">Casi terminamos!</h4>
+                                                <t t-set="ss" t-value="'width:' + str(cand_progress) + '%;'"/>
+                                                <div class="progress" style="height: 35px;">
+                                                  <div class="progress-bar o_rating_progressbar" role="progressbar" t-att-aria-valuenow="cand_progress" aria-valuemin="0" aria-valuemax="100" t-attf-style="#{ss}">
+                                                      <span><t t-esc="cand_progress"/> %</span>
+                                                  </div>
+                                            </div> 
+                                          </div>
+                                          <div>
+                                            <h4 class="o_default_snippet_text">Más progresso, más oportunidades...</h4>
+                                            <p>
+                                              Nuestra recomendación es terminar y mantener actualizada la HV con : datos básicos, educación, experiencia, habilidades y aspiraciones; 
+                                              así aumentará la posibilidad de entrar y continuar en procesos de selección.
+                                          </p>
+                                          </div>
+                
+                                    <div class="o_portal_docs list-group">
+                                    </div>
+                                    
+                                    <div class="oe_structure" id="oe_structure_portal_my_home_1"/>
+                                      <h3>Contratos</h3>
+                                        <div class="o_portal_docs list-group">
+                                          <form action="/mis/contratos" method="post">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <div>
+                                              <p>
+                                                Revise los contratos adquiridos con quieroemplearmeya
+                                              </p>
+                                               <a href="/mis/contratos" class="btn btn-secondary btn-link btn-sm float-left" role="button">Consulta mis contratos</a>
                                             </div>
-                                      </div> 
-                                    </div>
-                                    <div>
-                                      <h4 class="o_default_snippet_text">Más progresso, más oportunidades...</h4>
-                                      <p>
-                                        Nuestra recomendación es terminar y mantener actualizada la HV con : datos básicos, educación, experiencia, habilidades y aspiraciones; 
-                                        así aumentará la posibilidad de entrar y continuar en procesos de selección.
-                                    </p>
-                                    </div>
-          
-                              <div class="o_portal_docs list-group">
-                              </div>
-                              
-                              <div class="oe_structure" id="oe_structure_portal_my_home_1"/>
-                                <h3>Postulaciones</h3>
-                                  <div class="o_portal_docs list-group">
-                                    <form action="/mi/postulacion" method="post">
-                                      <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                      <div>
-                                        <p>
-                                          En esta sección brindamos la posibilidad de ver el estado de sus aplicaciones (manuales o automaticas). 
-                                        </p>
-                                         <a href="/mi/postulacion" class="btn btn-secondary btn-link btn-sm float-left" role="button">Consulte aquí las postulaciones</a>
-                                      </div>
-                                    </form>
-                                  </div>
-                              <div class="oe_structure" id="oe_structure_portal_my_home_1"/>
-                                  <div class="o_portal_docs list-group">
+                                          </form>
+                                        </div>                              
+                                    
+                                    
+                                      <h3>Postulaciones</h3>
+                                        <div class="o_portal_docs list-group">
+                                          <form action="/mi/postulacion" method="post">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <div>
+                                              <p>
+                                                En esta sección brindamos la posibilidad de ver el estado de sus aplicaciones (manuales o automaticas). 
+                                              </p>
+                                               <a href="/mi/postulacion" class="btn btn-secondary btn-link btn-sm float-left" role="button">Consulte aquí las postulaciones</a>
+                                            </div>
+                                          </form>
+                                        </div>
+                                    <div class="oe_structure" id="oe_structure_portal_my_home_1"/>
+                                        <div class="o_portal_docs list-group">
+            
+                                        </div>
+                                        <h3/>
+                                    <h3>Video Presentacion</h3>
+                                        <div class="o_portal_docs list-group">
+                                    </div>                        
+                                </div>
+                                <div class="oe_structure" id="oe_structure_portal_my_home_2"/>
+                            </t>
       
-                                  </div>
-                                  <h3></h3>
-                              <h3>Video Presentacion</h3>
-                                  <div class="o_portal_docs list-group">
-                              </div>                        
-                          </div>
-                          <div class="oe_structure" id="oe_structure_portal_my_home_2"/>
-                      </t>
-                  </t>
-              </t>
           </t>
       
           
@@ -1555,369 +1799,236 @@
 
 <template id="empleabilidad.hvpdf">
   <t t-name="empleabilidad.hvpdf">
-
-    <div class="templates">
-      <div class="templates__header">
-        <div class="templates-header__option-modal">
-          <span class="ant-tooltip-disabled-compatible-wrapper" style="display: inline-block; cursor: not-allowed;">
-            <button disabled="" type="button" class="ant-btn ant-btn-text" style="pointer-events: none;">
-              <span role="img" aria-label="file-image" class="anticon anticon-file-image">
-                <svg viewBox="64 64 896 896" focusable="false" data-icon="file-image" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                  <path d="M553.1 509.1l-77.8 99.2-41.1-52.4a8 8 0 00-12.6 0l-99.8 127.2a7.98 7.98 0 006.3 12.9H696c6.7 0 10.4-7.7 6.3-12.9l-136.5-174a8.1 8.1 0 00-12.7 0zM360 442a40 40 0 1080 0 40 40 0 10-80 0zm494.6-153.4L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326zm1.8 562H232V136h302v216a42 42 0 0042 42h216v494z"></path>
-                </svg>
-              </span>
-              <span>Cambiar diseño</span>
-            </button>
-          </span>
-        </div>
-        <div class="templates-header__option-popover">
-          <button type="button" class="ant-btn ant-btn-text">
-            <i aria-hidden="true" role="presentation" class="la la-palette"></i>
-            <span>Colores</span>
-          </button>
-          <div style="position: absolute; top: 0px; left: 0px; width: 100%;">
-            <div>
-              <div class="ant-popover ant-popover-placement-bottom  ant-popover-hidden" style="left: -227px; top: -941px; transform-origin: 50% -4px;">
-                <div class="ant-popover-content">
-                  <div class="ant-popover-arrow">
-                    <span class="ant-popover-arrow-content"></span>
+   <body>
+      <link rel="stylesheet" href="/empleabilidad/static/src/css/hvpdf.css"/>
+      <link href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic" rel="stylesheet" type="text/css"/>
+      <script src="/empleabilidad/static/src/js/hvpdf.js"/>
+      <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+      <link rel="stylesheet" href="/empleabilidad/static/src/css/bootstrap-taginput.css"/>
+  
+      <link rel="stylesheet" href="/empleabilidad/static/src/css/empleabilidad.css"/>
+      <!-- <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script> -->
+                      <!-- Caso 2  Inicio inclusion de los JS a la página -->
+                                    <script src="/empleabilidad/static/src/js/jquery-3.6.0.min.js"/>
+                                    <script src="/empleabilidad/static/src/js/bootstrap.min.js"/>
+                                    <script src="/empleabilidad/static/src/js/tagify.min.js"/>
+                                    <script src="/empleabilidad/static/src/js/tagify.polyfills.min.js"/>
+                                    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"/>
+                                    
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"/>
+                                    
+                      <!-- Caso 2  Fin inclusion de los JS a la página -->
+  
+          <input type="hidden" name="x_skill_ids" t-att-value="x_skill_ids"/>
+          <input type="hidden" name="skill_Total" t-att-value="skill_Total"/>
+          <input type="hidden" name="x_categ_dicts" t-att-value="x_categ_dicts"/>
+          <input type="hidden" name="x_categ_Totals" t-att-value="x_categ_Totals"/>
+          <input type="hidden" name="TipoEdu" t-att-value="TipoEdu"/>
+          <input type="hidden" name="x_estudios_ids" t-att-value="x_estudios_ids"/>
+          <input type="hidden" name="x_experiencia_ids" t-att-value="x_experiencia_ids"/>
+          <input type="hidden" name="x_photo" t-att-value="partner.image_1920"/>
+          <input type="hidden" name="ufile" t-att-value="ufile"/>
+                      
+        <!-- MAIN CONTAINER -->
+        <div id="main_container">
+              <!-- HEADER -->
+              <div id="header">
+                <!-- LOGOTYPE/NAME -->
+                <div class="header_logotype_container">
+                  <h2>HOJA DE VIDA</h2>
+                  <!--
+                  <h1 class="logotype_name"><span t-field="partner.name"/></h1>
+                  <h2 class="logotype_occupation">Frontend Web Developer</h2>
+                  -->
+                </div>
+                <!-- MAIN MENU -->
+                <div class="header_menu_container">
+                  <ul class="download_print_buttons horizontal_list">
+                    <li><a href="#" id="Descargar"><span class="icon entypo-download"></span>Descargar</a></li>
+                    <!-- <li><a href="#"><span class="icon entypo-print"></span>Print CV</a></li> -->
+                  </ul>
+                  <div class="block">
+                    <h1 class="logotype_name"><span t-field="partner.name"/></h1>
+                    <h2 class="logotype_occupation">Frontend Web Developer</h2>
                   </div>
-                  <div class="ant-popover-inner" role="tooltip">
-                    <div class="ant-popover-inner-content">
-                      <div class="templates-header__colors">
-                        <div id="0" class="templates-header__colors--item-content" style="cursor: pointer;">
-                          <div class="sc-bdnxRM csTBbC"></div>
-                        </div>
-                        <div id="1" class="templates-header__colors--item-content" style="cursor: pointer;">
-                          <div class="sc-bdnxRM hXyKMV"></div>
-                        </div>
-                        <div id="2" class="templates-header__colors--item-content" style="cursor: pointer;">
-                          <div class="sc-bdnxRM enrXLs"></div>
-                        </div>
-                        <div id="3" class="templates-header__colors--item-content" style="cursor: pointer;">
-                          <div class="sc-bdnxRM dLSpWv"></div>
-                        </div>
-                        <div id="4" class="templates-header__colors--item-content" style="cursor: pointer;">
-                          <div class="sc-bdnxRM hHithH"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <div class="clear"></div>
+                  <!-- 
+                  <ul class="header_menu horizontal_list">
+                    <li><a class="no_border purple" href="#">Profile</a></li>
+                    <li><a href="#">Education</a></li>
+                    <li><a href="#">Skills</a></li>
+                    <li><a href="#">Work Experience</a></li>
+                    <li><a href="#">Featured Projects</a></li>
+                    <li><a href="#">Awards</a></li>
+                  </ul>
+                  -->
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="templates-header__option-popover">
-          <button type="button" class="ant-btn ant-btn-text">
-            <span role="img" aria-label="font-colors" class="anticon anticon-font-colors">
-              <svg viewBox="64 64 896 896" focusable="false" data-icon="font-colors" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                <path d="M904 816H120c-4.4 0-8 3.6-8 8v80c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-80c0-4.4-3.6-8-8-8zm-650.3-80h85c4.2 0 8-2.7 9.3-6.8l53.7-166h219.2l53.2 166c1.3 4 5 6.8 9.3 6.8h89.1c1.1 0 2.2-.2 3.2-.5a9.7 9.7 0 006-12.4L573.6 118.6a9.9 9.9 0 00-9.2-6.6H462.1c-4.2 0-7.9 2.6-9.2 6.6L244.5 723.1c-.4 1-.5 2.1-.5 3.2-.1 5.3 4.3 9.7 9.7 9.7zm255.9-516.1h4.1l83.8 263.8H424.9l84.7-263.8z"></path>
-              </svg>
-            </span>
-            <span>Estilo de letra</span>
-          </button>
-          <div style="position: absolute; top: 0px; left: 0px; width: 100%;">
-            <div>
-              <div class="ant-popover ant-popover-placement-bottom  ant-popover-hidden" style="left: -63px; top: -941px; transform-origin: 50% -4px;">
-                <div class="ant-popover-content">
-                  <div class="ant-popover-arrow">
-                    <span class="ant-popover-arrow-content"></span>
+              <!-- LEFT COL -->
+              <div id="left_col">
+                <div class="profile_frame">
+                  <div class="profile_picture">
+                    <img id="x_photo" alt="" src=""  width="120" height="120"></img>
                   </div>
-                  <div class="ant-popover-inner" role="tooltip">
-                    <div class="ant-popover-inner-content">
-                      <ul class="ant-menu ant-menu-light templates-header__fonts ant-menu-root ant-menu-vertical" role="menu">
-                        <li class="ant-menu-item ant-menu-item-only-child" role="menuitem" style="font-family: Mulish;">Mulish</li>
-                        <li class="ant-menu-item ant-menu-item-only-child" role="menuitem" style="font-family: Arial;">Arial</li>
-                        <li class="ant-menu-item ant-menu-item-only-child" role="menuitem" style="font-family: Roboto;">Roboto</li>
-                        <li class="ant-menu-item ant-menu-item-only-child" role="menuitem" style="font-family: Comfortaa;">Comfortaa</li>
-                        <li class="ant-menu-item ant-menu-item-only-child" role="menuitem" style="font-family: Lato;">Lato</li>
-                        <li class="ant-menu-item ant-menu-item-only-child" role="menuitem" style="font-family: Quicksand;">Quicksand</li>
-                        <li class="ant-menu-item ant-menu-item-only-child" role="menuitem" style="font-family: Allerta;">Allerta</li>
-                        <li class="ant-menu-item ant-menu-item-only-child" role="menuitem" style="font-family: &quot;Bree Serif&quot;;">Bree Serif</li>
-                        <li class="ant-menu-item ant-menu-item-only-child" role="menuitem" style="font-family: Raleway;">Raleway</li>
+                  
+                  <!-- <img src="images/javier_latorre.jpg" alt="profile picture"> -->
+                </div>
+                <!--
+                <div class="hello_content">
+                  <h2>Hello!</h2>
+                  <p>I'm passionate about technology and human behavior, hardworker and a fast-learner with experience in around 10 different countries studying, working and volunteering.</p>
+                </div>
+                -->
+                <div class="contact_details_content">
+                  <h2>Contacto</h2>
+                  <div class="row">
+                    <ion-icon name="call-outline"></ion-icon>
+                    <h10><span t-field="partner.phone"/></h10>
+                  </div>
+                  <div class="row">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    <h10><span t-field="partner.email"/></h10>
+                  </div>
+                  <div class="row">
+                    <ion-icon name="logo-linkedin"></ion-icon>
+                    <h10><span t-field="partner.link_linkedin"/></h10>
+                  </div>  
+                  <div class="row">
+                    <ion-icon name="location-outline"></ion-icon>
+                    <h10><span t-field="partner.city"/> </h10>
+                  </div>    
+  
+                </div>
+                <!-- Habilidades -->
+                <div  class="contact_details_content">
+                  <h2>Habilidades</h2>
+                  <table class="table table-sm o_main_table" name="skills_table" id="skills_table">
+                    <tbody>                
+                        <t t-foreach="partner.partner_skill_ids" t-as="key">
+                          <tr>
+                            <td>
+                              <h10><span t-field="key.skill_id.name"/></h10>
+                            </td>
+                                          <td>
+                                            <div class="progress">
+                                              <div class="progress-bar o_rating_progressbar" style="width:20%" role="progressbar" 
+                                                  t-att-aria-valuenow="key.skill_level_id.level_progress" aria-valuemin="0" aria-valuemax="100" 
+                                                  t-att-style="'width:' + str(key.skill_level_id.level_progress) + '%;'"
+                                                  t-att-id="key.skill_id.name">
+                                                <h10><span class="px-2 text-warning"><t t-esc="key.skill_level_id.level_progress"/>%</span></h10>
+                                              </div>
+                                            </div>
+                                            </td>
+                          </tr>
+                        </t>
+                    </tbody>
+                  </table>
+                </div>
+                
+                
+                
+                <a t-att-href="'mailto: '+ partner.email" class="send_message_button">
+                  <span class="cut1"></span>
+                  <span class="cut2"></span>
+                  <h10><span class="content">Enviar email <span class="fontawesome-double-angle-right"></span></span></h10>
+                </a>
+                <div class="get_social_content">
+                  <h2>Redes Sociales</h2>
+                  <ul class="social_icons horizontal_list">
+                    <li><a class="facebook" href="https://www.facebook.com">
+                          <span class="entypo-facebook-circled"></span>
+                          <span class="invisible">Facebook</span>
+                          </a></li>
+                    <li><a class="twitter" t-att-href="partner.link_twitter"><span class="entypo-twitter-circled"></span><span class="invisible">Twitter</span></a></li>
+                    <li>
+                      <a class="linkedin" t-att-href="partner.link_linkedin">
+                        <span class="entypo-linkedin-circled">
+                        </span>
+                        <span class="invisible">LinkedIn</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!-- PROFILE CONTENT -->
+              <div id="content_container">				
+                <div class="block">
+                  <h1>Perfil</h1>
+                  <blockquote class="profile_quote">
+                    <h5><span t-field="partner.profile"/></h5>
+                    <!-- <span class="entypo-quote"></span> -->
+                  </blockquote>
+                </div>
+                <div class="horizontal_line">
+                  <div class="line_left"></div>
+                  <div class="left_circle"></div>
+                  <div class="central_circle"></div>
+                  <div class="right_circle"></div>
+                  <div class="line_right"></div>
+                </div>              
+                <div class="block">
+                  <h1>Educación</h1>
+                  <!-- <section class="py-5">  -->
+                  <!-- <ul class="timeline"> -->
+                  <blockquote class="profile_quote">
+                      <t t-foreach="partner.partner_edus_ids" t-as="key">
+                        <ul class="timeline">
+                        <h5 class="fw-bold"><t t-esc="key.edu_title"/></h5>
+                        <h6>
+                          <span t-field="key.name"/> ( <span t-field="key.date_start" t-options='{"widget": "date", "format": "yyyy/MM"}'/> - <span t-field="key.date_end" t-options='{"widget": "date", "format": "yyyy/MM"}'/> )
+                        </h6>
                       </ul>
-                    </div>
-                  </div>
+                      </t>  
+                    <!-- Section: Timeline -->
+                  </blockquote>
+                    <!-- </ul> -->
+                  <!-- </section>  -->
                 </div>
+                <div class="horizontal_line">
+                  <div class="line_left"></div>
+                  <div class="left_circle"></div>
+                  <div class="central_circle"></div>
+                  <div class="right_circle"></div>
+                  <div class="line_right"></div>
+                </div>
+                <div class="block">
+                  <h1>Experiencia</h1>
+                  <!-- <section class="py-5">  -->
+                  <!-- <ul class="timeline"> -->
+                  <blockquote class="profile_quote">
+                      <t t-foreach="partner.partner_jobs_ids" t-as="key">
+                        <ul class="timeline">
+                        <h5 class="fw-bold"><t t-esc="key.job_title"/></h5>
+                        <h6>
+                          <span t-field="key.name"/> ( <span t-field="key.date_start" t-options='{"widget": "date", "format": "yyyy/MM"}'/> - <span t-field="key.date_end" t-options='{"widget": "date", "format": "yyyy/MM"}'/> )
+                        </h6>
+                        <h8> Funciones </h8>
+                        <h9>
+                          <span t-field="key.functions"/> 
+                        </h9>    
+                        <h8> Logros </h8>
+                        <h9>
+                          <span t-field="key.achievements"/> 
+                        </h9>                        
+                      </ul>
+                      </t>  
+                    <!-- Section: Timeline -->
+                  </blockquote>
+                    <!-- </ul> -->
+                  <!-- </section>  -->
+                </div>              
+  
               </div>
-            </div>
-          </div>
+              <div class="clear"></div>
+              <!-- FOOTER -->
+              <div id="footer">
+                <p class="footer_name">quieroemplearmeya</p>
+              </div>
         </div>
-        <div class="templates-header__option-modal">
-          <button type="button" class="ant-btn ant-btn-text">
-            <i aria-hidden="true" role="presentation" class="la la-share-alt"></i>
-            <span>Compartir</span>
-          </button>
-        </div>
-        <div class="templates-header__option-modal">
-          <span class="ant-tooltip-disabled-compatible-wrapper" style="display: inline-block; cursor: not-allowed;">
-            <button disabled="" type="button" class="ant-btn ant-btn-text" style="pointer-events: none;">
-              <span role="img" aria-label="download" class="anticon anticon-download">
-                <svg viewBox="64 64 896 896" focusable="false" data-icon="download" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                  <path d="M505.7 661a8 8 0 0012.6 0l112-141.7c4.1-5.2.4-12.9-6.3-12.9h-74.1V168c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v338.3H400c-6.7 0-10.4 7.7-6.3 12.9l112 141.8zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
-                </svg>
-              </span>
-              <span>Descargar HV</span>
-            </button>
-          </span>
-          <div style="position: absolute; top: 0px; left: 0px; width: 100%;">
-            <div>
-              <div class="ant-tooltip ant-tooltip-placement-top  ant-tooltip-hidden" style="left: 275px; top: -1022px; transform-origin: 50% 45px;">
-                <div class="ant-tooltip-content">
-                  <div class="ant-tooltip-arrow">
-                    <span class="ant-tooltip-arrow-content"></span>
-                  </div>
-                  <div class="ant-tooltip-inner" role="tooltip">Próximamente disponible</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="templates-default">
-        <div class="sc-eCApnc cIbEUt templates-default-left">
-          <img class="templates-default-left__photo" src="https://media.magneto365.com/candidates/profile_images/4206890/thumb-938bd0d6-7fe7-4c3e-8834-e0ed77a8fffe-.?Expires=1662595199&amp;Key-Pair-Id=K3F66W3VXZUW7N&amp;Signature=wJH1LeGx5UAQPnAeSb6whsr0gsymlgn~GI3Xyfc68KqRa8PsreoeSYlVGhzert0gAYzeqXiQFUNuYBRL9qArjFV5AkT4P3eCSrzHeahI~XNFFVqQtSjg2Yb5vH3WCrfOL3pw5-QyH-bXtFErWRYwXxO0b5hzXxvz3DPhpUBGaaIPrJLhOAaoZlIbkA2XgoAfkYLpvsZxqdILE5dn3mzDUNDQPMF-vCn91DFNF6JMheQikYb5byVHa3ibdxVvf00vQgt-cPSYGp2dp1RSwsr8uyAINtYANg2hHAKC72OzeQpLKLnsOKoUCqUdXh2j7QTxpVYjFszmoZFs-oUqUWIzAQ__"/>
-            <div class="templates-default-left__names">
-              <span class="templates-default-left__names--first-name">Osvaldo</span>
-              <span class="templates-default-left__names--last-name">GARCIA</span>
-            </div>
-            <div class="templates-default-left__basic-information">
-              <span class="templates-default-left__basic-information--identification">CC 79364773</span>
-              <span class="templates-default-left__basic-information--age">Masculino, 56 años</span>
-              <span class="templates-default-left__basic-information--profession">Ingeniero de sistemas</span>
-            </div>
-            <div class="ant-divider ant-divider-horizontal sc-hKFxyN cVJpmQ" role="separator"></div>
-            <span class="templates-default-left__title">CONTACTO</span>
-            <div class="templates-default-left__contact">
-              <span class="templates-default-left__contact--email">oj_garcia@hotmail.com</span>
-              <span class="templates-default-left__contact--phone">3114770493</span>
-              <span class="templates-default-left__contact--location">Bogotá, Colombia</span>
-            </div>
-            <div class="ant-divider ant-divider-horizontal sc-hKFxyN cVJpmQ" role="separator"></div>
-            <span class="templates-default-left__title">HABILIDADES</span>
-            <div class="templates-default-left__skills">
-              <span class="templates-default-left__skills--name">Innovacion</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 75%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">Experiencia en : bases de datos oracle/sqlserver/mysql/postgres; erp financiero sap/gp; puntos de venta; software de desarrollo c++/c#/java/python/postman; conocimiento en transformacion digital, cloud computing, automatizacion (rpa), analitica de datos, modelamiento y machine learning. </span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 75%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">Powerbi</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 50%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">Sqlserver</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 75%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">C#</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 50%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">Oracle</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 75%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">Apirest</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 50%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">Scrum</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 75%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">Ssis</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 75%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">Ia</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 50%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">Pl/sql</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 75%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">Linux</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 75%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">Python</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 50%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">Itil</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 75%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="templates-default-left__skills--name">Postman</span>
-              <div class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default sc-gtsrHT kgKQFI">
-                <div class="ant-progress-outer">
-                  <div class="ant-progress-inner">
-                    <div class="ant-progress-bg" style="width: 75%; height: 8px; border-radius: 0px;"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="ant-divider ant-divider-horizontal sc-hKFxyN cVJpmQ" role="separator"></div>
-            <span class="templates-default-left__title">IDIOMAS</span>
-            <div class="templates-default-left__languages">
-              <span style="margin-bottom: 0.2rem;">Inglés   Intermedio</span>
-            </div>
-            <div class="ant-divider ant-divider-horizontal sc-hKFxyN cVJpmQ" role="separator"></div>
-        </div>
-        <div class="sc-iCoGMd bnecQ templates-default-rigth">
-          <div class="ant-divider ant-divider-horizontal sc-hKFxyN cVJpmQ" role="separator"></div>
-          <div class="templates-default-rigth__description">Profesional en ingeniería de sistemas y especialista en evaluación y desarrollo de proyectos. con una trayectoria de más de 15 años liderando proyectos de tecnología. en la implementación de planes ti, sistemas core de negocios, erp financieros (sap/gp/ebs), facturación electrónica, e-commerce, access control, business intelligence, payroll y sus integraciones directas o por apirest; aplicación de las metodologías itil/scrum, gestión de los recursos y servicios informáticos. automatización y digitalización de los procesos y procedimientos(rap). conocimientos deep learning and machine learning. inglés intermedio. con recursividad, orientación al logro, innovación, trabajo en equipo y liderazgo. </div>
-          <div class="ant-divider ant-divider-horizontal sc-hKFxyN cVJpmQ" role="separator"></div>
-          <span class="templates-default-rigth__title">EXPERIENCIA</span>
-          <div class="templates-default-rigth__experiences">
-            <ul class="ant-timeline sc-jSFjdj gqUkp">
-              <li class="ant-timeline-item">
-                <div class="ant-timeline-item-tail"></div>
-                <div class="ant-timeline-item-head ant-timeline-item-head-blue"></div>
-                <div class="ant-timeline-item-content">
-                  <div style="color: rgb(0, 158, 170);">05/2014 a 07/2021</div>
-                  <div>Gerente de aplicaciones</div>
-                  <div style="margin-bottom: 0.5rem;">
-                    <i>Bodytech</i>
-                  </div>
-                  <div style="font-size: 12px;">Selección, evaluación e implementación del sistema transaccional de facturación; encargado de la unificación de las aplicaciones para los países de Chile, Colombia y Perú; estandarización del ERP (Dynamics GP),  KPIS basado en software estable;  implementación del software de PowerBi para los informes (KPIS) de negocio; líder del proyecto de funcionamiento de venta de servicios On-Line;  PCI</div>
-                </div>
-              </li>
-              <li class="ant-timeline-item">
-                <div class="ant-timeline-item-tail"></div>
-                <div class="ant-timeline-item-head ant-timeline-item-head-blue"></div>
-                <div class="ant-timeline-item-content">
-                  <div style="color: rgb(0, 158, 170);">05/2001 a 06/2012</div>
-                  <div>Jefe De Aplicaciones</div>
-                  <div style="margin-bottom: 0.5rem;">
-                    <i>Makro De Colombia Sa</i>
-                  </div>
-                  <div style="font-size: 12px;">Dirección del equipo de trabajo en área; soporte y administración de los ERP (SAP/EBS/MBS/ PROPHIX), B2B/BI/POS/TAT/SupplyChance (WMS), 
-programación en lenguaje PL/SQL, triggers, contraints, programcion en Shell script (Linux), C++ y soporte a los servicios informáticos, gestión del ciclo de vida de las aplicaciones y elaboración e implementación de estrategias de TI</div>
-                </div>
-              </li>
-              <li class="ant-timeline-item">
-                <div class="ant-timeline-item-tail"></div>
-                <div class="ant-timeline-item-head ant-timeline-item-head-blue"></div>
-                <div class="ant-timeline-item-content">
-                  <div style="color: rgb(0, 158, 170);">02/1996 a 05/2001</div>
-                  <div>Jefe División Técnica</div>
-                  <div style="margin-bottom: 0.5rem;">
-                    <i>Fiduciaria La Previsora</i>
-                  </div>
-                  <div style="font-size: 12px;">Responsabilidades y Tareas: Administración de las bases de datos (v7) y sistema operativo AIX, Dirección 
-del grupo de desarrollo de aplicaciones, Soporte y mantenimiento de las aplicaciones del FNPSM
-</div>
-                </div>
-              </li>
-              <li class="ant-timeline-item ant-timeline-item-last">
-                <div class="ant-timeline-item-tail"></div>
-                <div class="ant-timeline-item-head ant-timeline-item-head-blue"></div>
-                <div class="ant-timeline-item-content">
-                  <div style="color: rgb(0, 158, 170);">07/1993 a 08/1995</div>
-                  <div>Coordinador Sistemas</div>
-                  <div style="margin-bottom: 0.5rem;">
-                    <i>Servicio Nacional De Aprendizaje Sena</i>
-                  </div>
-                  <div style="font-size: 12px;">Responsabilidades y Tareas: Administración de las bases de datos (v 6 y 7) y sistema operativo UNIX, 
-Soporte y mantenimiento de las aplicaciones de empleo, relación directa con la región y central para 
-conocer sobre sus necesidades. </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="ant-divider ant-divider-horizontal sc-hKFxyN cVJpmQ" role="separator"></div>
-          <span class="templates-default-rigth__title">ESTUDIOS</span>
-          <div class="templates-default-rigth__studies">
-            <ul class="ant-timeline sc-jSFjdj gqUkp">
-              <li class="ant-timeline-item">
-                <div class="ant-timeline-item-tail"></div>
-                <div class="ant-timeline-item-head ant-timeline-item-head-blue"></div>
-                <div class="ant-timeline-item-content">
-                  <div style="color: rgb(0, 158, 170);">07/1987 a 11/1989</div>
-                  <div>Evaluador de proyectos</div>
-                  <div style="font-size: 12px;">Universidad del Rosario</div>
-                </div>
-              </li>
-              <li class="ant-timeline-item ant-timeline-item-last">
-                <div class="ant-timeline-item-tail"></div>
-                <div class="ant-timeline-item-head ant-timeline-item-head-blue"></div>
-                <div class="ant-timeline-item-content">
-                  <div style="color: rgb(0, 158, 170);">07/1984 a 11/1989</div>
-                  <div>Ingeniero de sistemas</div>
-                  <div style="font-size: 12px;">Universidad piloto</div>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="ant-divider ant-divider-horizontal sc-hKFxyN cVJpmQ" role="separator"></div>
-        </div>
-      </div>
-    </div>
-
-
+        </body>
   </t>
+  
+      
 </template>
 
     <template id="portal_mi_edu">
