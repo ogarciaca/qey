@@ -1033,17 +1033,17 @@ class CustomerPortal(http.Controller):
             
             x_skill_ids.append(x_skill_dict)
 
-            x_categ_ids = []
-            x_categ_dicts = []
-            #x_categ_dict = {'partner_id': '','candidate_vacant_id': '','res_partner_category_id':'','name':''};
-            for l in partner.category_id:
-                x_categ_dict={}
-                x_categ_dict["name"] = l.name
-                #x_categ_dict["partner_id"] = partner.id
-                #x_categ_dict["candidate_vacant_id"] = vacant.id
-                x_categ_dict["res_partner_category_id"] = l.id
-                
-                x_categ_dicts.append(x_categ_dict)    
+        x_categ_ids = []
+        x_categ_dicts = []
+        #x_categ_dict = {'partner_id': '','candidate_vacant_id': '','res_partner_category_id':'','name':''};
+        for l in partner.category_id:
+            x_categ_dict={}
+            x_categ_dict["name"] = l.name
+            #x_categ_dict["partner_id"] = partner.id
+            #x_categ_dict["candidate_vacant_id"] = vacant.id
+            x_categ_dict["res_partner_category_id"] = l.id
+            
+            x_categ_dicts.append(x_categ_dict)    
 
         # Caso 4  Fin Llenado del arreglo de los skill de la persona
 
