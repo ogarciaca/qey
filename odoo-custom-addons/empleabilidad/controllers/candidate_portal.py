@@ -1026,6 +1026,7 @@ class CustomerPortal(http.Controller):
 
         countries = request.env['res.country'].sudo().search([])
         states = request.env['res.country.state'].sudo().search([])
+        identification_types = request.env['l10n_latam.identification.type'].sudo().search([])
 
         genders = [('male', 'Male'),('female', 'Female'),('other', 'Other')]
         maritals = [('single', 'Single'),('married', 'Married'),('cohabitant', 'Legal Cohabitant'),('widower', 'Widower'),('divorced', 'Divorced')]
@@ -1077,7 +1078,8 @@ class CustomerPortal(http.Controller):
             'redirect': redirect,
             'page_name': 'cuenta',
             'TipoEdu' : TipoEdu,
-            'x_photo': x_photo
+            'x_photo': x_photo,
+            "identification_types" : identification_types
         })
 
         response = request.render("empleabilidad.portal_my_details", values)
@@ -1136,6 +1138,7 @@ class CustomerPortal(http.Controller):
 
         countries = request.env['res.country'].sudo().search([])
         states = request.env['res.country.state'].sudo().search([])
+        identification_types = request.env['l10n_latam.identification.type'].sudo().search([])
 
         genders = [('male', 'Male'),('female', 'Female'),('other', 'Other')]
         maritals = [('single', 'Single'),('married', 'Married'),('cohabitant', 'Legal Cohabitant'),('widower', 'Widower'),('divorced', 'Divorced')]
@@ -1187,7 +1190,8 @@ class CustomerPortal(http.Controller):
             'redirect': redirect,
             'page_name': 'cuenta',
             'TipoEdu' : TipoEdu,
-            'x_photo': x_photo
+            'x_photo': x_photo,
+            "identification_types" : identification_types
         })
 
         response = request.render("empleabilidad.hvpdf", values)
