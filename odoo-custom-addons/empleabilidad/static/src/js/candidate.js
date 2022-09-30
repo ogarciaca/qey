@@ -615,7 +615,7 @@ function _AddRowExp_table() {
 
         let index = 1 + Number(max)
 
-        let _row = `<tr PopUpExp_indice = "${index}" PopUpExp_job_id="-1" PopUpExp_job_title="${PopUpExp_job_title}" PopUpExp_name="${PopUpExp_name}" PopUpExp_date_start="${PopUpExp_date_start}" PopUpExp_date_end="${PopUpExp_date_end}
+        let _row = `<tr PopUpExp_indice = "${index}" PopUpExp_job_id="-1" PopUpExp_job_title="${PopUpExp_job_title}" PopUpExp_name="${PopUpExp_name}" PopUpExp_date_start="${PopUpExp_date_start}" PopUpExp_date_end="${PopUpExp_date_end}"
         PopUpExp_functions="${PopUpExp_functions}"  PopUpExp_achievements="${PopUpExp_achievements}">
             <td>
             <span>${PopUpExp_name}</span>
@@ -1105,17 +1105,19 @@ function checkFileSize(evt) {
 function _CategToJson(input) {
     const table = input;
     const rows = [...table.rows]
-    const props = [...rows[0].attributes].map(a => { return a.name })
+    if (rows.length > 0) {
+        const props = [...rows[0].attributes].map(a => { return a.name })
 
-    const filas = [...rows].map(r => {
-        const entries = [...r.attributes].map((c, i) => {
-            return [props[i], c.value];
+        const filas = [...rows].map(r => {
+            const entries = [...r.attributes].map((c, i) => {
+                return [props[i], c.value];
 
+            });
+            return Object.fromEntries(entries);
         });
-        return Object.fromEntries(entries);
-    });
 
-    return JSON.stringify(filas);
+        return JSON.stringify(filas);
+    } else { return [] }
 };
 
 function _SkillToJson(input) {

@@ -102,14 +102,15 @@ def  _SkillSearch (js,search_term):
 def _SkillWrite(pjs,v_id):
     s = request.env['candidate.vacant.skill'].sudo().search([('vacant_id','=',v_id)])
     # Eliminar los que no vienen en el json pjs
-    for i in s:
-        val = _SkillSearch(pjs,i.skill_id.id)
-        if not val:
-            # print("Update",val)
-        #else:
-            qry ="DELETE FROM candidate_vacant_skill WHERE ID = " + str(i.id)
-            request.cr.execute(qry)
-            print("Delete",i.id)
+    if s.id:
+        for i in s:
+            val = _SkillSearch(pjs,i.skill_id.id)
+            if not val:
+                # print("Update",val)
+            #else:
+                qry ="DELETE FROM candidate_vacant_skill WHERE ID = " + str(i.id)
+                request.cr.execute(qry)
+                print("Delete",i.id)
 
     for i in pjs:
         val = request.env['candidate.vacant.skill'].sudo().search([('vacant_id','=',v_id),('skill_id','=',int(i["skill_id"]))])
@@ -126,14 +127,15 @@ def _SkillWrite(pjs,v_id):
 def _SkillWriteHV(pjs,p_id):
     s = request.env['candidate.skill'].sudo().search([('partner_id','=',p_id)])
     # Eliminar los que no vienen en el json pjs
-    for i in s:
-        val = _SkillSearch(pjs,i.skill_id.id)
-        if not val:
-            # print("Update",val)
-        #else:
-            qry ="DELETE FROM candidate_skill WHERE ID = " + str(i.id)
-            request.cr.execute(qry)
-            print("Delete",i.id)
+    if s.id:
+        for i in s:
+            val = _SkillSearch(pjs,i.skill_id.id)
+            if not val:
+                # print("Update",val)
+            #else:
+                qry ="DELETE FROM candidate_skill WHERE ID = " + str(i.id)
+                request.cr.execute(qry)
+                print("Delete",i.id)
 
     for i in pjs:
         val = request.env['candidate.skill'].sudo().search([('partner_id','=',p_id),('skill_id','=',int(i["skill_id"]))])
@@ -155,12 +157,13 @@ def  _ESTSearch (js,search_term):
 def _ESTWriteHV(pjs,p_id):
     s = request.env['candidate.edus'].sudo().search([('partner_id','=',p_id)])
     # Eliminar los que no vienen en el json pjs
-    for i in s:
-        val = _ESTSearch(pjs,i.id)
-        if not val:
-            qry ="DELETE FROM candidate_edus WHERE ID = " + str(i.id)
-            request.cr.execute(qry)
-            print("Delete",i.id)
+    if s.id:
+        for i in s:
+            val = _ESTSearch(pjs,i.id)
+            if not val:
+                qry ="DELETE FROM candidate_edus WHERE ID = " + str(i.id)
+                request.cr.execute(qry)
+                print("Delete",i.id)
 
     for i in pjs:
         val = request.env['candidate.edus'].sudo().search([('partner_id','=',p_id),('id','=',int(i["popupest_edu_id"]))])
@@ -182,12 +185,13 @@ def  _EXPearch(js,search_term):
 def _EXPWriteHV(pjs,p_id):
     s = request.env['candidate.jobs'].sudo().search([('partner_id','=',p_id)])
     # Eliminar los que no vienen en el json pjs
-    for i in s:
-        val = _EXPearch(pjs,i.id)
-        if not val:
-            qry ="DELETE FROM candidate_jobs WHERE ID = " + str(i.id)
-            request.cr.execute(qry)
-            print("Delete",i.id)
+    if s.id:
+        for i in s:
+            val = _EXPearch(pjs,i.id)
+            if not val:
+                qry ="DELETE FROM candidate_jobs WHERE ID = " + str(i.id)
+                request.cr.execute(qry)
+                print("Delete",i.id)
 
     for i in pjs:
         val = request.env['candidate.jobs'].sudo().search([('partner_id','=',p_id),('id','=',int(i["popupexp_job_id"]))])
@@ -195,7 +199,7 @@ def _EXPWriteHV(pjs,p_id):
             qry ="UPDATE candidate_jobs SET job_title='" + i["popupexp_job_title"] + "', name = '" +  i["popupexp_name"] + "', date_start = '" +   i["popupexp_date_start"]  + "', date_end = '" +   i["popupexp_date_end"] + "', functions = '" +   i["popupexp_functions"] + "', achievements = '" +   i["popupexp_achievements"] + "' WHERE ID = " + str(val.id)
             print("update",val.id,i)
         else:
-            qry ="INSERT INTO candidate_edu (partner_id,job_title, name, date_start, date_end, functions, achievements) \
+            qry ="INSERT INTO candidate_jobs (partner_id,job_title, name, date_start, date_end, functions, achievements) \
                     VALUES (" + str(p_id) + ",'" + i["popupexp_job_title"] + "','" + i["popupexp_name"] + "','" + i["popupexp_date_start"] + "','" + i["popupexp_date_end"] + "','" + i["popupexp_functions"] + "','" + i["popupexp_achievements"] + "')"
             print("Insert ", p_id,i)
         request.cr.execute(qry)
@@ -957,11 +961,12 @@ class CustomerPortal(http.Controller):
             elif 'AdicionaCat' in post:
                 return request.redirect('/mi/cuenta/CandidateCat/-1')                           
             else:
-                error, error_message = self.details_form_validate(post)
+                #error, error_message = self.details_form_validate(post)
+                error = ''                
                 #_logger.info('An INFO error and error_message')
                 #_logger.info(error)
                 #_logger.info(error_message)
-                values.update({'error': error, 'error_message': error_message})
+                #values.update({'error': error, 'error_message': error_message})
                 values.update(post)
                 if not error:
                     values = {key: post[key] for key in self.MANDATORY_BILLING_FIELDS}
@@ -984,24 +989,34 @@ class CustomerPortal(http.Controller):
                     x_photo = unicodedata.normalize('NFKD', x_photo).encode('ascii', 'ignore')
                     values["image_1920"] = x_photo
                     # Poner las categorias
-                    x_categ_ids=json.loads(json.loads(post["x_categ_dicts"]))
-                    if (x_categ_ids):
-                        list = []
-                        for x in x_categ_ids:
-                            list.append(int(x["res_partner_category_id"]))
-                        values["category_id"]=list
-                    # salvar los datos en partner    
+                    #x_categ_ids=json.loads(json.loads(post["x_categ_dicts"]))
+                    x_categ_ids=json.loads(post["x_categ_dicts"])
+                    if len(x_categ_ids) > 0:
+                        x_categ_ids=json.loads(x_categ_ids)
+                        if (x_categ_ids):
+                            list = []
+                            for x in x_categ_ids:
+                                list.append(int(x["res_partner_category_id"]))
+                            values["category_id"]=list
+                        # salvar los datos en partner    
                     partner.sudo().write(values)    
 
                     # poner aca la actualziacion de skill
-                    x_skill_ids = json.loads(json.loads(post["x_skill_ids"]))
+                    #x_skill_ids = json.loads(json.loads(post["x_skill_ids"]))
+                    x_skill_ids = json.loads(post["x_skill_ids"])
+                    if len(x_skill_ids) > 0:
+                        x_skill_ids=json.loads(x_skill_ids)
                     # Function to write JSON x_skill_ids into database
                     _SkillWriteHV(x_skill_ids,partner.id)
                     # poner aca la actualziacion de estudios
-                    x_estrudios_ids=json.loads(json.loads(post["x_estudios_ids"]))
+                    x_estrudios_ids=json.loads(post["x_estudios_ids"])
+                    if len(x_estrudios_ids) > 0:
+                        x_estrudios_ids=json.loads(x_estrudios_ids)
                     _ESTWriteHV(x_estrudios_ids,partner.id)
                     # pponer a la actualizacion de la experiencia
-                    x_experiencia_ids=json.loads(json.loads(post["x_experiencia_ids"]))
+                    x_experiencia_ids=json.loads(post["x_experiencia_ids"])
+                    if len(x_experiencia_ids) > 0:
+                        x_experiencia_ids=json.loads(x_experiencia_ids)                    
                     _EXPWriteHV(x_experiencia_ids,partner.id)
 
 
