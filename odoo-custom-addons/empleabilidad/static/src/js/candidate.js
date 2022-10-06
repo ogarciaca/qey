@@ -217,26 +217,34 @@ window.addEventListener("load", e => {
 
 
     btnaddCateg.addEventListener('click', e => {
-        let theform = document.getElementById("EmpresaHojadeVida");
-        //theform.addEventListener("submit", e => {
-        //    e.preventDefault();
-        //});
+        console.log("Entro en btnaddCateg")
+            //let theform = document.getElementById("EmpresaHojadeVida");
+            //theform.addEventListener("submit", e => {
+            //    e.preventDefault();
+            //});
 
         let CategJson = _CategToJson(document.querySelector('#categ_table tbody'));
-        CategJson = JSON.parse(CategJson);
-
+        let long = CategJson.length
+        console.log("longitud de la lista de categoria ", long)
+        if (long > 0) {
+            CategJson = JSON.parse(CategJson);
+        } else {
+            CategJson = []
+        }
+        console.log("CategJson ", CategJson)
         let x = document.getElementById("CategDL").selectedOptions;
         console.log("x ", x, x.length)
         for (i = 0; i <= x.length - 1; i++) {
             let val_id = x[i].attributes[1].value
             let val_name = x[i].attributes[0].value
-                //    console.log("CategJson ", CategJson)
+            console.log("CategJson ", CategJson)
+
             let enc = searchInObject(CategJson, "res_partner_category_id", val_id)
                 //    console.log("Search ", enc)
             let tableRef = document.querySelector(`#categ_table tbody`);
             //    console.log(val_id)
             if (!enc) {
-                //        console.log("Agregó categoria....")
+                console.log("Agregó categoria....")
 
                 let _row = `<tr class="badge badge-pill" res_partner_category_id="${val_id}" name="${val_name}">
                                 <td>
@@ -248,11 +256,13 @@ window.addEventListener("load", e => {
                                     </td>
                                 </tr>`
                 tableRef.innerHTML += _row;
+            } else {
+                console.log("No se agrega categoria....")
             }
 
         }
         //alert("Parar para ver los selected");
-
+        // alert()
     });
 
     addskilltype.addEventListener('click', e => {
@@ -365,7 +375,7 @@ function _AddCateg() {
     for (var i in x) {
         console.log("Selected ", i.value);
     }
-    alert("Parar para ver los selected");
+    //alert("Parar para ver los selected");
 };
 
 
@@ -513,12 +523,18 @@ function validateESTForm() {
 
 
 function searchInObject(object, searchKey, searchValue) {
+    console.log("object ", object)
+    console.log("searchKey ", searchKey)
     console.log("searchValue ", searchValue)
+
+
     for (var i in object) {
+        console.log("obj searchInObject ", object[i][searchKey])
         if (object[i][searchKey] == searchValue) {
             return [i, object[i].name];
         };
     };
+    //alert("")
 };
 
 function _DelMisCat() {
@@ -558,7 +574,7 @@ function _DelMisCat() {
 function _AddMisCat() {
     var div = event.srcElement.id;
     var res_partner_category_id = event.srcElement.id;
-
+    console.log("entro en _AddMisCat....");
     if (event.target.name === "CATTOT") {
         //console.log("Add CATTOT....");
         //console.log("Add....res_partner_category_id ", res_partner_category_id);

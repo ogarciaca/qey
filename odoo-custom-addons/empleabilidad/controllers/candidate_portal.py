@@ -537,7 +537,7 @@ class CustomerPortal(http.Controller):
     def CandidateEdu(self, edu_id, **post):
 
         values = self._prepare_portal_layout_values()
-        TipoEdu = [('classic', 'Classic')]
+        TipoEdu = [('classic', 'Classic'),('Bachillerato','Bachillerato'),('Tecnico','Tecnico'),('Tecnologo','Tecnologo'),('Profesional','Profesional'),('Especializacion','Especializacion'),('Maestria','Maestria'),('Doctorado','Doctorado')]
         if post:
             if 'Borrar' in post:
                 if post['id']:
@@ -978,7 +978,7 @@ class CustomerPortal(http.Controller):
                             values[field] = False
                     values.update({'zip': values.pop('zipcode', 'image_1920')})
                     values['salary'] = int(post['salary'])
-                    # partner.sudo().write(values)
+                    values['l10n_latam_identification_type_id'] = int(post['l10n_latam_identification_type_id'])
                     values.update({'image_1920': x_photo})
                     x_photo = post["x_photo"]
                     if 'jpeg' in x_photo:

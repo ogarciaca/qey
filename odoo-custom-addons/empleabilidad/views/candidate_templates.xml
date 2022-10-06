@@ -848,7 +848,7 @@
     </template>
 
     <template id="portal_my_details">
-                  <t t-name="empleabilidad.portal_my_details">
+      <t t-name="empleabilidad.portal_my_details">
                     <t t-call="empleabilidad.portal_layout">
                       <t t-set="additional_title">Contact Details</t>
                       
@@ -1511,10 +1511,11 @@
                                               <label for="tutorial_choice">Cargos: </label>
                                               <select id="CategDL" autocomplete="on" autofocus="true" multiple="true"> 
                                               </select> <!--autocomplete="on" autofocus="true" multiple="true"/> -->
-                                              <!-- <input list="CategDL" name="addsCategDL" id="addsCategDL" title="Seleccione el cargo que mas se acomode"/>-->
+                                              <!-- <input list="CategDL" name="addsCategDL" id="addsCategDL" title="Seleccione el cargo que mas se acomode"/>
                                                   <button ref="#" id="btnaddsCateg">
                                                       Adicionar Cargos
-                                                  </button>
+                                                  </button>-->
+                                                  <input type="button" class="oe_action_button btn btn-secondary rounded-circle" id="btnaddsCateg" name="btnaddsCateg" data-original-title="" title="">Adicionar Cargos</input>
                                           </div>
                                       </div>
                                       <div class="col-md-1"/>
@@ -1639,7 +1640,9 @@
                         </div>
                       </div>
                     </t>
-                  </t>
+          </t>
+      
+          
     </template>
 
     <template id="portal_my_oportunidad">
