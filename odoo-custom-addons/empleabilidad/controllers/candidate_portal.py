@@ -914,7 +914,7 @@ class CustomerPortal(http.Controller):
 
     @route(['/mi/cuenta'], type='http', auth='user', website=True)
     def micuentapersona(self, redirect=None, **post):
-        TipoEdu = [('classic', 'Classic')]
+        TipoEdu = [('classic', 'Classic'),('Bachillerato','Bachillerato'),('Tecnico','Tecnico'),('Tecnologo','Tecnologo'),('Profesional','Profesional'),('Especializacion','Especializacion'),('Maestria','Maestria'),('Doctorado','Doctorado')]
         # Caso 5  Inicio de llenado de todos los skill
         skill_Total1 = request.env['candidate.skills.view'].sudo().search([])
         skill_Total = []

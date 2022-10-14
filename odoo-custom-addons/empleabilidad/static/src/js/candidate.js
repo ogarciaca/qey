@@ -148,7 +148,7 @@ window.addEventListener("load", e => {
     });
 
     AdicionaEst.addEventListener("click", e => {
-        console.log(" Evento adiciona experiencia ");
+        console.log(" Evento adiciona estudio ");
         if (document.getElementById("PopUpEst").style.display == "none") {
             document.getElementById("PopUpEst").style.display = "block";
         } else {
@@ -634,7 +634,7 @@ function _AddRowExp_table() {
         let _row = `<tr PopUpExp_indice = "${index}" PopUpExp_job_id="-1" PopUpExp_job_title="${PopUpExp_job_title}" PopUpExp_name="${PopUpExp_name}" PopUpExp_date_start="${PopUpExp_date_start}" PopUpExp_date_end="${PopUpExp_date_end}"
         PopUpExp_functions="${PopUpExp_functions}"  PopUpExp_achievements="${PopUpExp_achievements}">
             <td>
-            <span>${PopUpExp_name}</span>
+            <span>${PopUpExp_job_title}</span>
             </td>
             <td>
             <span>${PopUpExp_name}</span>
@@ -685,13 +685,16 @@ function _AddRowEst_table() {
     let id = document.getElementsByName("PopUpEst_indice")[0].value
     console.log("_AddRowEst_table ", id)
     if (id == '') {
-
+        console.log("Se activa boton de adicionar estudio")
         let tableRef = document.querySelector("#Est_table tbody");
         let PopUpEst_edu_title = document.getElementsByName("PopUpEst_edu_title")[0].value;
         let PopUpEst_name = document.getElementsByName("PopUpEst_name")[0].value;
         let PopUpEst_date_start = document.getElementsByName("PopUpEst_date_start")[0].value;
         let PopUpEst_date_end = document.getElementsByName("PopUpEst_date_end")[0].value;
+        console.log("document.getElementsByName( ", document.getElementsByName("PopUpEst_edu_type")[0].value)
+
         let PopUpEst_edu_type = document.getElementsByName("PopUpEst_edu_type")[0].value;
+        console.log("PopUpEst_edu_type ", PopUpEst_edu_type)
         let PopUpEst_edu_id = '-1'
 
         // Encontrar el indice maximo

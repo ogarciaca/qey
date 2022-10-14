@@ -19,7 +19,7 @@ class CandidateEdus(models.Model):
     date_end = fields.Date("Fecha retiro")
     line_type_id = fields.Integer("line_type_id", default=1)
     description = fields.Text(string="Descripcion")
-    display_type = fields.Selection([('classic', 'Classic')], string="Display Type", default='classic')
+    display_type = fields.Selection([('classic', 'Classic'),('Bachillerato','Bachillerato'),('Tecnico','Tecnico'),('Tecnologo','Tecnologo'),('Profesional','Profesional'),('Especializacion','Especializacion'),('Maestria','Maestria'),('Doctorado','Doctorado')], string="Display Type", default='classic')
 
     _sql_constraints = [
         ('date_check', "CHECK ((date_start <= date_end OR date_end = NULL))", "La fecha de inicio debe ser anterior a la de retiro"),
