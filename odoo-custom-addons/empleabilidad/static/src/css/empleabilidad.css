@@ -93,3 +93,45 @@ textarea.success:focus {
 .uploadButton {
     display: none;
 }
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+h4.a.blink,
+a.blink,
+i.blink {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.blink-one {
+    animation: blinker-one 1s linear infinite;
+}
+
+@keyframes blinker-one {
+    0% {
+        opacity: 0;
+    }
+}
+
+.blink-two {
+    animation: blinker-two 1.4s linear infinite;
+}
+
+@keyframes blinker-two {
+    100% {
+        opacity: 0;
+    }
+}

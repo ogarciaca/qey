@@ -102,15 +102,15 @@ def  _SkillSearch (js,search_term):
 def _SkillWrite(pjs,v_id):
     s = request.env['candidate.vacant.skill'].sudo().search([('vacant_id','=',v_id)])
     # Eliminar los que no vienen en el json pjs
-    if s.id:
-        for i in s:
-            val = _SkillSearch(pjs,i.skill_id.id)
+    if len(s.ids):
+        for i in s.ids:
+            val = _SkillSearch(pjs,i)
             if not val:
                 # print("Update",val)
             #else:
-                qry ="DELETE FROM candidate_vacant_skill WHERE ID = " + str(i.id)
+                qry ="DELETE FROM candidate_vacant_skill WHERE ID = " + str(i)
                 request.cr.execute(qry)
-                print("Delete",i.id)
+                print("Delete",i)
 
     for i in pjs:
         val = request.env['candidate.vacant.skill'].sudo().search([('vacant_id','=',v_id),('skill_id','=',int(i["skill_id"]))])
@@ -127,15 +127,15 @@ def _SkillWrite(pjs,v_id):
 def _SkillWriteHV(pjs,p_id):
     s = request.env['candidate.skill'].sudo().search([('partner_id','=',p_id)])
     # Eliminar los que no vienen en el json pjs
-    if s.id:
-        for i in s:
-            val = _SkillSearch(pjs,i.skill_id.id)
+    if len(s.ids):
+        for i in s.ids:
+            val = _SkillSearch(pjs,i)
             if not val:
                 # print("Update",val)
             #else:
-                qry ="DELETE FROM candidate_skill WHERE ID = " + str(i.id)
+                qry ="DELETE FROM candidate_skill WHERE ID = " + str(i)
                 request.cr.execute(qry)
-                print("Delete",i.id)
+                print("Delete",i)
 
     for i in pjs:
         val = request.env['candidate.skill'].sudo().search([('partner_id','=',p_id),('skill_id','=',int(i["skill_id"]))])
@@ -157,13 +157,13 @@ def  _ESTSearch (js,search_term):
 def _ESTWriteHV(pjs,p_id):
     s = request.env['candidate.edus'].sudo().search([('partner_id','=',p_id)])
     # Eliminar los que no vienen en el json pjs
-    if s.id:
-        for i in s:
-            val = _ESTSearch(pjs,i.id)
+    if len(s.ids):
+        for i in s.ids:
+            val = _ESTSearch(pjs,i)
             if not val:
-                qry ="DELETE FROM candidate_edus WHERE ID = " + str(i.id)
+                qry ="DELETE FROM candidate_edus WHERE ID = " + str(i)
                 request.cr.execute(qry)
-                print("Delete",i.id)
+                print("Delete",i)
 
     for i in pjs:
         val = request.env['candidate.edus'].sudo().search([('partner_id','=',p_id),('id','=',int(i["popupest_edu_id"]))])
@@ -185,13 +185,13 @@ def  _EXPearch(js,search_term):
 def _EXPWriteHV(pjs,p_id):
     s = request.env['candidate.jobs'].sudo().search([('partner_id','=',p_id)])
     # Eliminar los que no vienen en el json pjs
-    if s.id:
-        for i in s:
-            val = _EXPearch(pjs,i.id)
+    if len(s.ids):
+        for i in s.ids:
+            val = _EXPearch(pjs,i)
             if not val:
-                qry ="DELETE FROM candidate_jobs WHERE ID = " + str(i.id)
+                qry ="DELETE FROM candidate_jobs WHERE ID = " + str(i)
                 request.cr.execute(qry)
-                print("Delete",i.id)
+                print("Delete",i)
 
     for i in pjs:
         val = request.env['candidate.jobs'].sudo().search([('partner_id','=',p_id),('id','=',int(i["popupexp_job_id"]))])
@@ -1028,8 +1028,8 @@ class CustomerPortal(http.Controller):
         states = request.env['res.country.state'].sudo().search([])
         identification_types = request.env['l10n_latam.identification.type'].sudo().search([])
 
-        genders = [('male', 'Male'),('female', 'Female'),('other', 'Other')]
-        maritals = [('single', 'Single'),('married', 'Married'),('cohabitant', 'Legal Cohabitant'),('widower', 'Widower'),('divorced', 'Divorced')]
+        genders = [('male', 'Hombre'),('female', 'Mujer'),('other', 'Otro')]
+        maritals = [('single', 'Soltero'),('married', 'Casado'),('cohabitant', 'Convivencia'),('widower', 'Viudo'),('divorced', 'Divorciado')]
 
         # Caso 4  Inicio Llenado del arreglo de los skill de la persona
         x_skill_ids = []
@@ -1140,8 +1140,8 @@ class CustomerPortal(http.Controller):
         states = request.env['res.country.state'].sudo().search([])
         identification_types = request.env['l10n_latam.identification.type'].sudo().search([])
 
-        genders = [('male', 'Male'),('female', 'Female'),('other', 'Other')]
-        maritals = [('single', 'Single'),('married', 'Married'),('cohabitant', 'Legal Cohabitant'),('widower', 'Widower'),('divorced', 'Divorced')]
+        genders = [('male', 'Hombre'),('female', 'Mujer'),('other', 'Otro')]
+        maritals = [('single', 'Soltero'),('married', 'Casado'),('cohabitant', 'Convivencia'),('widower', 'Viudo'),('divorced', 'Divorciado')]
 
         # Caso 4  Inicio Llenado del arreglo de los skill de la persona
         x_skill_ids = []

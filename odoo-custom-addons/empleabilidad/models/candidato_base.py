@@ -28,7 +28,7 @@ class candidate(models.Model):
 
     cand_progress = fields.Integer('progreso',compute="_compute_cand_progress")
     salary = fields.Integer('Salario Mensual')
-    gender = fields.Selection([('male', 'Male'),('female', 'Female'),('other', 'Other')], 'Gender')
+    gender = fields.Selection([('male', 'Hombre'),('female', 'Mujer'),('other', 'Otro')], 'Gender')
     marital = fields.Selection([
                 ('single', 'Single'),
                 ('married', 'Married'),

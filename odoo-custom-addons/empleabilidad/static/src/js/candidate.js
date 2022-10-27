@@ -37,7 +37,7 @@ Date.prototype.toDateInputValueMonth = function() {
 
 
 window.addEventListener("load", e => {
-    console.log("Evento Hoja de Vida");
+    // console.log("Evento Hoja de Vida");
     let theform = document.getElementById("EmpresaHojadeVida");
     //let descriptioncount = document.getElementById("description");
     //let countdescription = document.getElementById("countdescription");
@@ -46,7 +46,7 @@ window.addEventListener("load", e => {
     let addskill = document.getElementById("addskill");
     let addskilllevel = document.getElementById("addskilllevel");
     let btnaddskill = document.getElementById("btnaddskill");
-    let btnaddCateg = document.getElementById("btnaddsCateg");
+    //let btnaddCateg = document.getElementById("btnaddsCateg");
 
 
 
@@ -92,13 +92,13 @@ window.addEventListener("load", e => {
 
     PopUpEst_Confirm.addEventListener("click", e => {
         const result = validateESTForm();
-        console.log("Validar los datos de la nueva educacion", result);
+        //console.log("Validar los datos de la nueva educacion", result);
         if (!result) {
             document.getElementById("AdicionaEst").focus();
         } else {
             document.getElementById("PopUpEst").style.display = "none";
             document.getElementById("AdicionaEst").focus();
-            console.log("Insertar el registro en la tabla de educacion");
+            // console.log("Insertar el registro en la tabla de educacion");
             _AddRowEst_table();
             _ClearRowEst_table();
 
@@ -108,13 +108,13 @@ window.addEventListener("load", e => {
 
     PopUpExp_Confirm.addEventListener("click", e => {
         const result = validateEXPForm();
-        console.log("Validar los datos de la nueva experiencia", result);
+        // console.log("Validar los datos de la nueva experiencia", result);
         if (!result) {
             document.getElementById("AdicionaJob").focus();
         } else {
             document.getElementById("PopUpExp").style.display = "none";
             document.getElementById("AdicionaJob").focus();
-            console.log("Insertar el registro en la tabla de de experiencia");
+            // console.log("Insertar el registro en la tabla de de experiencia");
             _AddRowExp_table();
             _ClearRowExp_table();
 
@@ -123,13 +123,13 @@ window.addEventListener("load", e => {
     });
 
     //clearChildren("skilltypeDL");
-    console.log("windows HV load _LVFillSkillType");
+    // console.log("windows HV load _LVFillSkillType");
     _LVFillSkillType();
-    console.log("windows HV FIN _LVFillSkillType");
+    // console.log("windows HV FIN _LVFillSkillType");
     //_SkillLV();
     const SkillJson = [];
     const CatJson = [];
-    console.log("windows HV FIN _LVFillSkillType");
+    // console.log("windows HV FIN _LVFillSkillType");
     _LVFillCategDL();
 
     // Cargar la foto
@@ -148,7 +148,7 @@ window.addEventListener("load", e => {
     });
 
     AdicionaEst.addEventListener("click", e => {
-        console.log(" Evento adiciona estudio ");
+        //console.log(" Evento adiciona estudio ");
         if (document.getElementById("PopUpEst").style.display == "none") {
             document.getElementById("PopUpEst").style.display = "block";
         } else {
@@ -158,20 +158,26 @@ window.addEventListener("load", e => {
 
     });
     addskilltype.addEventListener("input", e => {
-        console.log(" Evento HV input on addskilltype ");
+        //console.log(" Evento HV input on addskilltype ");
         _LVFillSkill();
         _LVFillSkillLevel();
     });
 
 
     btnaddskill.addEventListener('click', e => {
-        console.log(" Evento click on btnaddskill ");
-        _AddSkill();
 
-        btnaddskill.setAttribute('disabled', 'true');
-        document.getElementById("addskill").value = [];
-        document.getElementById("addskilllevel").value = [];
-        document.getElementById("addskilltype").value = [];
+        let l = document.getElementById('addskilllevel')
+        if (l.value.length > 0) {
+            //console.log(" Evento click on btnaddskill ");
+            _AddSkill();
+
+            btnaddskill.setAttribute('disabled', 'true');
+            document.getElementById("addskill").value = [];
+            document.getElementById("addskilllevel").value = [];
+            document.getElementById("addskilltype").value = [];
+        } else {
+            e.preventDefault();
+        }
 
     });
 
@@ -215,59 +221,59 @@ window.addEventListener("load", e => {
 
     });
 
+    /*
+        btnaddCateg.addEventListener('click', e => {
+            console.log("Entro en btnaddCateg")
+                //let theform = document.getElementById("EmpresaHojadeVida");
+                //theform.addEventListener("submit", e => {
+                //    e.preventDefault();
+                //});
 
-    btnaddCateg.addEventListener('click', e => {
-        console.log("Entro en btnaddCateg")
-            //let theform = document.getElementById("EmpresaHojadeVida");
-            //theform.addEventListener("submit", e => {
-            //    e.preventDefault();
-            //});
-
-        let CategJson = _CategToJson(document.querySelector('#categ_table tbody'));
-        let long = CategJson.length
-        console.log("longitud de la lista de categoria ", long)
-        if (long > 0) {
-            CategJson = JSON.parse(CategJson);
-        } else {
-            CategJson = []
-        }
-        console.log("CategJson ", CategJson)
-        let x = document.getElementById("CategDL").selectedOptions;
-        console.log("x ", x, x.length)
-        for (i = 0; i <= x.length - 1; i++) {
-            let val_id = x[i].attributes[1].value
-            let val_name = x[i].attributes[0].value
-            console.log("CategJson ", CategJson)
-
-            let enc = searchInObject(CategJson, "res_partner_category_id", val_id)
-                //    console.log("Search ", enc)
-            let tableRef = document.querySelector(`#categ_table tbody`);
-            //    console.log(val_id)
-            if (!enc) {
-                console.log("Agregó categoria....")
-
-                let _row = `<tr class="badge badge-pill" res_partner_category_id="${val_id}" name="${val_name}">
-                                <td>
-                                    <span res_partner_category_id="${val_id}" name="${val_name}">${val_name}</span>
-                                </td>
-                                    <td>
-                                    <div class="btn btn-sm btn-link" cat_id="${val_id}"></div>
-                                    <a href="#" class="fa fa-fw fa-remove"  id="${val_id}" onclick="_DelMisCateg(this)" name="CATEG"><i class="fa"></i></a>
-                                    </td>
-                                </tr>`
-                tableRef.innerHTML += _row;
+            let CategJson = _CategToJson(document.querySelector('#categ_table tbody'));
+            let long = CategJson.length
+            console.log("longitud de la lista de categoria ", long)
+            if (long > 0) {
+                CategJson = JSON.parse(CategJson);
             } else {
-                console.log("No se agrega categoria....")
+                CategJson = []
             }
+            console.log("CategJson ", CategJson)
+            let x = document.getElementById("CategDL").selectedOptions;
+            console.log("x ", x, x.length)
+            for (i = 0; i <= x.length - 1; i++) {
+                let val_id = x[i].attributes[1].value
+                let val_name = x[i].attributes[0].value
+                console.log("CategJson ", CategJson)
 
-        }
-        //alert("Parar para ver los selected");
-        // alert()
-    });
+                let enc = searchInObject(CategJson, "res_partner_category_id", val_id)
+                    //    console.log("Search ", enc)
+                let tableRef = document.querySelector(`#categ_table tbody`);
+                //    console.log(val_id)
+                if (!enc) {
+                    console.log("Agregó categoria....")
 
+                    let _row = `<tr class="badge badge-pill" res_partner_category_id="${val_id}" name="${val_name}">
+                                    <td>
+                                        <span res_partner_category_id="${val_id}" name="${val_name}">${val_name}</span>
+                                    </td>
+                                        <td>
+                                        <div class="btn btn-sm btn-link" cat_id="${val_id}"></div>
+                                        <a href="#" class="fa fa-fw fa-remove"  id="${val_id}" onclick="_DelMisCateg(this)" name="CATEG"><i class="fa"></i></a>
+                                        </td>
+                                    </tr>`
+                    tableRef.innerHTML += _row;
+                } else {
+                    console.log("No se agrega categoria....")
+                }
+
+            }
+            //alert("Parar para ver los selected");
+            // alert()
+        });
+    */
     addskilltype.addEventListener('click', e => {
         e.target.value = '';
-        console.log(" Evento click on addskilltype ");
+        //console.log(" Evento click on addskilltype ");
         document.getElementById("addskill").value = '';
         document.getElementById("addskilllevel").value = '';
         _LVFillSkillType();
@@ -276,7 +282,7 @@ window.addEventListener("load", e => {
 
     addskilltype.addEventListener('click', e => {
         e.target.select();
-        console.log(" Evento click2 on addskilltype ");
+        //console.log(" Evento click2 on addskilltype ");
         document.getElementById("addskill").value = '';
         document.getElementById("addskilllevel").value = '';
         //_SkillLV();
@@ -286,47 +292,70 @@ window.addEventListener("load", e => {
 
     addskill.addEventListener('click', e => {
         e.target.value = ''
-        console.log(" Evento click on addskill ");
+            //console.log(" Evento click on addskill ");
         document.getElementById("addskilllevel").value = '';
         _LVFillSkillLevel();
         btnaddskill.setAttribute('disabled', 'true');
 
     });
 
-    addskill.addEventListener('click', e => {
+    /* addskill.addEventListener('click', e => {
         e.target.select()
         console.log(" Evento click2 on addskill ");
         document.getElementById("addskilllevel").value = '';
         _LVFillSkillLevel();
     });
 
-
+*/
     addskilllevel.addEventListener('click', e => {
         e.target.value = ''
-        console.log(" Evento click on addskilllevel ");
+            //console.log(" Evento click on addskilllevel ");
         _LVFillSkillLevel();
         btnaddskill.setAttribute('disabled', 'true');
     });
 
+
     addskilllevel.addEventListener('click', e => {
         e.target.select()
-        console.log(" Evento click2 on addskilllevel ");
+            //console.log("e.target.select() ", e.target.select())
+            //console.log(" Evento click2 on addskilllevel ");
+        const input = document.querySelector('addskilllevel')
+            //console.log("input ", input)
+            //input.onchange = (e) => {
+            //    console.log("Change ", e.target.value)
+            //}
+
         //_LVFillSkillLevel(); 
         btnaddskill.removeAttribute('disabled');
 
     });
 
+
+    // boton par adicionar un skill btnaddskill
+
+
+    addskilllevel.addEventListener('onchange', e => {
+        e.target.select()
+            //console.log("e.target.select() ", e.target.select())
+            //console.log(" Evento change on addskilllevel ");
+
+        //_LVFillSkillLevel(); 
+        btnaddskill.removeAttribute('disabled');
+
+    });
+
+
     // TODO: prevent the form from being auto-submitted when the user  
     // clicks the Submit button or types Enter in a field
     theform.addEventListener("submit", e => {
         //e.preventDefault();
-        console.log("submit HV button");
+        //console.log("submit HV button");
         //alert("Se va a avalidar submmit")
 
         const result = validaCantidateForm()
 
         //result = 1;
-        console.log(" validaCantidateForm HV ", result);
+        //console.log(" validaCantidateForm HV ", result);
 
 
         //e.preventDefault();
@@ -391,7 +420,7 @@ function showMessage(input, message, type) {
 }
 
 function showError(input, message) {
-    console.log("Entro showError ")
+    //console.log("Entro showError ")
     return showMessage(input, message, false);
 }
 
@@ -414,7 +443,7 @@ function TextCount(input, message) {
 }
 
 function TableRowCount(input, message) {
-    console.log("input.children.length ", input.children.length)
+    //console.log("input.children.length ", input.children.length)
     if (input.children.length === 0) {
         return showError(input, message);
     }
@@ -433,8 +462,8 @@ function DateValidate(input, requiredMsg, invalidMsg) {
 }
 
 function DateValidate2(input, input2, invalidMsg) {
-    console.log("input ", input)
-    console.log("input2 ", input2)
+    //console.log("input ", input)
+    //console.log("input2 ", input2)
     if (input.valueAsDate > input2.valueAsDate) {
         return showSuccess(input);
     }
@@ -523,13 +552,13 @@ function validateESTForm() {
 
 
 function searchInObject(object, searchKey, searchValue) {
-    console.log("object ", object)
-    console.log("searchKey ", searchKey)
-    console.log("searchValue ", searchValue)
+    //console.log("object ", object)
+    //console.log("searchKey ", searchKey)
+    //console.log("searchValue ", searchValue)
 
 
     for (var i in object) {
-        console.log("obj searchInObject ", object[i][searchKey])
+        //console.log("obj searchInObject ", object[i][searchKey])
         if (object[i][searchKey] == searchValue) {
             return [i, object[i].name];
         };
@@ -574,7 +603,7 @@ function _DelMisCat() {
 function _AddMisCat() {
     var div = event.srcElement.id;
     var res_partner_category_id = event.srcElement.id;
-    console.log("entro en _AddMisCat....");
+    //console.log("entro en _AddMisCat....");
     if (event.target.name === "CATTOT") {
         //console.log("Add CATTOT....");
         //console.log("Add....res_partner_category_id ", res_partner_category_id);
@@ -597,7 +626,7 @@ function _AddMisCat() {
 };
 
 function _AddRowTableMisCat(_id, _name) {
-    console.log("_AddRowTableMisCat (_id,_name)", _id, _name)
+    //console.log("_AddRowTableMisCat (_id,_name)", _id, _name)
     let tableRef = document.querySelector("#mis_categ_ids_table tbody");
     let _row = `<tr id="${_name}" category_id="${_id}"><td align="left">${_name}<a href="#" id=${_id} onclick="_DelMisCat(this)" name="CAT" class="fa fa-trash" title="Delete" aria-label="Delete"></a></td></tr>`;
     tableRef.innerHTML += _row;
@@ -606,7 +635,7 @@ function _AddRowTableMisCat(_id, _name) {
 function _AddRowExp_table() {
 
     let id = document.getElementsByName("PopUpExp_indice")[0].value
-    console.log("_AddRowExp_table ", id)
+        //console.log("_AddRowExp_table ", id)
     if (id == '') {
 
         let tableRef = document.querySelector("#Exp_table tbody");
@@ -621,7 +650,7 @@ function _AddRowExp_table() {
         let row = [...tableRef.rows]
         var max = -1
         row.forEach((e) => {
-            console.log(e.attributes.PopUpExp_indice.value)
+            //console.log(e.attributes.PopUpExp_indice.value)
             if (!isNaN(e.attributes.PopUpExp_indice.value)) {
                 if (e.attributes.PopUpExp_indice.value > max) {
                     max = e.attributes.PopUpExp_indice.value
@@ -683,25 +712,26 @@ function _AddRowEst_table() {
 
 
     let id = document.getElementsByName("PopUpEst_indice")[0].value
-    console.log("_AddRowEst_table ", id)
+        //console.log("_AddRowEst_table ", id)
     if (id == '') {
-        console.log("Se activa boton de adicionar estudio")
+        //console.log("Se activa boton de adicionar estudio")
         let tableRef = document.querySelector("#Est_table tbody");
         let PopUpEst_edu_title = document.getElementsByName("PopUpEst_edu_title")[0].value;
         let PopUpEst_name = document.getElementsByName("PopUpEst_name")[0].value;
         let PopUpEst_date_start = document.getElementsByName("PopUpEst_date_start")[0].value;
         let PopUpEst_date_end = document.getElementsByName("PopUpEst_date_end")[0].value;
-        console.log("document.getElementsByName( ", document.getElementsByName("PopUpEst_edu_type")[0].value)
+        //console.log("document.getElementsByName( ", document.getElementsByName("PopUpEst_edu_type")[0].value)
 
-        let PopUpEst_edu_type = document.getElementsByName("PopUpEst_edu_type")[0].value;
-        console.log("PopUpEst_edu_type ", PopUpEst_edu_type)
+        //let PopUpEst_edu_type = document.getElementsByName("PopUpEst_edu_type")[0].value;
+        let PopUpEst_edu_type = document.getElementsByName("PopUpEst_edu_type_sel")[0].value
+            //console.log("PopUpEst_edu_type ", PopUpEst_edu_type)
         let PopUpEst_edu_id = '-1'
 
         // Encontrar el indice maximo
         let row = [...tableRef.rows]
         var max = -1
         row.forEach((e) => {
-            console.log(e.attributes.PopUpEst_indice.value)
+            //console.log(e.attributes.PopUpEst_indice.value)
             if (!isNaN(e.attributes.PopUpEst_indice.value)) {
                 if (e.attributes.PopUpEst_indice.value > max) {
                     max = e.attributes.PopUpEst_indice.value
@@ -711,7 +741,7 @@ function _AddRowEst_table() {
 
         let index = 1 + Number(max)
 
-        let _row = `<tr popupest_indice="${index}" PopUpEst_edu_id="${PopUpEst_edu_id}" popupest_name="${PopUpEst_name}" popupest_edu_title="${PopUpEst_edu_title}" popupest_edu_type="${PopUpEst_edu_type}" popupest_date_start="${PopUpEst_date_start}" popupest_date_end="${PopUpEst_date_end}" >
+        let _row = `<tr popupest_indice="${index}" PopUpEst_edu_id="${PopUpEst_edu_id}" popupest_name="${PopUpEst_name}" popupest_edu_title="${PopUpEst_edu_title}" popupest_date_start="${PopUpEst_date_start}" popupest_date_end="${PopUpEst_date_end}" popupest_edu_type="${PopUpEst_edu_type}">
             <td>
                 <span>${PopUpEst_name}</span>
             </td>
@@ -776,7 +806,7 @@ function _ClearRowEst_table() {
 
     document.getElementsByName("PopUpEst_edu_id")[0].value = '-1';
     document.getElementsByName("PopUpEst_indice")[0].value = '';
-    console.log("finalizó _ClearRowEst_table")
+    //console.log("finalizó _ClearRowEst_table")
 };
 
 
@@ -826,16 +856,19 @@ function FilterJson(object, searchKey, searchValue) {
 
 
 function clearChildren(parent_id) {
-
+    //let parent_id = "skillLevelDL"
     var parent = document.getElementById(parent_id);
-    var childArray = parent.children;
-    var cL = childArray.length;
-    console.log("Clean Chidren ", parent_id, cL);
-    while (cL > 0) {
-        cL--;
-        parent.removeChild(childArray[cL]);
+    if (parent.children.length > 0) {
 
-    };
+        var childArray = parent.children;
+        var cL = childArray.length;
+        //console.log("Clean Chidren ", parent_id, cL);
+        while (cL > 0) {
+            cL--;
+            parent.removeChild(childArray[cL]);
+
+        };
+    }
 };
 
 function _LVFillSkillType() {
@@ -848,7 +881,7 @@ function _LVFillSkillType() {
 
     //clearChildren("skilltypeDL");
     clearChildren("skillDL");
-    console.log("Llenando skilltypeDL");
+    // console.log("Llenando skilltypeDL");
 
     var parent = document.getElementById("skilltypeDL");
     var childArray = parent.children;
@@ -875,15 +908,16 @@ function _LVFillSkill() {
     let A_skill = [];
 
     let S_skill_type = document.getElementsByName("addskilltype")[0].value;
-    console.log("S_skill_type selected ", S_skill_type);
+    //console.log("S_skill_type selected ", S_skill_type);
 
     // Clean datalist 
     clearChildren("skillDL");
     if (S_skill_type) {
-        console.log("Llena lita skillDL");
+        //console.log("Llena lita skillDL");
         A_skill = FilterJson(a, "name_type", S_skill_type);
         A_skill = [...new Set(A_skill.map(x => x.name_skill))];
         let l = document.getElementById("skillDL");
+        l.innerHTML = "";
         for (var i in A_skill) {
             let opt = document.createElement("option");
             opt.setAttribute("value", A_skill[i]);
@@ -910,6 +944,7 @@ function _LVFillCategDL() {
     let A_name = [...new Set(a.map(x => x.name))];
     let A_ateg = [];
 
+    /*
     let l = document.getElementById("CategDL");
     // Clean the list 
     clearSelectList(l);
@@ -928,7 +963,43 @@ function _LVFillCategDL() {
         opt.setAttribute("res_partner_category_id", a[i].res_partner_category_id)
         l.appendChild(opt);
     };
+*/
+    // Inicio de tabla para categoria
+    for (var i in a) {
 
+        // Preguntar aca si la categoria esta en mis-categorias
+        let l = document.querySelector(`#categ_table tbody`)
+        let exist = 0
+        let ind = 0
+        for (ind = 0; ind < l.children.length; ind++) {
+            if (l.children[ind].attributes['res_partner_category_id'].value == a[i].res_partner_category_id) {
+                exist = 1;
+                // console.log("Categoria esta en mis-categorias", a[i].name)
+                break;
+            };
+        }
+        if (exist == 0) {
+            let tableRef = document.querySelector(`#categia_table tbody`);
+            let _row = `<tr res_partner_category_id="${a[i].res_partner_category_id}" name="${a[i].name}" >
+            <td>
+                <div class="btn btn-sm btn-link" res_partner_category_id="${a[i].res_partner_category_id}">
+                    <a href="#" id="${a[i].res_partner_category_id}"  res_partner_category_id="${a[i].res_partner_category_id}" class="fa fa-fw fa-plus" onclick="_AddMisCateg(this)" name="CATEGTABLE" res_partner_category_name="${a[i].name}"></a>
+    
+                </div>
+                <span> ${a[i].name}
+                </span>            
+            </td>
+            </tr>`;
+
+            //console.log(_row);
+            tableRef.innerHTML += _row;
+
+        }
+
+
+    };
+    // Fin de tabla para categoria
+    // console.log("Finaliza _LVFillCategDL")
 };
 
 
@@ -944,14 +1015,14 @@ function _LVFillSkillLevel() {
 
     S_skill_type = document.getElementsByName("addskilltype")[0].value;
     S_skill = document.getElementsByName("addskill")[0].value;
-    console.log("S_skill selected ", S_skill);
+    //console.log("S_skill selected ", S_skill);
 
     // Clean datalist 
     clearChildren("skillLevelDL");
-    console.log("S_skill_type ", S_skill_type);
-    console.log("S_skill ", S_skill);
-    if (S_skill) {
-        console.log("Llena lita skillLevelDL");
+    //console.log("S_skill_type ", S_skill_type);
+    //console.log("S_skill ", S_skill);
+    if (S_skill.length > 0) {
+        //console.log("Llena lita skillLevelDL");
         A_skill = FilterJson(a, "name_type", S_skill_type);
         A_skill = FilterJson(A_skill, "name_skill", S_skill);
         A_skill = [...new Set(A_skill.map(x => x.name_level))];
@@ -1015,36 +1086,36 @@ function _AddSkill() {
 }
 
 function _DelMisEst() {
-    console.log("Entro.._DelMisEst");
+    //console.log("Entro.._DelMisEst");
     if (event.target.name === "EST") {
-        console.log("Entro..EST");
-        console.log("event.srcElement..", event.srcElement);
+        //console.log("Entro..EST");
+        //console.log("event.srcElement..", event.srcElement);
         var id = event.srcElement.attributes.PopUpEst_indice.value;
-        console.log("Entro..i", id);
+        //console.log("Entro..i", id);
         let element = document.querySelector(`#Est_table tbody tr[PopUpEst_indice$="${id}"]`);
         element.remove();
     };
 };
 
 function _DelMisExp() {
-    console.log("Entro.._DelMisExp");
+    //console.log("Entro.._DelMisExp");
     if (event.target.name === "EXP") {
-        console.log("Entro..EXP");
-        console.log("event.srcElement..", event.srcElement);
+        //console.log("Entro..EXP");
+        //console.log("event.srcElement..", event.srcElement);
         var id = event.srcElement.attributes.PopUpExp_indice.value;
-        console.log("Entro..i", id);
+        //console.log("Entro..i", id);
         let element = document.querySelector(`#Exp_table tbody tr[PopUpExp_indice$="${id}"]`);
         element.remove();
     };
 };
 
 function _UpdateMisExp() {
-    console.log("event.target.name ", event.target.name)
+    //console.log("event.target.name ", event.target.name)
     if (event.target.name === "EXP") {
-        console.log("Entro..EXP");
-        console.log("event.srcElement..", event.srcElement);
+        //console.log("Entro..EXP");
+        //console.log("event.srcElement..", event.srcElement);
         var id = event.srcElement.attributes.PopUpExp_indice.value;
-        console.log("Entro..i", id);
+        //console.log("Entro..i", id);
         let element = document.querySelector(`#Exp_table tbody tr[PopUpExp_indice$="${id}"]`);
         // Activar el PopUp
         document.getElementById("PopUpExp").style.display = "block";
@@ -1059,50 +1130,87 @@ function _UpdateMisExp() {
         document.getElementsByName("PopUpExp_job_id")[0].value = element.attributes.PopUpExp_job_id.value;
         document.getElementsByName("PopUpExp_indice")[0].value = element.attributes.PopUpExp_indice.value;
     };
-    console.log("Fin de _UpdateMisExp");
+    //console.log("Fin de _UpdateMisExp");
 };
 
 function _UpdateMisEst() {
-    console.log("event.target.name ", event.target.name)
+    // console.log("event.target.name ", event.target.name)
     if (event.target.name === "EST") {
-        console.log("Entro..EST");
-        console.log("event.srcElement..", event.srcElement);
+        // console.log("Entro..EST");
+        // console.log("Entro..EST");
+        // console.log("event.srcElement..", event.srcElement);
         var id = event.srcElement.attributes.PopUpEst_indice.value;
-        console.log("Entro..i", id);
+        // console.log("Entro..i", id);
         let element = document.querySelector(`#Est_table tbody tr[PopUpEst_indice$="${id}"]`);
+        // console.log("desplegar tipo de estudio")
+        // console.log("element.attributes.PopUpEst_edu_type.value; ", element.attributes.PopUpEst_edu_type.value)
         // Activar el PopUp
         document.getElementById("PopUpEst").style.display = "block";
         // document.getElementById("AdicionaJob").focus();
 
         document.getElementsByName("PopUpEst_edu_title")[0].value = element.attributes.PopUpEst_edu_title.value;
-        document.getElementsByName("PopUpEst_edu_type")[0].value = element.attributes.PopUpEst_edu_type.value;
+        // document.getElementsByName("PopUpEst_edu_type")[0].value = element.attributes.PopUpEst_edu_type.value;
+        document.getElementsByName("PopUpEst_edu_type_sel")[0].value = element.attributes.PopUpEst_edu_type.value;
+
+        // console.log("document.getElementsByName(PopUpEst_edu_type_sel)[0].value ", document.getElementsByName("PopUpEst_edu_type_sel")[0].value)
         document.getElementsByName("PopUpEst_name")[0].value = element.attributes.PopUpEst_name.value;
         document.getElementsByName("PopUpEst_date_start")[0].value = element.attributes.PopUpEst_date_start.value;
         document.getElementsByName("PopUpEst_date_end")[0].value = element.attributes.PopUpEst_date_end.value;
         document.getElementsByName("PopUpEst_edu_id")[0].value = element.attributes.PopUpEst_edu_id.value;
         document.getElementsByName("PopUpEst_indice")[0].value = element.attributes.PopUpEst_indice.value;
     };
-    console.log("Fin de _UpdateMisEst");
+    // console.log("Fin de _UpdateMisEst");
 };
 
 
 function _DelMisSkill() {
-    console.log("Entro.._DelMisSkill");
+    //console.log("Entro.._DelMisSkill");
     if (event.target.name === "SKILL") {
-        console.log("Entro..SKILL");
-        console.log("event.srcElement..", event.srcElement);
+        //console.log("Entro..SKILL");
+        //console.log("event.srcElement..", event.srcElement);
         var id = event.srcElement.id;
-        console.log("Entro..i", id);
+        //console.log("Entro..i", id);
         let element = document.querySelector(`#skills_table tbody tr[id$="${id}"]`);
         element.remove();
     };
 };
 
+function _AddMisCateg() {
+    // console.log("_AddMisCateg.....")
+    if (event.target.name === "CATEGTABLE") {
+        let res_partner_category_id = event.srcElement.id;
+        // console.log("_AddMisCateg res_partner_category_id=", res_partner_category_id)
+
+        let ele_borrar = document.querySelector(`#categia_table tbody tr[res_partner_category_id$="${res_partner_category_id}"]`);
+        let ele_adicionar = ele_borrar.innerHTML
+        ele_adicionar = ele_adicionar.replace('CATEGTABLE', 'CATEG')
+        ele_adicionar = ele_adicionar.replace('_AddMisCateg(this)', '_DelMisCateg(this)')
+        ele_adicionar = ele_adicionar.replace('fa-plus', 'fa-remove')
+            // console.log("ele_adicionar ", ele_adicionar)
+        let res_partner_category_name = ele_borrar.attributes.name.value
+            // console.log("_AddMisCateg res_partner_category_name=", res_partner_category_name)
+        ele_borrar.remove();
+
+        let tableRef = document.querySelector(`#categ_table tbody`);
+        tableRef.innerHTML = '<tr res_partner_category_id="' + res_partner_category_id + '" name="' + res_partner_category_name + '">' + ele_adicionar + '</tr>' + tableRef.innerHTML
+    };
+};
+
 function _DelMisCateg() {
     if (event.target.name === "CATEG") {
-        var id = event.srcElement.id;
-        let element = document.querySelector(`#categ_table tbody tr[res_partner_category_id$="${id}"]`);
-        element.remove();
+        //var id = event.srcElement.id;
+        let res_partner_category_id = event.srcElement.id;
+        // console.log("_DelMisCateg() id=", res_partner_category_id)
+        let ele_borrar = document.querySelector(`#categ_table tbody tr[res_partner_category_id$="${res_partner_category_id}"]`);
+        let ele_adicionar = ele_borrar.innerHTML
+        ele_adicionar = ele_adicionar.replace('CATEG', 'CATEGTABLE')
+        ele_adicionar = ele_adicionar.replace('_DelMisCateg(this)', '_AddMisCateg(this)')
+        ele_adicionar = ele_adicionar.replace('fa-remove', 'fa-plus')
+        let res_partner_category_name = ele_borrar.attributes.name.value
+        ele_borrar.remove();
+
+        let tableRef = document.querySelector(`#categia_table tbody`);
+        tableRef.innerHTML = '<tr res_partner_category_id="' + res_partner_category_id + '" name="' + res_partner_category_name + '">' + ele_adicionar + '</tr>' + tableRef.innerHTML
     };
 };
 
